@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">CineYet</string>
+    <string name="loginbackground">LoginBackground</string>
+    <string name="email">" Email"</string>
+    <string name="password">" Password"</string>
+    <string name="emailicon">EmailIcon</string>
+    <string name="login">Login</string>
+    <string name="sign_up_button">Sign up.</string>
+    <string name="forgot_password_button">Forgot password?</string>
+    <string name="connect_with_google">Connect with Google</string>
+    <string name="googlelogo">GoogleLogo</string>
+    <string name="connect_with_facebook">Connect with Facebook</string>
+    <string name="facebooklogo">FacebookLogo</string>
+    <string name="not_part_of_the_gang_yet">Not part of the gang yet?</string>
+    <string name="welcome_screen_msg">Connecting you to a community of cinephiles</string>
 </resources>
