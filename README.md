@@ -1,2 +1,2 @@
 # CineYet
-YiFei and Andreea's  amazing app
+Andreea and Yifei's amazing movie recommendation app!
