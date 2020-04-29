@@ -150,7 +150,7 @@
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/LoginBackground"
-        app:layout_constraintHorizontal_bias="0.713"
+        app:layout_constraintHorizontal_bias="0.737"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/LoginBackground"
         app:layout_constraintVertical_bias="0.829" />
@@ -225,10 +225,10 @@
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/LoginBackground"
-        app:layout_constraintHorizontal_bias="0.387"
+        app:layout_constraintHorizontal_bias="0.42"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/LoginBackground"
-        app:layout_constraintVertical_bias="0.835" />
+        app:layout_constraintVertical_bias="0.834" />
 
     <TextView
         android:id="@+id/WelcomeTitle"
