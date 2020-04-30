@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".profile_page">
+    tools:context=".profile_page"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -36,18 +37,20 @@
             app:layout_constraintLeft_toRightOf="@id/followbutton"
             app:layout_constraintStart_toEndOf="@+id/followbutton"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            />
 
-        <ImageView
+        <Button
             android:id="@+id/profile_picture_sample"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="143dp"
             android:layout_height="148dp"
+            android:background="@drawable/roundprofilepic"
             app:layout_constraintBottom_toTopOf="@+id/profile_pic_name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.029"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/roundprofilepic" />
 
         <TextView
@@ -60,9 +63,11 @@
             android:textSize="19sp"
             app:layout_constraintBottom_toTopOf="@+id/favourite_movies_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.084"
+            app:layout_constraintHorizontal_bias="0.091"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_picture_sample" />
+
+
 
         <Button
             android:id="@+id/followbutton"
@@ -70,6 +75,7 @@
             android:layout_height="67dp"
             android:layout_marginStart="12dp"
             android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="48dp"
             android:layout_marginBottom="89dp"
             android:text="182 Followers"
@@ -87,7 +93,7 @@
             android:padding="10dp"
             app:layout_constraintBottom_toTopOf="@+id/sample_favourite_movie"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.085"
+            app:layout_constraintHorizontal_bias="0.071"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_pic_name"
             app:layout_constraintVertical_bias="0.0" />
@@ -96,7 +102,6 @@
             android:id="@+id/activityText"
             android:layout_width="46dp"
             android:layout_height="16dp"
-            android:layout_marginTop="50dp"
 
             android:text="Activity"
 
@@ -107,24 +112,24 @@
             app:layout_constraintTop_toBottomOf="@+id/sample_favourite_movie"
             app:layout_constraintVertical_bias="0.0" />
 
-        <ImageView
-            android:id="@+id/sample_favourite_movie"
-            android:layout_width="131dp"
-            android:layout_height="179dp"
+        <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/sample_favourite_movie"
+            android:scrollbars="vertical"
+
             app:layout_constraintBottom_toTopOf="@+id/activityText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.078"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/favourite_movies_text"
-            app:srcCompat="@drawable/movieposter"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
 
-            />
 
-        <ImageView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/sample_watch_list"
-            android:layout_width="132dp"
-            android:layout_height="202dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:scrollbars="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.093"
             app:layout_constraintStart_toStartOf="parent"
@@ -147,7 +152,6 @@
             android:id="@+id/sample_activity_photo"
             android:layout_width="197dp"
             android:layout_height="112dp"
-            android:layout_marginBottom="30dp"
             app:layout_constraintBottom_toTopOf="@+id/watch_list_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.121"
