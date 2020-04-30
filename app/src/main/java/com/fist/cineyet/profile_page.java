@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class profile_page extends AppCompatActivity {
         for(int i=0;i<moviesArray.length;i++){
             moviesList.add(moviesArray[i]);
         }
+        moviesList.add(R.drawable.plusbutton);
         LinearLayoutManager layoutManager = new LinearLayoutManager(profile_page.this,LinearLayoutManager.HORIZONTAL,false);
         favouriteMoviesLayout.setLayoutManager(layoutManager);
         favouriteMoviesLayout.setItemAnimator(new DefaultItemAnimator());
