@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch(v.getId()){
             case R.id.LoginButton:
-                openProfilePage();
+                openHomePage();
                 break;
             case R.id.SignUpButton:
                 openSignUpPage();
@@ -111,6 +111,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void openSignUpPage(){
         Intent myIntent = new Intent(this, SignUpPage.class);
+        Log.i(TAG,"openRegisterPage");
+
+        startActivity(myIntent);
+    }
+    public void openHomePage(){
+        Intent myIntent = new Intent(this, HomeActivity.class);
         Log.i(TAG,"openRegisterPage");
 
         startActivity(myIntent);
