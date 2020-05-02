@@ -13,4 +13,5 @@
     <string name="facebooklogo">FacebookLogo</string>
     <string name="not_part_of_the_gang_yet">Not part of the gang yet?</string>
     <string name="welcome_screen_msg">Connecting you to a community of cinephiles</string>
+    <string name="username">" Username"</string>
 </resources>
