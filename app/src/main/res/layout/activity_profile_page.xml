@@ -10,155 +10,220 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/watch_list_text"
-            android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:background="#85C3CF">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="30dp"
-            android:text="Watch List"
-            app:layout_constraintBottom_toTopOf="@+id/sample_watch_list"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.075"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sample_activity_photo"
-            app:layout_constraintVertical_bias="0.965" />
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp"
+                android:background="@drawable/custom_border">
+                <Button
+                    android:id="@+id/profile_picture_sample"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_margin="10dp"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:background="@drawable/roundprofilepic"
+                    app:layout_constraintBottom_toTopOf="@+id/profile_pic_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.029"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/roundprofilepic" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+                    <TextView
+                        android:id="@+id/profile_pic_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="YiFei Tang"
+                        android:textColor="#000000"
+                        android:textSize="19sp"
+                        app:layout_constraintBottom_toTopOf="@+id/favourite_movies_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.091"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_picture_sample" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:id="@+id/friends_profile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_person_black_24dp"
+                            android:text="Friends"
+                            android:background="@android:color/transparent"
+                            app:layout_constraintBottom_toBottomOf="@+id/profile_pic_name"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0"
+                            android:layout_marginRight="10dp"/>
 
-        <Button
-            android:id="@+id/following_button"
-            android:layout_width="109dp"
-            android:layout_height="67dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginBottom="89dp"
-            android:text="180 Following"
-            app:layout_constraintBottom_toBottomOf="@+id/profile_pic_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/followbutton"
-            app:layout_constraintStart_toEndOf="@+id/followbutton"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            />
+                        <Button
+                            android:id="@+id/message_profile"
+                            android:layout_width="107dp"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/transparent"
+                            android:drawableLeft="@drawable/comment_icon"
+                            android:text="Messages"
+                            app:layout_constraintBottom_toBottomOf="@+id/profile_pic_name"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0" />
+                    </LinearLayout>
 
-        <Button
-            android:id="@+id/profile_picture_sample"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="143dp"
-            android:layout_height="148dp"
-            android:background="@drawable/roundprofilepic"
-            app:layout_constraintBottom_toTopOf="@+id/profile_pic_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.029"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/roundprofilepic" />
-
-        <TextView
-            android:id="@+id/profile_pic_name"
-            android:layout_width="126dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:text="YiFei Tang"
-            android:textColor="#000000"
-            android:textSize="19sp"
-            app:layout_constraintBottom_toTopOf="@+id/favourite_movies_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.091"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_picture_sample" />
-
-
-
-        <Button
-            android:id="@+id/followbutton"
-            android:layout_width="109dp"
-            android:layout_height="67dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginBottom="89dp"
-            android:text="182 Followers"
-            app:layout_constraintBottom_toTopOf="@+id/profile_pic_name"
-            app:layout_constraintRight_toLeftOf="@+id/following_button"
-            app:layout_constraintStart_toEndOf="@+id/profile_picture_sample"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
-            android:id="@+id/favourite_movies_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Favourite Movies"
-            android:padding="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/sample_favourite_movie"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.071"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_pic_name"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/activityText"
-            android:layout_width="46dp"
-            android:layout_height="16dp"
-
-            android:text="Activity"
-
-            app:layout_constraintBottom_toTopOf="@+id/sample_activity_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.071"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sample_favourite_movie"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <androidx.recyclerview.widget.RecyclerView
-             android:id="@+id/sample_favourite_movie"
-            android:scrollbars="vertical"
-
-            app:layout_constraintBottom_toTopOf="@+id/activityText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.078"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/favourite_movies_text"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Interests"
+                        android:textColor="@android:color/black"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hitchcock, Fantasy, Mystery, Movies with attractive women in it."
+                        android:textColor="@android:color/darker_gray"
+                        />
+                </LinearLayout>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/sample_watch_list"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:scrollbars="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.093"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/watch_list_text"
-            app:srcCompat="@drawable/movieposter" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/sample_activity_text"
-            android:layout_width="276dp"
-            android:layout_height="83dp"
-            android:layout_marginTop="20dp"
-            android:text="Commented on Parasite is About Alien Nazis from Parasite Discussion:  “Wow, what an amazing idea!”"
-            app:layout_constraintBottom_toTopOf="@+id/sample_activity_photo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.192"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activityText" />
 
-        <ImageView
-            android:id="@+id/sample_activity_photo"
-            android:layout_width="197dp"
-            android:layout_height="112dp"
-            app:layout_constraintBottom_toTopOf="@+id/watch_list_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.121"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sample_activity_text"
-            app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/parasite" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/custom_border"
+                android:layout_margin="10dp">
+                <TextView
+                    android:id="@+id/watch_list_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Watch List"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+
+                    android:textColor="@android:color/black"
+                    app:layout_constraintBottom_toTopOf="@+id/sample_watch_list"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.075"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sample_activity_photo"
+                    app:layout_constraintVertical_bias="0.965" />
+
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/sample_watch_list"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:scrollbars="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/watch_list_text"
+                    app:srcCompat="@drawable/movieposter"
+                    android:layout_margin="20dp"/>
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/custom_border"
+                android:layout_margin="10dp">
+                <TextView
+                    android:id="@+id/activityText"
+                    android:layout_width="46dp"
+                    android:layout_height="16dp"
+                    android:layout_margin="10dp"
+                    android:text="Activity"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintBottom_toTopOf="@+id/sample_activity_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.071"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sample_favourite_movie"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/sample_activity_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Commented on Parasite is About Alien Nazis from Parasite Discussion:  “Wow, what an amazing idea!”"
+                    app:layout_constraintBottom_toTopOf="@+id/sample_activity_photo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.192"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/activityText" />
+                <ImageView
+                    android:id="@+id/sample_activity_photo"
+                    android:layout_width="197dp"
+                    android:layout_height="112dp"
+                    android:layout_margin="20dp"
+                    android:layout_marginBottom="20dp"
+                    app:layout_constraintBottom_toTopOf="@+id/watch_list_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.121"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sample_activity_text"
+                    app:layout_constraintVertical_bias="1.0"
+                    app:srcCompat="@drawable/parasite" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/custom_border"
+                android:layout_margin="10dp">
+                <TextView
+                    android:id="@+id/favourite_movies_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Favourite Movies"
+                    android:textColor="@android:color/black"
+
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    app:layout_constraintBottom_toTopOf="@+id/sample_favourite_movie"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/profile_pic_name"
+                    app:layout_constraintVertical_bias="0.0" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/sample_favourite_movie"
+                    android:scrollbars="vertical"
+
+                    android:layout_margin="20dp"
+                    app:layout_constraintBottom_toTopOf="@+id/activityText"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/favourite_movies_text"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content" />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
