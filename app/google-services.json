@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "127677431176",
+    "firebase_url": "https://cineyet-4fa96.firebaseio.com",
+    "project_id": "cineyet-4fa96",
+    "storage_bucket": "cineyet-4fa96.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:127677431176:android:826004034d515e276fce3d",
+        "android_client_info": {
+          "package_name": "com.fist.cineyet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "127677431176-tvt394t621200er88pf2nu7b8v3107jo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACwClfM_YpDxB7PEs7UaBjUaflMRqDN-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "127677431176-tvt394t621200er88pf2nu7b8v3107jo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -17,7 +17,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
         BottomNavigationView botNav=findViewById(R.id.bottom_nav);
         botNav.setOnNavigationItemSelectedListener(myListener);
-         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
     }
     private BottomNavigationView.OnNavigationItemSelectedListener myListener=new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override

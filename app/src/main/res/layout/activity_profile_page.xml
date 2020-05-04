@@ -160,5 +160,13 @@
             app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/parasite" />
 
+        <Button
+            android:id="@+id/LogOutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log Out"
+            tools:layout_editor_absoluteX="233dp"
+            tools:layout_editor_absoluteY="131dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
