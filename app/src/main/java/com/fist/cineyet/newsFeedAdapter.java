@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -47,6 +46,13 @@ public class newsFeedAdapter extends RecyclerView.Adapter<newsFeedAdapter.ViewHo
                 context.startActivity(myIntent);
             }
         });
+//        holder.imgView.setOnLongClickListener(new View.OnLongClickListener(){
+//            @Override
+//            public boolean onLongClick(View view){
+//
+//                return false;
+//            }
+//        });
         holder.personName.setText(mainModels.get(position).postPersonName);
         holder.movieName.setText(mainModels.get(position).postMovie);
         holder.activity.setText(mainModels.get(position).postActivityType);
