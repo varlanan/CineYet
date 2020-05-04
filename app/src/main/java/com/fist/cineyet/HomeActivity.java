@@ -31,7 +31,11 @@ public class HomeActivity extends AppCompatActivity {
                     selectedFrag=new HotFragment();
                     break;
                 case R.id.nav_profile:
+                    Bundle myBund=new Bundle();
+                    myBund.putString("isPersonalProfile","PERSONAL");
                     selectedFrag=new profile_page();
+                    selectedFrag.setArguments(myBund);
+
                     break;
 
             }

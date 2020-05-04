@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/parent_news"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="@drawable/custom_border">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/news_profile_image"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/roundprofilepic"/>
+            <!--            app:civ_border_width="2dp"-->
+            <!--            app:civ_border_color="@color/white"-->
+            <!--            android:layout_alignParentTop="true"-->
+            <!--            android:layout_alignParentLeft="true" />-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/news_profile_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="YiFei Tang"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:padding="10sp"
+                    android:textColor="@android:color/black"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:padding="5dp">
+                    <TextView
+                        android:id="@+id/news_activity_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Insert Activity Here"
+                        android:textColor="@android:color/black"
+                        android:textSize="13sp"
+                        android:paddingRight="4dp"/>
+                    <TextView
+                        android:id="@+id/news_movie_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Insert Movie"
+                        android:textColor="@android:color/black"
+                        android:textSize="13sp"
+                        android:paddingRight="4dp"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/news_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/news_snippet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Snippet of News Item "
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    />
+
+
+
+            <ImageView
+                android:id="@+id/news_movie_poster"
+                android:layout_width="80dp"
+                android:layout_height="120dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/midsommarposter"
+                />
+
+        </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginLeft="10dp">
+
+    <Button
+        android:id="@+id/news_like"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="20dp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/thumbs"
+        android:text="Like" />
+
+    <Button
+        android:id="@+id/news_comment"
+        android:layout_width="105dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/comment_icon"
+        android:text="Comment"
+
+        />
+
+
+</LinearLayout>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
