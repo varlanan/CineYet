@@ -30,8 +30,6 @@ public class profile_page extends Fragment {
     ListView activityList;
     MainAdapter mainAdapter;
 
-    View myview;
-
     Button bLogOut;
     FirebaseAuth myFirebaseAuth;
     private FirebaseAuth.AuthStateListener myAuthListener;

@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_main);
 
-        //myFirebaseAuth = FirebaseAuth.getInstance();
+        myFirebaseAuth = FirebaseAuth.getInstance();
         email = (EditText) findViewById(R.id.EmailLogin);
         password = (EditText) findViewById(R.id.PasswordLogin);
         loginButton=(Button) findViewById(R.id.LoginButton);
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             FirebaseUser myFirebaseUser = myFirebaseAuth.getCurrentUser();
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(myFirebaseAuth != null){
+                if(myFirebaseUser != null){
                     Toast.makeText(MainActivity.this, "You are logged in", Toast.LENGTH_SHORT).show();
                     openHomePage();
                 }
