@@ -32,7 +32,7 @@ public class newsFeedAdapter extends RecyclerView.Adapter<newsFeedAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Log.d(TAG, "on bind called on" + mainModels.get(position).postMovie);
 
         holder.imgView.setImageResource(mainModels.get(position).movieDrawable);
@@ -41,18 +41,14 @@ public class newsFeedAdapter extends RecyclerView.Adapter<newsFeedAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 Log.d(TAG,"clicked on image");
+
+
                 Intent myIntent=new Intent(context,MoviePageActivity.class);
 
                 context.startActivity(myIntent);
             }
         });
-//        holder.imgView.setOnLongClickListener(new View.OnLongClickListener(){
-//            @Override
-//            public boolean onLongClick(View view){
-//
-//                return false;
-//            }
-//        });
+
         holder.personName.setText(mainModels.get(position).postPersonName);
         holder.movieName.setText(mainModels.get(position).postMovie);
         holder.activity.setText(mainModels.get(position).postActivityType);
