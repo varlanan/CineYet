@@ -1,5 +1,6 @@
 package com.fist.cineyet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -17,7 +18,23 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
         BottomNavigationView botNav=findViewById(R.id.bottom_nav);
         botNav.setOnNavigationItemSelectedListener(myListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
+
+        Intent intent=getIntent();
+        if(intent.hasExtra("name")){
+            Fragment profFrag=new profile_page();
+            Bundle mybund=new Bundle();
+            mybund.putString("updatedName",intent.getStringExtra("name"));
+            mybund.putString("updatedUsername",intent.getStringExtra("username"));
+            mybund.putString("updatedInterests",intent.getStringExtra("interests"));
+            mybund.putString("updatedEmail",intent.getStringExtra("email"));
+            mybund.putString("isPersonalProfile","PERSONAL");
+            profFrag.setArguments(mybund);
+            botNav.setSelectedItemId(R.id.nav_profile);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,profFrag).commit();
+
+        }
+        else
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
     }
     private BottomNavigationView.OnNavigationItemSelectedListener myListener=new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override

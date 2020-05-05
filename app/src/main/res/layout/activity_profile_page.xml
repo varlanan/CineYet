@@ -22,7 +22,7 @@
                 android:orientation="horizontal"
                 android:layout_margin="10dp"
                 android:background="@drawable/custom_border">
-                <Button
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_picture_sample"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_margin="10dp"
@@ -134,6 +134,7 @@
                         android:text="Interests"
                         android:textColor="@android:color/black"/>
                     <TextView
+                        android:id="@+id/profile_interests"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Hitchcock, Fantasy, Mystery, Movies with attractive women in it."

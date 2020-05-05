@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "127677431176-5kqh8veugplq53qsjq2r6s0f0tp7rks6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fist.cineyet",
+            "certificate_hash": "5dad92bc2e94298602f74594ea58031a6bdeba58"
+          }
+        },
+        {
           "client_id": "127677431176-tvt394t621200er88pf2nu7b8v3107jo.apps.googleusercontent.com",
           "client_type": 3
         }

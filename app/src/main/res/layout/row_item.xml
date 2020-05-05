@@ -6,6 +6,7 @@
     android:id="@+id/parent_layout">
 
     <LinearLayout
+        android:id="@+id/row_item_parent_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -21,5 +22,40 @@
             android:maxHeight="120dp"
             android:scaleType="fitCenter"
             android:src="@drawable/groundhogdayposter" />
+
+        <LinearLayout
+            android:id="@+id/delete_menu_row_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:adjustViewBounds="true"
+                android:background="@android:color/transparent"
+                android:maxWidth="100dp"
+                android:maxHeight="120dp"
+                android:scaleType="fitCenter"
+                android:drawableLeft="@drawable/trash_icon"
+                android:text="DELETE"/>
+
+            <Button
+                android:id="@+id/cancel_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:adjustViewBounds="true"
+                android:background="@android:color/transparent"
+                android:maxWidth="100dp"
+                android:maxHeight="120dp"
+                android:scaleType="fitCenter"
+                android:drawableLeft="@drawable/ic_undo_black_24dp"
+                android:text="Cancel"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

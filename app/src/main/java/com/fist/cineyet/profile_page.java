@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -31,6 +32,8 @@ public class profile_page extends Fragment {
     MainAdapter mainAdapter;
 
     Button bLogOut;
+    Button editProfile;
+
     FirebaseAuth myFirebaseAuth;
     private FirebaseAuth.AuthStateListener myAuthListener;
 
@@ -56,6 +59,7 @@ public class profile_page extends Fragment {
         //hardcoded for now
         myview= inflater.inflate(R.layout.activity_profile_page, container, false);
         bLogOut = (Button) myview.findViewById(R.id.LogOutButton);
+        editProfile=(Button)myview.findViewById(R.id.update_profile);
         bLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +68,14 @@ public class profile_page extends Fragment {
                 startActivity(meinTent);
             }
         });
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent meinTent = new Intent((Context)getActivity(), UpdateProfileActivity.class);
+                startActivity(meinTent);
+            }
+        });
+
 
 
         Integer[] moviesArray={R.drawable.groundhogdayposter,R.drawable.movieposter,R.drawable.rearwindowposter,R.drawable.serbianfilmposter,R.drawable.parasiteposter};
@@ -74,8 +86,8 @@ public class profile_page extends Fragment {
                     "Reviewed",R.drawable.midsommarposter,R.drawable.roundprofilepic));
         }
 
-
-        String profileType=getArguments().getString("isPersonalProfile");
+        Bundle arguments=getArguments();
+        String profileType=arguments.getString("isPersonalProfile");
         //change up buttons
         Button addFriendButton=myview.findViewById(R.id.add_friend_button);
         Button messageButton=myview.findViewById(R.id.message_profile);
@@ -94,6 +106,18 @@ public class profile_page extends Fragment {
         }
         else{
             layout.removeView(addFriendButton);
+        }
+        if(arguments.containsKey("updatedName")) {
+            TextView name = myview.findViewById(R.id.profile_pic_name);
+            TextView interests = myview.findViewById(R.id.profile_interests);
+
+            String newname = arguments.getString("updatedName");
+            if (newname != "")
+                name.setText(newname);
+
+            String newInterests = arguments.getString("updatedInterests");
+            if (newInterests != "")
+                interests.setText(newInterests);
         }
 
         scrollFunction(R.id.sample_favourite_movie,moviesArray,profileType);
