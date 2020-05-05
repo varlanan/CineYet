@@ -48,19 +48,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         signUpButton.setOnClickListener(this);
         loginButton.setOnClickListener(this);
 
-        myAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            FirebaseUser myFirebaseUser = myFirebaseAuth.getCurrentUser();
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(myFirebaseUser != null){
-                    Toast.makeText(MainActivity.this, "You are logged in", Toast.LENGTH_SHORT).show();
-                    openHomePage();
-                }
-                else {
-                    Toast.makeText(MainActivity.this, "Please log in", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
+        if(myFirebaseAuth.getCurrentUser() != null){
+            Toast.makeText(MainActivity.this, "You are logged in", Toast.LENGTH_SHORT).show();
+            openHomePage();
+            finish();
+        }
+
+//        myAuthStateListener = new FirebaseAuth.AuthStateListener() {
+//            FirebaseUser myFirebaseUser = myFirebaseAuth.getCurrentUser();
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                if(myFirebaseUser != null){
+//                    Toast.makeText(MainActivity.this, "You are logged in", Toast.LENGTH_SHORT).show();
+//                    openHomePage();
+//                    finish();
+//                }
+//                else {
+//                    Toast.makeText(MainActivity.this, "Please log in", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        };
     }
 
     @Override
@@ -83,13 +90,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(MainActivity.this, "Fields are empty.", Toast.LENGTH_SHORT).show();
                 }
                 else if(!(Email.isEmpty() && Pwd.isEmpty())) {
+                    /* Authenticate the user */
                     myFirebaseAuth.signInWithEmailAndPassword(Email, Pwd).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(!task.isSuccessful()) {
-                                Toast.makeText(MainActivity.this, "SignIn Unsuccessful, please try again.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Log in unsuccessful, please try again.", Toast.LENGTH_SHORT).show();
                             }
                             else {
+                                /* Upon successfully logging in, user is brought to home page */
+                                Toast.makeText(MainActivity.this, "Log in successful", Toast.LENGTH_SHORT).show();
                                 openHomePage();
                             }
                         }
@@ -107,20 +117,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
 
-//        loginButton.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v){
-//                openProfilePage();
-//            }
-//        });
-
         Log.i(TAG,"onCreate");
 
     }
     @Override
     protected void onStart() {
         super.onStart();
-        myFirebaseAuth.addAuthStateListener(myAuthStateListener);
+//        myFirebaseAuth.addAuthStateListener(myAuthStateListener);
         Log.i(TAG,"onStart");
 
     }
@@ -177,5 +180,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.i(TAG,"openRegisterPage");
 
         startActivity(myIntent);
+        //finish();
     }
 }

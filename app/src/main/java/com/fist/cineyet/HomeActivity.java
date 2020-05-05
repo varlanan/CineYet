@@ -46,4 +46,11 @@ public class HomeActivity extends AppCompatActivity {
         }
     };
 
+    /* Ensures user does not return to log in screen after logging in the first time and being redirected to the home page*/
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 }
+
+

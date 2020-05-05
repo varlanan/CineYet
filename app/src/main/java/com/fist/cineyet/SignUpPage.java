@@ -31,6 +31,11 @@ public class SignUpPage extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.PasswordSignUp);
         bSignUp = (Button) findViewById(R.id.RegisterButton);
 
+        if(myFirebaseAuth.getCurrentUser() != null){
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+            finish();
+        }
+
         /* Once you sign up, you are redirected back to the login page to sign in */
         bSignUp.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -47,18 +52,23 @@ public class SignUpPage extends AppCompatActivity {
                     etPassword.setError("Please enter a password");
                     etEmail.requestFocus();
                 }
+                else if(pwd.length() < 6){
+                    Toast.makeText(SignUpPage.this, "Password must have at least 6 characters", Toast.LENGTH_SHORT).show();
+                }
                 else if(email.isEmpty() && pwd.isEmpty()){
                     Toast.makeText(SignUpPage.this, "Fields are empty.", Toast.LENGTH_SHORT).show();
                 }
                 else if(!(email.isEmpty() && pwd.isEmpty())) {
+                    /* User is signed in automatically upon successfully creating a new account */
                     myFirebaseAuth.createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(SignUpPage.this, new OnCompleteListener<com.google.firebase.auth.AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<com.google.firebase.auth.AuthResult> task) {
                             if (!task.isSuccessful()) {
                                 Toast.makeText(SignUpPage.this, "SignUp Unsuccessful, please try again.", Toast.LENGTH_SHORT).show();
                             } else {
-                                /* Go to login page */
-                                Intent SignUpIntent = new Intent(SignUpPage.this, MainActivity.class);
+                                /* Upon successfully registering, user redirected to login page */
+                                Toast.makeText(SignUpPage.this, "User created", Toast.LENGTH_SHORT).show();
+                                Intent SignUpIntent = new Intent(SignUpPage.this, HomeActivity.class);
                                 startActivity(SignUpIntent);
                             }
                         }
