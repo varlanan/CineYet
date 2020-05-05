@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.fist.cineyet">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -30,6 +33,8 @@
             android:permission="com.google.firebase.auth.api.gms.permission.LAUNCH_FEDERATED_SIGN_IN"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             tools:replace="android:launchMode" />
+<!--        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"-->
+<!--            android:theme="@style/Base.Theme.AppCompat"/>-->
     </application>
 
 </manifest>
