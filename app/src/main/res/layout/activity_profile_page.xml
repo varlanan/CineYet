@@ -28,13 +28,13 @@
                     android:layout_margin="10dp"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
-                    android:background="@drawable/roundprofilepic"
+                    android:background="@drawable/ic_account_circle_black_24dp"
                     app:layout_constraintBottom_toTopOf="@+id/profile_pic_name"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.029"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/roundprofilepic" />
+                    app:srcCompat="@drawable/ic_account_circle_black_24dp" />
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

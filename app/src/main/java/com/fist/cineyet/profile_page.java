@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,16 @@ public class profile_page extends Fragment {
 
     private Button bLogOut, editProfile;
 
+    TextView name;
+    TextView interests;
+
+    //CircleImageView profile_pic;
+    //DatabaseReference UserRef;
+    //FirebaseAuth mAuth;
+    //String currentUserID;
+
     FirebaseAuth myFirebaseAuth;
+    String new_name;
     private FirebaseAuth.AuthStateListener myAuthListener;
     private DatabaseReference userRef;
     String currentUserID;
@@ -69,14 +79,17 @@ public class profile_page extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        //hardcoded for now
+        myview= inflater.inflate(R.layout.activity_profile_page, container, false);
         myFirebaseAuth = FirebaseAuth.getInstance();
         currentUserID = myFirebaseAuth.getCurrentUser().getUid();
-        userRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
 
-        myview = inflater.inflate(R.layout.activity_profile_page, container, false);
+        name = myview.findViewById(R.id.profile_pic_name);
+        interests = myview.findViewById(R.id.profile_interests);
         bLogOut = (Button) myview.findViewById(R.id.LogOutButton);
         editProfile = (Button)myview.findViewById(R.id.update_profile);
+        profile_img = myview.findViewById(R.id.profile_picture_sample);
+        new_name = name.getText().toString();
 
         bLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,23 +102,42 @@ public class profile_page extends Fragment {
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent meinTent = new Intent((Context)getActivity(), UpdateProfileActivity.class);
-                startActivity(meinTent);
+                Intent myIntent = new Intent((Context)getActivity(), UpdateProfileActivity.class);
+                startActivity(myIntent);
             }
         });
 
+
+//        /* Setting user profile pic and name */
+//        profile_img = (CircleImageView) myview.findViewById(R.id.profile_picture_sample);
+//        profile_name = (TextView) myview.findViewById(R.id.profile_pic_name);
+//        userRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.exists()){
+//                    String name = dataSnapshot.child("name").getValue().toString();
+//                    String image = dataSnapshot.child("profileimage").getValue().toString();
+//
+//                    profile_name.setText(name);
+//                    Picasso.with(getContext()).load(image).placeholder(R.drawable.roundprofilepic).into(profile_img);
+
         /* Setting user profile pic and name */
-        profile_img = (CircleImageView) myview.findViewById(R.id.profile_picture_sample);
-        profile_name = (TextView) myview.findViewById(R.id.profile_pic_name);
-        userRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+        userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    String name = dataSnapshot.child("name").getValue().toString();
-                    String image = dataSnapshot.child("profileimage").getValue().toString();
 
-                    profile_name.setText(name);
-                    Picasso.with(getContext()).load(image).placeholder(R.drawable.roundprofilepic).into(profile_img);
+                if(dataSnapshot.exists()){
+                    String image_string=dataSnapshot.child("profileimage").getValue().toString();
+                    Picasso.get().load(image_string).placeholder(R.drawable.ic_account_circle_black_24dp).into(profile_img);
+
+
+                    new_name=dataSnapshot.child("name").getValue().toString();
+                    name.setText(new_name);
+
+                    if(dataSnapshot.child("interests").getValue()!=null) {
+                        String new_interests = dataSnapshot.child("interests").getValue().toString();
+                        interests.setText(new_interests);
+                    }
                 }
             }
 
@@ -119,7 +151,7 @@ public class profile_page extends Fragment {
         Integer[] movies2Array={R.drawable.boanposter,R.drawable.littlewomen,R.drawable.midsommarposter,R.drawable.oldboyposter};
         ArrayList<newsfeedItems> myMovies=new ArrayList<newsfeedItems>();
         for(int i=0;i<10;i++){
-            myMovies.add(new newsfeedItems("Sept-06-2018", "YiFei Tang", "Midsommar",  "Midsommar scared the shit out of me. What the hell was that",
+            myMovies.add(new newsfeedItems("Sept-06-2018", new_name, "Midsommar",  "Midsommar scared the shit out of me. What the hell was that",
                     "Reviewed",R.drawable.midsommarposter,R.drawable.roundprofilepic));
         }
 
@@ -129,6 +161,7 @@ public class profile_page extends Fragment {
         Button addFriendButton=myview.findViewById(R.id.add_friend_button);
         Button messageButton=myview.findViewById(R.id.message_profile);
         Button recommendButton=myview.findViewById(R.id.give_rec_profile);
+
         ViewGroup layout = (ViewGroup) messageButton.getParent();
 
         if(profileType=="PERSONAL") {
@@ -144,18 +177,18 @@ public class profile_page extends Fragment {
         else{
             layout.removeView(addFriendButton);
         }
-        if(arguments.containsKey("updatedName")) {
-            //TextView name = myview.findViewById(R.id.profile_pic_name);
-            TextView interests = myview.findViewById(R.id.profile_interests);
 
-            String newName = arguments.getString("updatedName");
-            if (newName != "")
-                profile_name.setText(newName);
-
-            String newInterests = arguments.getString("updatedInterests");
-            if (newInterests != "")
-                interests.setText(newInterests);
-        }
+//        if(arguments.containsKey("updatedName")) {
+//
+//
+//            String newname = arguments.getString("updatedName");
+//            if (newname != "")
+//                name.setText(newname);
+//
+//            String newInterests = arguments.getString("updatedInterests");
+//            if (newInterests != "")
+//                interests.setText(newInterests);
+//        }
 
         scrollFunction(R.id.sample_favourite_movie,moviesArray,profileType);
         scrollFunction(R.id.sample_watch_list,movies2Array,profileType);

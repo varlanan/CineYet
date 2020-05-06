@@ -3,6 +3,7 @@ package com.fist.cineyet;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,13 +30,18 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
+
 public class UpdateProfileActivity extends AppCompatActivity {
     EditText name, username, interests, email;
-    ImageView profile_pic;
+    CircleImageView profile_pic;
     Button submit, update_profile_pic;
+
     FirebaseAuth mAuth;
     String currentUserID;
     final static int gallery_pick=1;
+    final static String TAG="TAG";
     private DatabaseReference UserRef;
     private StorageReference UserProfileImageRef;
 
@@ -75,7 +82,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 if(dataSnapshot.exists()){
                     String image = dataSnapshot.child("profileimage").getValue().toString();
 
-                    Picasso.with(UpdateProfileActivity.this).load(image).placeholder(R.drawable.roundprofilepic).into(profile_pic);
+                    Picasso.get().load(image).placeholder(R.drawable.roundprofilepic).into(profile_pic);
                 }
             }
 
@@ -103,40 +110,103 @@ public class UpdateProfileActivity extends AppCompatActivity {
             }
         });
 
+        UserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.i(TAG,"on data change");
+
+                if(dataSnapshot.exists()){
+                    String image_string=dataSnapshot.child("profileimage").getValue().toString();
+                    Picasso.get().load(image_string).placeholder(R.drawable.ic_account_circle_black_24dp).into(profile_pic);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == gallery_pick && resultCode == RESULT_OK && data != null){
-            Uri ImageUri = data.getData();
 
-            final StorageReference filePath = UserProfileImageRef.child(currentUserID+".jpg");
+//        if(requestCode == gallery_pick && resultCode == RESULT_OK && data != null){
+//            Uri ImageUri = data.getData();
+//
+//            final StorageReference filePath = UserProfileImageRef.child(currentUserID+".jpg");
+//
+//            filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+//                @Override
+//                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+//                     if(task.isSuccessful()) {
+//                         Toast.makeText(UpdateProfileActivity.this, "Profile Image Successfully Uploaded to storage in Firebase", Toast.LENGTH_SHORT).show();
+//                         final String downloadUrl = filePath.getDownloadUrl().toString();
+//
+//                         UserRef.child("profileimage").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                             @Override
+//                             public void onComplete(@NonNull Task<Void> task) {
+//                                 if(task.isSuccessful()){
+//                                     Toast.makeText(UpdateProfileActivity.this, "Profile Image Successfully Stored in database", Toast.LENGTH_SHORT).show();
+//                                 }
+//                                 else{
+//
+//                                     String message =task.getException().getMessage();
+//                                     Toast.makeText(UpdateProfileActivity.this, "Error Occurred"+message, Toast.LENGTH_SHORT).show();
+//
+//                                 }
+//
+//                             }
+//                         });
+//                     }
 
-            filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+        if(requestCode==gallery_pick && resultCode==RESULT_OK && data!=null){
+            Uri ImageUri=data.getData();
+
+            final StorageReference filePath=UserProfileImageRef.child(currentUserID+".jpg");
+            filePath.putFile(ImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
                 @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                     if(task.isSuccessful()) {
-                         Toast.makeText(UpdateProfileActivity.this, "Profile Image Successfully Uploaded to storage in Firebase", Toast.LENGTH_SHORT).show();
-                         final String downloadUrl = filePath.getDownloadUrl().toString();
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 
-                         UserRef.child("profileimage").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
-                             @Override
-                             public void onComplete(@NonNull Task<Void> task) {
-                                 if(task.isSuccessful()){
-                                     Toast.makeText(UpdateProfileActivity.this, "Profile Image Successfully Stored in database", Toast.LENGTH_SHORT).show();
-                                 }
-                                 else{
+                        @Override
 
-                                     String message =task.getException().getMessage();
-                                     Toast.makeText(UpdateProfileActivity.this, "Error Occurred"+message, Toast.LENGTH_SHORT).show();
+                        public void onSuccess(Uri uri) {
 
-                                 }
+                            final String downloadUrl = uri.toString();
 
-                             }
-                         });
-                     }
+                            UserRef.child("profileimage").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                                @Override
+
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+
+
+                                        Toast.makeText(UpdateProfileActivity.this, "Image Stored", Toast.LENGTH_SHORT).show();
+
+
+                                    } else {
+
+                                        String message = task.getException().getMessage();
+
+                                        Toast.makeText(UpdateProfileActivity.this, "Error:" + message, Toast.LENGTH_SHORT).show();
+
+
+                                    }
+
+                                }
+
+                            });
+
+                        }
+
+
+                    });
                 }
             });
         }
