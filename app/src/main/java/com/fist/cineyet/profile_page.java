@@ -40,16 +40,6 @@ public class profile_page extends Fragment {
     private ListView activityList;
     private MainAdapter mainAdapter;
 
-    private Button bLogOut, editProfile;
-
-    TextView name;
-    TextView interests;
-
-    //CircleImageView profile_pic;
-    //DatabaseReference UserRef;
-    //FirebaseAuth mAuth;
-    //String currentUserID;
-
     FirebaseAuth myFirebaseAuth;
     String new_name;
     private FirebaseAuth.AuthStateListener myAuthListener;
@@ -61,7 +51,8 @@ public class profile_page extends Fragment {
     private View myview;
 
     private CircleImageView profile_img;
-    private TextView profile_name;
+    private TextView profile_name, interests;
+    private Button bLogOut, editProfile;
 
 
 //    @Override
@@ -84,12 +75,12 @@ public class profile_page extends Fragment {
         currentUserID = myFirebaseAuth.getCurrentUser().getUid();
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
 
-        name = myview.findViewById(R.id.profile_pic_name);
+        profile_name = myview.findViewById(R.id.profile_pic_name);
         interests = myview.findViewById(R.id.profile_interests);
         bLogOut = (Button) myview.findViewById(R.id.LogOutButton);
         editProfile = (Button)myview.findViewById(R.id.update_profile);
         profile_img = myview.findViewById(R.id.profile_picture_sample);
-        new_name = name.getText().toString();
+        new_name = profile_name.getText().toString();
 
         bLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,9 +121,8 @@ public class profile_page extends Fragment {
                     String image_string=dataSnapshot.child("profileimage").getValue().toString();
                     Picasso.get().load(image_string).placeholder(R.drawable.ic_account_circle_black_24dp).into(profile_img);
 
-
                     new_name=dataSnapshot.child("name").getValue().toString();
-                    name.setText(new_name);
+                    profile_name.setText(new_name);
 
                     if(dataSnapshot.child("interests").getValue()!=null) {
                         String new_interests = dataSnapshot.child("interests").getValue().toString();

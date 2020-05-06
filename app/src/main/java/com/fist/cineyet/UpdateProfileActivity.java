@@ -30,6 +30,8 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 
+import java.util.HashMap;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -39,7 +41,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     Button submit, update_profile_pic;
 
     FirebaseAuth mAuth;
-    String currentUserID;
+    String currentUserID, newName, newUsername, newInterests, newEmail;
     final static int gallery_pick=1;
     final static String TAG="TAG";
     private DatabaseReference UserRef;
@@ -58,9 +60,13 @@ public class UpdateProfileActivity extends AppCompatActivity {
         
         /* Buttons */
         name = (EditText) findViewById(R.id.edit_name);
+        newName = name.getText().toString();
         username = (EditText) findViewById(R.id.edit_username);
+        newUsername = username.getText().toString();
         interests = (EditText) findViewById(R.id.edit_interests);
+        newInterests = interests.getText().toString();
         email = (EditText)findViewById(R.id.edit_email);
+        newEmail = email.getText().toString();
         profile_pic = findViewById(R.id.edit_profile_pic);
         update_profile_pic = findViewById(R.id.edit_profile_pic_button);
 
@@ -81,8 +87,19 @@ public class UpdateProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     String image = dataSnapshot.child("profileimage").getValue().toString();
+                    Picasso.get().load(image).placeholder(R.drawable.abstract_user_icon).into(profile_pic);
 
-                    Picasso.get().load(image).placeholder(R.drawable.roundprofilepic).into(profile_pic);
+                    newName = dataSnapshot.child("name").getValue().toString();
+                    name.setText(newName);
+
+                    newUsername = dataSnapshot.child("username").getValue().toString();
+                    username.setText(newUsername);
+
+                    newEmail = dataSnapshot.child("email").getValue().toString();
+                    email.setText(newEmail);
+
+//                    newInterests = dataSnapshot.child("interests").getValue().toString();
+//                    interests.setText(newInterests);
                 }
             }
 
@@ -96,17 +113,51 @@ public class UpdateProfileActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name_str=name.getText().toString();
-                String username_str=username.getText().toString();
-                String interests_str=interests.getText().toString();
-                String email_str=interests.getText().toString();
-                Intent intent = new Intent(UpdateProfileActivity.this,HomeActivity.class);
+                String name_str = name.getText().toString();
+                String username_str = username.getText().toString();
+                String interests_str = interests.getText().toString();
+                String email_str = email.getText().toString();
+                Intent intent = new Intent(UpdateProfileActivity.this, HomeActivity.class);
 
-                intent.putExtra("name",name_str);
-                intent.putExtra("username",username_str);
-                intent.putExtra("interests",interests_str);
-                intent.putExtra("email",email_str);
+                intent.putExtra("name", name_str);
+                intent.putExtra("username", username_str);
+                intent.putExtra("interests", interests_str);
+                intent.putExtra("email", email_str);
+                /* Save user information */
+                UserRef.child("name").setValue(name_str);
+                UserRef.child("username").setValue(username_str);
+                UserRef.child("email").setValue(email_str);
+
                 startActivity(intent);
+//                HashMap userMap = new HashMap();
+//                userMap.put("username", name_str);
+//                userMap.put("name", username_str);
+//                userMap.put("email", interests_str);
+//                userMap.put("profileimage", profile_pic);
+//                UserRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
+//                    @Override
+//                    public void onComplete(@NonNull Task task) {
+//                        if(task.isSuccessful()){
+//                            Toast.makeText(UpdateProfileActivity.this, "User information updated", Toast.LENGTH_SHORT).show();
+//                            String name_str = name.getText().toString();
+//                            String username_str = username.getText().toString();
+//                            String interests_str = interests.getText().toString();
+//                            String email_str = email.getText().toString();
+//
+//                            Intent intent = new Intent(UpdateProfileActivity.this, HomeActivity.class);
+//                            intent.putExtra("name", name_str);
+//                            intent.putExtra("username", username_str);
+//                            intent.putExtra("interests", interests_str);
+//                            intent.putExtra("email", email_str);
+//                            startActivity(intent);
+//                        }
+//                        else {
+//                            String message = task.getException().getMessage();
+//                            Toast.makeText(UpdateProfileActivity.this, "Error occured: " + message, Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
+
             }
         });
 
@@ -116,8 +167,17 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 Log.i(TAG,"on data change");
 
                 if(dataSnapshot.exists()){
-                    String image_string=dataSnapshot.child("profileimage").getValue().toString();
-                    Picasso.get().load(image_string).placeholder(R.drawable.ic_account_circle_black_24dp).into(profile_pic);
+                    String image_string = dataSnapshot.child("profileimage").getValue().toString();
+                    Picasso.get().load(image_string).placeholder(R.drawable.abstract_user_icon).into(profile_pic);
+
+                    newName = dataSnapshot.child("name").getValue().toString();
+                    name.setText(newName);
+
+                    newUsername = dataSnapshot.child("username").getValue().toString();
+                    username.setText(newUsername);
+
+                    newEmail = dataSnapshot.child("email").getValue().toString();
+                    email.setText(newEmail);
 
                 }
             }
@@ -185,18 +245,10 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-
-
                                         Toast.makeText(UpdateProfileActivity.this, "Image Stored", Toast.LENGTH_SHORT).show();
-
-
                                     } else {
-
                                         String message = task.getException().getMessage();
-
                                         Toast.makeText(UpdateProfileActivity.this, "Error:" + message, Toast.LENGTH_SHORT).show();
-
-
                                     }
 
                                 }
