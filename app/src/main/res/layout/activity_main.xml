@@ -2,23 +2,25 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relative_lay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/relative_lay"
     android:background="@drawable/login_screen"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/LoginBackground"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.8"
-        android:contentDescription="@string/loginbackground"
-        android:src="@drawable/login_screen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+    <!--    <ImageView-->
+    <!--        android:id="@+id/LoginBackground"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:alpha="0.8"-->
+    <!--        android:contentDescription="@string/loginbackground"-->
+    <!--        android:src="@drawable/login_screen"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintVertical_bias="0.0" />-->
+
+    <!--        app:layout_constraintVertical_bias="0.746" />-->
 
     <TextView
         android:id="@+id/WhiteBoxLogin"
@@ -27,9 +29,11 @@
         android:background="@drawable/round_box"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/LoginBackground"
-        app:layout_constraintTop_toTopOf="@+id/LoginBackground"
-        app:layout_constraintVertical_bias="0.746" />
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.737" />
+
 
     <EditText
         android:id="@+id/EmailLogin"
@@ -47,12 +51,12 @@
         android:fontFamily="cursive"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toBottomOf="@+id/LoginBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.57"
-        app:layout_constraintStart_toStartOf="@+id/LoginBackground"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintBottom_toBottomOf="@+id/WhiteBoxLogin"
+        app:layout_constraintEnd_toEndOf="@+id/WhiteBoxLogin"
+        app:layout_constraintHorizontal_bias="0.742"
+        app:layout_constraintStart_toStartOf="@+id/WhiteBoxLogin"
+        app:layout_constraintTop_toTopOf="@+id/WhiteBoxLogin"
+        app:layout_constraintVertical_bias="0.045" />
 
     <EditText
         android:id="@+id/PasswordLogin"
@@ -70,12 +74,12 @@
         android:fontFamily="cursive"
         android:hint="@string/password"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="@+id/LoginBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.57"
-        app:layout_constraintStart_toStartOf="@+id/LoginBackground"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.559" />
+        app:layout_constraintBottom_toBottomOf="@+id/WhiteBoxLogin"
+        app:layout_constraintEnd_toEndOf="@+id/WhiteBoxLogin"
+        app:layout_constraintHorizontal_bias="0.742"
+        app:layout_constraintStart_toStartOf="@+id/WhiteBoxLogin"
+        app:layout_constraintTop_toTopOf="@+id/WhiteBoxLogin"
+        app:layout_constraintVertical_bias="0.21" />
 
     <ImageView
         android:id="@+id/EmailIcon"
@@ -83,26 +87,27 @@
         android:layout_height="26dp"
         android:alpha="0.6"
         android:contentDescription="@string/emailicon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/LoginBackground"
-        app:layout_constraintHorizontal_bias="0.232"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/LoginBackground"
-        app:layout_constraintVertical_bias="0.499"
+
+        app:layout_constraintBottom_toBottomOf="@+id/WhiteBoxLogin"
+        app:layout_constraintEnd_toEndOf="@+id/WhiteBoxLogin"
+        app:layout_constraintHorizontal_bias="0.073"
+        app:layout_constraintStart_toStartOf="@+id/WhiteBoxLogin"
+        app:layout_constraintTop_toTopOf="@+id/WhiteBoxLogin"
+        app:layout_constraintVertical_bias="0.045"
         app:srcCompat="@drawable/mail" />
 
     <ImageView
         android:id="@+id/PasswordIcon"
-        android:layout_width="32dp"
-        android:layout_height="26dp"
+        android:layout_width="37dp"
+        android:layout_height="27dp"
         android:alpha="0.6"
         android:contentDescription="@string/password"
-        app:layout_constraintBottom_toBottomOf="@+id/LoginBackground"
-        app:layout_constraintEnd_toEndOf="@+id/LoginBackground"
-        app:layout_constraintHorizontal_bias="0.23"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.56"
+        app:layout_constraintBottom_toBottomOf="@+id/WhiteBoxLogin"
+        app:layout_constraintEnd_toEndOf="@+id/WhiteBoxLogin"
+        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintStart_toStartOf="@+id/WhiteBoxLogin"
+        app:layout_constraintTop_toTopOf="@+id/WhiteBoxLogin"
+        app:layout_constraintVertical_bias="0.205"
         app:srcCompat="@drawable/password" />
 
     <Button
@@ -111,14 +116,15 @@
         android:layout_height="27dp"
         android:background="@drawable/rounded_button"
         android:fontFamily="cursive"
-        android:textColor="#FFFFFF"
         android:stateListAnimator="@null"
         android:text="@string/login"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/LoginBackground"
-        app:layout_constraintTop_toTopOf="@+id/LoginBackground"
-        app:layout_constraintVertical_bias="0.615" />
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/WhiteBoxLogin"
+        app:layout_constraintEnd_toEndOf="@+id/WhiteBoxLogin"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="@+id/WhiteBoxLogin"
+        app:layout_constraintTop_toTopOf="@+id/WhiteBoxLogin"
+        app:layout_constraintVertical_bias="0.382" />
 
     <Button
         android:id="@+id/ForgotPasswordButton"
@@ -131,31 +137,31 @@
         android:text="@string/forgot_password_button"
         android:textAllCaps="false"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/LoginBackground"
-        app:layout_constraintHorizontal_bias="0.262"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/LoginBackground"
-        app:layout_constraintVertical_bias="0.657" />
+        app:layout_constraintBottom_toBottomOf="@+id/WhiteBoxLogin"
+        app:layout_constraintEnd_toEndOf="@+id/WhiteBoxLogin"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/WhiteBoxLogin"
+        app:layout_constraintTop_toTopOf="@+id/WhiteBoxLogin"
+        app:layout_constraintVertical_bias="0.481" />
 
     <Button
         android:id="@+id/SignUpButton"
         style="?android:attr/borderlessButtonStyle"
-        android:layout_width="121dp"
-        android:layout_height="21dp"
+        android:layout_width="58dp"
+        android:layout_height="24dp"
         android:alpha="0.6"
         android:background="#FAF9F9"
         android:fontFamily="cursive"
-        android:text="@string/sign_up_button"
+        android:text="Sign up."
         android:textAllCaps="false"
         android:textColor="#EA436F"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/LoginBackground"
-        app:layout_constraintHorizontal_bias="0.737"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/LoginBackground"
-        app:layout_constraintVertical_bias="0.829" />
+        app:layout_constraintBottom_toBottomOf="@+id/WhiteBoxLogin"
+        app:layout_constraintEnd_toEndOf="@+id/WhiteBoxLogin"
+        app:layout_constraintHorizontal_bias="0.292"
+        app:layout_constraintStart_toEndOf="@+id/NoGangEy"
+        app:layout_constraintTop_toTopOf="@+id/WhiteBoxLogin"
+        app:layout_constraintVertical_bias="0.991" />
 
     <Button
         android:id="@+id/ConnectGoogleButton"
@@ -167,12 +173,12 @@
         android:text="@string/connect_with_google"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/LoginBackground"
-        app:layout_constraintHorizontal_bias="0.515"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/LoginBackground"
-        app:layout_constraintVertical_bias="0.777" />
+        app:layout_constraintBottom_toBottomOf="@+id/WhiteBoxLogin"
+        app:layout_constraintEnd_toEndOf="@+id/WhiteBoxLogin"
+        app:layout_constraintHorizontal_bias="0.585"
+        app:layout_constraintStart_toStartOf="@+id/WhiteBoxLogin"
+        app:layout_constraintTop_toTopOf="@+id/WhiteBoxLogin"
+        app:layout_constraintVertical_bias="0.854" />
 
     <Button
         android:id="@+id/connectFacebookButton"
@@ -184,53 +190,52 @@
         android:text="@string/connect_with_facebook"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/LoginBackground"
-        app:layout_constraintHorizontal_bias="0.515"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/LoginBackground"
-        app:layout_constraintVertical_bias="0.717" />
+        app:layout_constraintBottom_toBottomOf="@+id/WhiteBoxLogin"
+        app:layout_constraintEnd_toEndOf="@+id/WhiteBoxLogin"
+        app:layout_constraintHorizontal_bias="0.585"
+        app:layout_constraintStart_toStartOf="@+id/WhiteBoxLogin"
+        app:layout_constraintTop_toTopOf="@+id/WhiteBoxLogin"
+        app:layout_constraintVertical_bias="0.68" />
 
     <ImageView
         android:id="@+id/FacebookLogo"
         android:layout_width="33dp"
         android:layout_height="25dp"
-        android:layout_marginTop="96dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.264"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/LoginBackground"
-        app:layout_constraintVertical_bias="0.668"
+        app:layout_constraintBottom_toBottomOf="@+id/connectFacebookButton"
+        app:layout_constraintEnd_toEndOf="@+id/connectFacebookButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/connectFacebookButton"
+        app:layout_constraintTop_toTopOf="@+id/connectFacebookButton"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/facebook" />
 
     <ImageView
         android:id="@+id/GoogleLogo"
         android:layout_width="18dp"
         android:layout_height="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/LoginBackground"
-        app:layout_constraintHorizontal_bias="0.272"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/LoginBackground"
-        app:layout_constraintVertical_bias="0.777"
+        app:layout_constraintBottom_toBottomOf="@+id/ConnectGoogleButton"
+        app:layout_constraintEnd_toEndOf="@+id/ConnectGoogleButton"
+        app:layout_constraintHorizontal_bias="0.035"
+        app:layout_constraintStart_toStartOf="@+id/ConnectGoogleButton"
+        app:layout_constraintTop_toTopOf="@+id/ConnectGoogleButton"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/google" />
 
     <TextView
         android:id="@+id/NoGangEy"
-        android:layout_width="135dp"
-        android:layout_height="26dp"
+        android:layout_width="140dp"
+        android:layout_height="24dp"
         android:alpha="0.8"
         android:fontFamily="cursive"
         android:text="@string/not_part_of_the_gang_yet"
         android:textAllCaps="false"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/LoginBackground"
-        app:layout_constraintHorizontal_bias="0.42"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/LoginBackground"
-        app:layout_constraintVertical_bias="0.834" />
+        app:layout_constraintBottom_toBottomOf="@+id/WhiteBoxLogin"
+        app:layout_constraintEnd_toEndOf="@+id/WhiteBoxLogin"
+        app:layout_constraintHorizontal_bias="0.161"
+        app:layout_constraintStart_toStartOf="@+id/WhiteBoxLogin"
+        app:layout_constraintTop_toTopOf="@+id/WhiteBoxLogin"
+        app:layout_constraintVertical_bias="0.991" />
 
     <TextView
         android:id="@+id/WelcomeTitle"
@@ -246,32 +251,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/LoginBackground"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.137" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/emailBox"-->
-<!--        android:layout_width="238dp"-->
-<!--        android:layout_height="32dp"-->
-<!--        android:background="@drawable/input_box"-->
-<!--        android:alpha="0.7"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.491"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/LoginBackground" />-->
+    <TextView
+        android:id="@+id/line0"
+        android:layout_width="224dp"
+        android:layout_height="1.5sp"
+        android:background="@drawable/input_box"
+        app:layout_constraintBottom_toBottomOf="@+id/WhiteBoxLogin"
+        app:layout_constraintEnd_toEndOf="@+id/WhiteBoxLogin"
+        app:layout_constraintStart_toStartOf="@+id/WhiteBoxLogin"
+        app:layout_constraintTop_toTopOf="@+id/WhiteBoxLogin"
+        app:layout_constraintVertical_bias="0.294" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/passwordBox"-->
-<!--        android:layout_width="238dp"-->
-<!--        android:layout_height="32dp"-->
-<!--        android:background="@drawable/input_box"-->
-<!--        android:alpha="0.7"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.491"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/LoginBackground"-->
-<!--        app:layout_constraintVertical_bias="0.562" />-->
+    <TextView
+        android:id="@+id/line"
+        android:layout_width="224dp"
+        android:layout_height="1.5sp"
+        android:background="@drawable/input_box"
+        app:layout_constraintBottom_toBottomOf="@+id/WhiteBoxLogin"
+        app:layout_constraintEnd_toEndOf="@+id/WhiteBoxLogin"
+        app:layout_constraintStart_toStartOf="@+id/WhiteBoxLogin"
+        app:layout_constraintTop_toTopOf="@+id/WhiteBoxLogin"
+        app:layout_constraintVertical_bias="0.145" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

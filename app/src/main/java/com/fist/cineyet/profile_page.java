@@ -21,25 +21,38 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class profile_page extends Fragment {
 
-    RecyclerView favouriteMoviesLayout;
-    ListView activityList;
-    MainAdapter mainAdapter;
+    private RecyclerView favouriteMoviesLayout;
+    private ListView activityList;
+    private MainAdapter mainAdapter;
 
-    Button bLogOut;
-    Button editProfile;
+    private Button bLogOut, editProfile;
 
     FirebaseAuth myFirebaseAuth;
     private FirebaseAuth.AuthStateListener myAuthListener;
+    private DatabaseReference userRef;
+    String currentUserID;
 
 
-    newsFeedAdapter listAdapter;
+    private newsFeedAdapter listAdapter;
     private View myview;
+
+    private CircleImageView profile_img;
+    private TextView profile_name;
+
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +70,14 @@ public class profile_page extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         //hardcoded for now
-        myview= inflater.inflate(R.layout.activity_profile_page, container, false);
+        myFirebaseAuth = FirebaseAuth.getInstance();
+        currentUserID = myFirebaseAuth.getCurrentUser().getUid();
+        userRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        myview = inflater.inflate(R.layout.activity_profile_page, container, false);
         bLogOut = (Button) myview.findViewById(R.id.LogOutButton);
-        editProfile=(Button)myview.findViewById(R.id.update_profile);
+        editProfile = (Button)myview.findViewById(R.id.update_profile);
+
         bLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +94,26 @@ public class profile_page extends Fragment {
             }
         });
 
+        /* Setting user profile pic and name */
+        profile_img = (CircleImageView) myview.findViewById(R.id.profile_picture_sample);
+        profile_name = (TextView) myview.findViewById(R.id.profile_pic_name);
+        userRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    String name = dataSnapshot.child("name").getValue().toString();
+                    String image = dataSnapshot.child("profileimage").getValue().toString();
 
+                    profile_name.setText(name);
+                    Picasso.with(getContext()).load(image).placeholder(R.drawable.roundprofilepic).into(profile_img);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         Integer[] moviesArray={R.drawable.groundhogdayposter,R.drawable.movieposter,R.drawable.rearwindowposter,R.drawable.serbianfilmposter,R.drawable.parasiteposter};
         Integer[] movies2Array={R.drawable.boanposter,R.drawable.littlewomen,R.drawable.midsommarposter,R.drawable.oldboyposter};
@@ -108,12 +145,12 @@ public class profile_page extends Fragment {
             layout.removeView(addFriendButton);
         }
         if(arguments.containsKey("updatedName")) {
-            TextView name = myview.findViewById(R.id.profile_pic_name);
+            //TextView name = myview.findViewById(R.id.profile_pic_name);
             TextView interests = myview.findViewById(R.id.profile_interests);
 
-            String newname = arguments.getString("updatedName");
-            if (newname != "")
-                name.setText(newname);
+            String newName = arguments.getString("updatedName");
+            if (newName != "")
+                profile_name.setText(newName);
 
             String newInterests = arguments.getString("updatedInterests");
             if (newInterests != "")
