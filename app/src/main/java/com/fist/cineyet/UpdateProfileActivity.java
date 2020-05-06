@@ -179,15 +179,11 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 
                         @Override
-
                         public void onSuccess(Uri uri) {
-
                             final String downloadUrl = uri.toString();
-
                             UserRef.child("profileimage").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
 
                                 @Override
-
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(UpdateProfileActivity.this, "Image Stored", Toast.LENGTH_SHORT).show();
