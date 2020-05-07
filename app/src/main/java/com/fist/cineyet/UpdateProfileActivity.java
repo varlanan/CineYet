@@ -98,8 +98,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     newEmail = dataSnapshot.child("email").getValue().toString();
                     email.setText(newEmail);
 
-//                    newInterests = dataSnapshot.child("interests").getValue().toString();
-//                    interests.setText(newInterests);
+                    newInterests = dataSnapshot.child("interests").getValue().toString();
+                    interests.setText(newInterests);
                 }
             }
 
@@ -127,37 +127,9 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 UserRef.child("name").setValue(name_str);
                 UserRef.child("username").setValue(username_str);
                 UserRef.child("email").setValue(email_str);
+                UserRef.child("interests").setValue(interests_str);
 
                 startActivity(intent);
-//                HashMap userMap = new HashMap();
-//                userMap.put("username", name_str);
-//                userMap.put("name", username_str);
-//                userMap.put("email", interests_str);
-//                userMap.put("profileimage", profile_pic);
-//                UserRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
-//                    @Override
-//                    public void onComplete(@NonNull Task task) {
-//                        if(task.isSuccessful()){
-//                            Toast.makeText(UpdateProfileActivity.this, "User information updated", Toast.LENGTH_SHORT).show();
-//                            String name_str = name.getText().toString();
-//                            String username_str = username.getText().toString();
-//                            String interests_str = interests.getText().toString();
-//                            String email_str = email.getText().toString();
-//
-//                            Intent intent = new Intent(UpdateProfileActivity.this, HomeActivity.class);
-//                            intent.putExtra("name", name_str);
-//                            intent.putExtra("username", username_str);
-//                            intent.putExtra("interests", interests_str);
-//                            intent.putExtra("email", email_str);
-//                            startActivity(intent);
-//                        }
-//                        else {
-//                            String message = task.getException().getMessage();
-//                            Toast.makeText(UpdateProfileActivity.this, "Error occured: " + message, Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
-
             }
         });
 
@@ -179,6 +151,9 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     newEmail = dataSnapshot.child("email").getValue().toString();
                     email.setText(newEmail);
 
+                    newInterests = dataSnapshot.child("interests").getValue().toString();
+                    interests.setText(newInterests);
+
                 }
             }
 
@@ -193,36 +168,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-//        if(requestCode == gallery_pick && resultCode == RESULT_OK && data != null){
-//            Uri ImageUri = data.getData();
-//
-//            final StorageReference filePath = UserProfileImageRef.child(currentUserID+".jpg");
-//
-//            filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-//                     if(task.isSuccessful()) {
-//                         Toast.makeText(UpdateProfileActivity.this, "Profile Image Successfully Uploaded to storage in Firebase", Toast.LENGTH_SHORT).show();
-//                         final String downloadUrl = filePath.getDownloadUrl().toString();
-//
-//                         UserRef.child("profileimage").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                             @Override
-//                             public void onComplete(@NonNull Task<Void> task) {
-//                                 if(task.isSuccessful()){
-//                                     Toast.makeText(UpdateProfileActivity.this, "Profile Image Successfully Stored in database", Toast.LENGTH_SHORT).show();
-//                                 }
-//                                 else{
-//
-//                                     String message =task.getException().getMessage();
-//                                     Toast.makeText(UpdateProfileActivity.this, "Error Occurred"+message, Toast.LENGTH_SHORT).show();
-//
-//                                 }
-//
-//                             }
-//                         });
-//                     }
-
         if(requestCode==gallery_pick && resultCode==RESULT_OK && data!=null){
             Uri ImageUri=data.getData();
 

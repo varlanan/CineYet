@@ -41,7 +41,7 @@ public class profile_page extends Fragment {
     private MainAdapter mainAdapter;
 
     FirebaseAuth myFirebaseAuth;
-    String new_name;
+    String new_name, new_interests;
     private FirebaseAuth.AuthStateListener myAuthListener;
     private DatabaseReference userRef;
     String currentUserID;
@@ -77,6 +77,7 @@ public class profile_page extends Fragment {
 
         profile_name = myview.findViewById(R.id.profile_pic_name);
         interests = myview.findViewById(R.id.profile_interests);
+        new_interests = interests.getText().toString();
         bLogOut = (Button) myview.findViewById(R.id.LogOutButton);
         editProfile = (Button)myview.findViewById(R.id.update_profile);
         profile_img = myview.findViewById(R.id.profile_picture_sample);
@@ -148,9 +149,9 @@ public class profile_page extends Fragment {
         Bundle arguments=getArguments();
         String profileType=arguments.getString("isPersonalProfile");
         //change up buttons
-        Button addFriendButton=myview.findViewById(R.id.add_friend_button);
-        Button messageButton=myview.findViewById(R.id.message_profile);
-        Button recommendButton=myview.findViewById(R.id.give_rec_profile);
+        Button addFriendButton = myview.findViewById(R.id.add_friend_button);
+        Button messageButton = myview.findViewById(R.id.message_profile);
+        Button recommendButton = myview.findViewById(R.id.give_rec_profile);
 
         ViewGroup layout = (ViewGroup) messageButton.getParent();
 

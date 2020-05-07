@@ -106,6 +106,7 @@ public class SignUpPage extends AppCompatActivity {
                                 userMap.put("name", name);
                                 userMap.put("email", email);
                                 userMap.put("password", pwd);
+                                userMap.put("interests", "");
                                 userMap.put("profileimage","https://firebasestorage.googleapis.com/v0/b/cineyet-4fa96.appspot.com/o/Profile%20Images%2FROoU5UMYpuOCQTMPAIg0gTuBdVV2.jpg?alt=media&token=745ddfd7-42a8-4a9e-aa82-f390d4800dbf");
                                 /* Might be a this point where we store a generic profile pic and have empty lists of movie made to be updated later */
                                 userRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
