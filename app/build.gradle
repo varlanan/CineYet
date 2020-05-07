@@ -17,9 +17,13 @@ android {
     }
 
     buildTypes {
+        debug{
+            buildConfigField 'String', "ApiKey", MOVIES_API_KEY
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', "ApiKey", MOVIES_API_KEY
         }
     }
 
@@ -39,7 +43,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
-
+    implementation "com.squareup.okhttp3:okhttp:4.6.0"
     implementation 'com.google.firebase:firebase-database:19.3.0'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     testImplementation 'junit:junit:4.12'

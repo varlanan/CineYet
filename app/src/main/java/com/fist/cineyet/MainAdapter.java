@@ -21,10 +21,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
     private static final String TAG="MainAdapter";
     ArrayList<Integer> mainModels;
     Context context;
+    Boolean addable;
 
-    public MainAdapter(Context context, ArrayList<Integer> mainModels){
+    public MainAdapter(Context context, ArrayList<Integer> mainModels, Boolean list_is_addable){
             this.context=context;
             this.mainModels=mainModels;
+            this.addable=list_is_addable;
     }
     @NonNull
     @Override
@@ -42,9 +44,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
             @Override
             public void onClick(View view) {
                 Log.d(TAG,"clicked on image");
-                    if(position!=mainModels.size()-1) {
+                    if(position!=mainModels.size()-1 && addable || !addable) {
                         Intent myIntent = new Intent(context, MoviePageActivity.class);
 
+                        context.startActivity(myIntent);
+                    }
+                    else if(position==mainModels.size()-1&&addable){
+                        Intent myIntent=new Intent(context, AddToListActivity.class);
                         context.startActivity(myIntent);
                     }
             }

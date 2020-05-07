@@ -155,14 +155,14 @@ public class profile_page extends Fragment {
 
         ViewGroup layout = (ViewGroup) messageButton.getParent();
 
-        if(profileType=="PERSONAL") {
+        if(profileType.equals("PERSONAL")) {
             if(null!=layout) {//for safety only  as you are doing onClick
                 layout.removeView(messageButton);
                 layout.removeView(recommendButton);
                 layout.removeView(addFriendButton);
             }
         }
-        else if(profileType=="NOTFRIENDS"){
+        else if(profileType.equals("NOTFRIENDS")){
             layout.removeView(recommendButton);
         }
         else{
@@ -193,12 +193,12 @@ public class profile_page extends Fragment {
         for(int i=0;i<moviesArray.length;i++){
             moviesList.add(moviesArray[i]);
         }
-        if(profileType=="PERSONAL")
+        if(profileType.equals("PERSONAL"))
             moviesList.add(R.drawable.plusbutton);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         favouriteMoviesLayout.setLayoutManager(layoutManager);
         favouriteMoviesLayout.setItemAnimator(new DefaultItemAnimator());
-        mainAdapter= new MainAdapter(getActivity(),moviesList);
+        mainAdapter= new MainAdapter(getActivity(),moviesList,true);
         favouriteMoviesLayout.setAdapter(mainAdapter);
     }
     private void listFunction(Integer id,ArrayList<newsfeedItems> myMovies){

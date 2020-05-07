@@ -37,11 +37,10 @@ public class HomeFragment extends Fragment {
         for(int i=0;i<moviesArray.length;i++){
             moviesList.add(moviesArray[i]);
         }
-        moviesList.add(R.drawable.plusbutton);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         favouriteMoviesLayout.setLayoutManager(layoutManager);
         favouriteMoviesLayout.setItemAnimator(new DefaultItemAnimator());
-        mainAdapter= new MainAdapter(getActivity(),moviesList);
+        mainAdapter= new MainAdapter(getActivity(),moviesList,false);
         favouriteMoviesLayout.setAdapter(mainAdapter);
     }
 }
