@@ -62,7 +62,6 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:background="@drawable/friends_icon"
-                            app:layout_constraintBottom_toBottomOf="@+id/profile_pic_name"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.0"
@@ -72,11 +71,21 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:background="@drawable/edit_icon"
-                            app:layout_constraintBottom_toBottomOf="@+id/profile_pic_name"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.0"
                             android:layout_margin="10dp"/>
+                        <Button
+                            android:id="@+id/LogOutButton"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/log_out"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0"
+                            android:layout_margin="10dp"
+
+                            />
                         <Button
                             android:id="@+id/message_profile"
                             android:layout_width="30dp"
@@ -112,18 +121,6 @@
 
                             />
 
-                        <Button
-                            android:id="@+id/LogOutButton"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:background="@drawable/log_out"
-                            app:layout_constraintBottom_toBottomOf="@+id/profile_pic_name"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0"
-                            android:layout_margin="10dp"
-
-                            />
 
 
                     </LinearLayout>
