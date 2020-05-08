@@ -4,24 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MoviePageActivity"
-    android:backgroundTint="#FFFFFF">
+    android:background="#000000"
+    tools:context=".MoviePageActivity">
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/jo_laurie_little_woman" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/gradient_flip" />
+
+    </FrameLayout>
+
 
     <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="411dp"
-        android:layout_height="229dp"
-        android:src="@drawable/gradient_movie_page"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/jo_laurie_little_woman" />
-
-    <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/movie_poster"
         android:layout_width="119dp"
         android:layout_height="158dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,7 +38,136 @@
         app:layout_constraintHorizontal_bias="0.945"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.301"
+        app:layout_constraintVertical_bias="0.331"
         app:srcCompat="@drawable/littlewomen" />
+
+    <TextView
+        android:id="@+id/movie_title"
+        android:layout_width="250dp"
+        android:layout_height="39dp"
+        android:text="Little Women"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/movie_poster"
+        app:layout_constraintEnd_toStartOf="@+id/movie_poster"
+        app:layout_constraintHorizontal_bias="0.592"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/movie_poster"
+        app:layout_constraintVertical_bias="0.33" />
+
+    <TextView
+        android:id="@+id/movie_year"
+        android:layout_width="35dp"
+        android:layout_height="26dp"
+        android:gravity="left"
+        android:text="2019"
+        android:textColor="#AEB4A9"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/movie_poster"
+        app:layout_constraintEnd_toEndOf="@+id/movie_title"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/movie_title"
+        app:layout_constraintTop_toTopOf="@+id/movie_poster"
+        app:layout_constraintVertical_bias="0.621" />
+
+    <TextView
+        android:id="@+id/dot"
+        android:layout_width="15dp"
+        android:layout_height="26dp"
+        android:gravity="center_horizontal"
+        android:text="•"
+        android:textAlignment="center"
+        android:textColor="#AEB4A9"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/movie_poster"
+        app:layout_constraintEnd_toEndOf="@+id/movie_title"
+        app:layout_constraintHorizontal_bias="0.152"
+        app:layout_constraintStart_toStartOf="@+id/movie_title"
+        app:layout_constraintTop_toTopOf="@+id/movie_poster"
+        app:layout_constraintVertical_bias="0.621" />
+
+    <TextView
+        android:id="@+id/movie_director"
+        android:layout_width="199dp"
+        android:layout_height="26dp"
+        android:gravity="left"
+        android:text="Greta Gerwig"
+        android:textColor="#AEB4A9"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/movie_poster"
+        app:layout_constraintEnd_toEndOf="@+id/movie_title"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/movie_title"
+        app:layout_constraintTop_toTopOf="@+id/movie_poster"
+        app:layout_constraintVertical_bias="0.621" />
+
+    <TextView
+        android:id="@+id/movie_genre"
+        android:layout_width="180dp"
+        android:layout_height="26dp"
+        android:gravity="left"
+        android:text="Drama, Romance"
+        android:textColor="#AEB4A9"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/movie_poster"
+        app:layout_constraintEnd_toEndOf="@+id/movie_title"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/movie_title"
+        app:layout_constraintTop_toTopOf="@+id/movie_poster"
+        app:layout_constraintVertical_bias="0.818" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="24dp"
+        android:layout_height="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/movie_poster"
+        app:layout_constraintEnd_toEndOf="@+id/movie_title"
+        app:layout_constraintHorizontal_bias="0.814"
+        app:layout_constraintStart_toStartOf="@+id/movie_title"
+        app:layout_constraintTop_toTopOf="@+id/movie_poster"
+        app:layout_constraintVertical_bias="0.782"
+        app:srcCompat="@drawable/white_star" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="23dp"
+        android:layout_height="22dp"
+        android:gravity="right"
+        android:text="/10"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/movie_poster"
+        app:layout_constraintEnd_toEndOf="@+id/movie_title"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/movie_title"
+        app:layout_constraintTop_toTopOf="@+id/movie_poster"
+        app:layout_constraintVertical_bias="0.794" />
+
+    <TextView
+        android:id="@+id/movie_rating"
+        android:layout_width="19dp"
+        android:layout_height="22dp"
+        android:gravity="right"
+        android:text="10"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/movie_poster"
+        app:layout_constraintEnd_toEndOf="@+id/movie_title"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="@+id/movie_title"
+        app:layout_constraintTop_toTopOf="@+id/movie_poster"
+        app:layout_constraintVertical_bias="0.794" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="378dp"
+        android:layout_height="95dp"
+        android:text="@string/little_women_summary"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/movie_poster"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/movie_title"
+        app:layout_constraintTop_toBottomOf="@+id/movie_poster"
+        app:layout_constraintVertical_bias="0.034" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
