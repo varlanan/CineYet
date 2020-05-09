@@ -122,10 +122,6 @@ public class profile_page extends Fragment {
             }
         });
 
-
-//        Integer[] moviesArray={R.drawable.groundhogdayposter,R.drawable.movieposter,R.drawable.rearwindowposter,R.drawable.serbianfilmposter,R.drawable.parasiteposter};
-//        Integer[] movies2Array={R.drawable.boanposter,R.drawable.littlewomen,R.drawable.midsommarposter,R.drawable.oldboyposter};
-
         //hardcoded newsfeed for now
         ArrayList<newsfeedItems> myMovies=new ArrayList<newsfeedItems>();
         for(int i=0;i<10;i++){
@@ -144,6 +140,12 @@ public class profile_page extends Fragment {
     private void scrollFunction(Integer id, final String profileType, final Boolean isFavouriteList){
         favouriteMoviesLayout=(RecyclerView)  myview.findViewById(id);
         final ArrayList<searchbarItems> moviesList= new ArrayList<>();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        favouriteMoviesLayout.setLayoutManager(layoutManager);
+        favouriteMoviesLayout.setItemAnimator(new DefaultItemAnimator());
+
+        mainAdapter= new MainAdapter(getActivity(),moviesList,true,isFavouriteList,profileType);
+        favouriteMoviesLayout.setAdapter(mainAdapter);
         userRef.child(isFavouriteList?"favouritelist":"watchlist").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -158,20 +160,15 @@ public class profile_page extends Fragment {
                 }
                 if(profileType=="PERSONAL")
                     moviesList.add(new searchbarItems("","","",""));
-
+                mainAdapter.notifyDataSetChanged();
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
-        favouriteMoviesLayout.setLayoutManager(layoutManager);
-        favouriteMoviesLayout.setItemAnimator(new DefaultItemAnimator());
-        mainAdapter= new MainAdapter(getActivity(),moviesList,true,isFavouriteList,profileType);
-        favouriteMoviesLayout.setAdapter(mainAdapter);
+
     }
     private void listFunction(Integer id,ArrayList<newsfeedItems> myMovies){
         favouriteMoviesLayout=(RecyclerView) myview.findViewById(id);

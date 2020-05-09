@@ -53,7 +53,7 @@ public class newsFeedAdapter extends RecyclerView.Adapter<newsFeedAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        Log.d(TAG, "on bind called on" + mainModels.get(position).postMovie);
+        Log.d(TAG, "newsfeed on bind on " + mainModels.get(position).postMovie);
 
         holder.imgView.setImageResource(mainModels.get(position).movieDrawable);
         //holder.profile_img.setImageResource(mainModels.get(position).profilePic);
