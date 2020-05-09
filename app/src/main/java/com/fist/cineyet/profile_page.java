@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -45,41 +48,36 @@ public class profile_page extends Fragment {
     private FirebaseAuth.AuthStateListener myAuthListener;
     private DatabaseReference userRef;
     String currentUserID;
-
+    ArrayList<searchbarItems> favouriteMovies;
 
     private newsFeedAdapter listAdapter;
     private View myview;
 
     private CircleImageView profile_img;
     private TextView profile_name, interests;
-    private Button bLogOut, editProfile;
-
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_profile_page);
-//        Integer[] moviesArray={R.drawable.groundhogdayposter,R.drawable.movieposter,R.drawable.rearwindowposter,R.drawable.serbianfilmposter,R.drawable.parasiteposter};
-//        Integer[] movies2Array={R.drawable.boanposter,R.drawable.littlewomen,R.drawable.midsommarposter,R.drawable.oldboyposter};
-//
-//        scrollFunction(R.id.sample_favourite_movie,moviesArray);
-//        scrollFunction(R.id.sample_watch_list,movies2Array);
-//    }
+    private Button bLogOut, editProfile, addFriendButton, messageButton, recommendButton;
+    private static final String TAG="Profile Page";
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         myview= inflater.inflate(R.layout.activity_profile_page, container, false);
+
+        //Firebase Variables
         myFirebaseAuth = FirebaseAuth.getInstance();
         currentUserID = myFirebaseAuth.getCurrentUser().getUid();
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
 
+        //Profile atributes
         profile_name = myview.findViewById(R.id.profile_pic_name);
         interests = myview.findViewById(R.id.profile_interests);
         new_interests = interests.getText().toString();
-        bLogOut = (Button) myview.findViewById(R.id.LogOutButton);
-        editProfile = (Button)myview.findViewById(R.id.update_profile);
+        bLogOut = myview.findViewById(R.id.LogOutButton);
+        editProfile = myview.findViewById(R.id.update_profile);
+        addFriendButton = myview.findViewById(R.id.add_friend_button);
+        messageButton = myview.findViewById(R.id.message_profile);
+        recommendButton = myview.findViewById(R.id.give_rec_profile);
         profile_img = myview.findViewById(R.id.profile_picture_sample);
         new_name = profile_name.getText().toString();
 
@@ -100,20 +98,6 @@ public class profile_page extends Fragment {
         });
 
 
-//        /* Setting user profile pic and name */
-//        profile_img = (CircleImageView) myview.findViewById(R.id.profile_picture_sample);
-//        profile_name = (TextView) myview.findViewById(R.id.profile_pic_name);
-//        userRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.exists()){
-//                    String name = dataSnapshot.child("name").getValue().toString();
-//                    String image = dataSnapshot.child("profileimage").getValue().toString();
-//
-//                    profile_name.setText(name);
-//                    Picasso.with(getContext()).load(image).placeholder(R.drawable.roundprofilepic).into(profile_img);
-
-        /* Setting user profile pic and name */
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -138,21 +122,67 @@ public class profile_page extends Fragment {
             }
         });
 
-        Integer[] moviesArray={R.drawable.groundhogdayposter,R.drawable.movieposter,R.drawable.rearwindowposter,R.drawable.serbianfilmposter,R.drawable.parasiteposter};
-        Integer[] movies2Array={R.drawable.boanposter,R.drawable.littlewomen,R.drawable.midsommarposter,R.drawable.oldboyposter};
+
+//        Integer[] moviesArray={R.drawable.groundhogdayposter,R.drawable.movieposter,R.drawable.rearwindowposter,R.drawable.serbianfilmposter,R.drawable.parasiteposter};
+//        Integer[] movies2Array={R.drawable.boanposter,R.drawable.littlewomen,R.drawable.midsommarposter,R.drawable.oldboyposter};
+
+        //hardcoded newsfeed for now
         ArrayList<newsfeedItems> myMovies=new ArrayList<newsfeedItems>();
         for(int i=0;i<10;i++){
             myMovies.add(new newsfeedItems("Sept-06-2018", new_name, "Midsommar",  "Midsommar scared the shit out of me. What the hell was that",
                     "Reviewed",R.drawable.midsommarposter,R.drawable.roundprofilepic));
         }
-
         Bundle arguments=getArguments();
         String profileType=arguments.getString("isPersonalProfile");
-        //change up buttons
-        Button addFriendButton = myview.findViewById(R.id.add_friend_button);
-        Button messageButton = myview.findViewById(R.id.message_profile);
-        Button recommendButton = myview.findViewById(R.id.give_rec_profile);
+        modifyButtons(profileType);
+        scrollFunction(R.id.sample_favourite_movie,profileType,true);
+        scrollFunction(R.id.sample_watch_list,profileType,false);
+        listFunction(R.id.activity_scroller,myMovies);
+        return myview;
+    }
 
+    private void scrollFunction(Integer id, final String profileType, final Boolean isFavouriteList){
+        favouriteMoviesLayout=(RecyclerView)  myview.findViewById(id);
+        final ArrayList<searchbarItems> moviesList= new ArrayList<>();
+        userRef.child(isFavouriteList?"favouritelist":"watchlist").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot postSnapshot: dataSnapshot.getChildren()){
+                    String myid=postSnapshot.getKey();
+                    String myyear=postSnapshot.child("year").getValue().toString();
+                    String mytitle=postSnapshot.child("title").getValue().toString();
+                    String myurl=postSnapshot.child("poster").getValue().toString();
+                    Log.d(TAG,mytitle+myurl+myyear+myid);
+
+                    moviesList.add(new searchbarItems(mytitle,myyear,myurl,myid));
+                }
+                if(profileType=="PERSONAL")
+                    moviesList.add(new searchbarItems("","","",""));
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        favouriteMoviesLayout.setLayoutManager(layoutManager);
+        favouriteMoviesLayout.setItemAnimator(new DefaultItemAnimator());
+        mainAdapter= new MainAdapter(getActivity(),moviesList,true,isFavouriteList,profileType);
+        favouriteMoviesLayout.setAdapter(mainAdapter);
+    }
+    private void listFunction(Integer id,ArrayList<newsfeedItems> myMovies){
+        favouriteMoviesLayout=(RecyclerView) myview.findViewById(id);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
+        favouriteMoviesLayout.setLayoutManager(layoutManager);
+        favouriteMoviesLayout.setItemAnimator(new DefaultItemAnimator());
+        listAdapter= new newsFeedAdapter(getActivity(),myMovies);
+        favouriteMoviesLayout.setAdapter(listAdapter);
+
+    }
+    private void modifyButtons(String profileType){
         ViewGroup layout = (ViewGroup) messageButton.getParent();
 
         if(profileType.equals("PERSONAL")) {
@@ -164,50 +194,12 @@ public class profile_page extends Fragment {
         }
         else if(profileType.equals("NOTFRIENDS")){
             layout.removeView(recommendButton);
+            layout.removeView(editProfile);
         }
         else{
+            //should be already friends
             layout.removeView(addFriendButton);
+            layout.removeView(editProfile);
         }
-
-//        if(arguments.containsKey("updatedName")) {
-//
-//
-//            String newname = arguments.getString("updatedName");
-//            if (newname != "")
-//                name.setText(newname);
-//
-//            String newInterests = arguments.getString("updatedInterests");
-//            if (newInterests != "")
-//                interests.setText(newInterests);
-//        }
-
-        scrollFunction(R.id.sample_favourite_movie,moviesArray,profileType);
-        scrollFunction(R.id.sample_watch_list,movies2Array,profileType);
-        listFunction(R.id.activity_scroller,myMovies);
-        return myview;
-    }
-
-    private void scrollFunction(Integer id, Integer[] moviesArray,String profileType){
-        favouriteMoviesLayout=(RecyclerView)  myview.findViewById(id);
-        ArrayList<Integer> moviesList=new ArrayList<Integer>();
-        for(int i=0;i<moviesArray.length;i++){
-            moviesList.add(moviesArray[i]);
-        }
-        if(profileType.equals("PERSONAL"))
-            moviesList.add(R.drawable.plusbutton);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
-        favouriteMoviesLayout.setLayoutManager(layoutManager);
-        favouriteMoviesLayout.setItemAnimator(new DefaultItemAnimator());
-        mainAdapter= new MainAdapter(getActivity(),moviesList,true);
-        favouriteMoviesLayout.setAdapter(mainAdapter);
-    }
-    private void listFunction(Integer id,ArrayList<newsfeedItems> myMovies){
-        favouriteMoviesLayout=(RecyclerView) myview.findViewById(id);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
-        favouriteMoviesLayout.setLayoutManager(layoutManager);
-        favouriteMoviesLayout.setItemAnimator(new DefaultItemAnimator());
-        listAdapter= new newsFeedAdapter(getActivity(),myMovies);
-        favouriteMoviesLayout.setAdapter(listAdapter);
-
     }
 }

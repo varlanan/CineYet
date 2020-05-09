@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/parent_news"
+    android:id="@+id/search_result_movie_parent"
     android:layout_marginTop="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginLeft="10dp">
@@ -27,7 +27,7 @@
                 android:src="@drawable/movieposter"
                 />
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
@@ -38,6 +38,7 @@
                     android:textColor="@android:color/black"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
+                    android:textSize="18dp"
                     android:textStyle="bold"
                     />
                 <TextView
@@ -48,9 +49,32 @@
                     android:textColor="@android:color/black"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="2"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="bottom"
+                    android:layout_margin="10dp">
+
+                    <Button
+                        android:id="@+id/search_result_item_add_button"
+                        android:layout_width="58dp"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:drawableLeft="@drawable/add_icon"
+                        android:text="Add"
+                        android:layout_marginRight="20dp"/>
+                    <Button
+                        android:id="@+id/search_result_item_visit_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Movie Page"
+                        android:drawableLeft="@drawable/forward_icon"
+                        android:background="@android:color/transparent"/>
+                </LinearLayout>
+
 
             </LinearLayout>
-
 
 
         </LinearLayout>

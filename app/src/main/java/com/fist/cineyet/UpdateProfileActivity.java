@@ -120,9 +120,9 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 Intent intent = new Intent(UpdateProfileActivity.this, HomeActivity.class);
 
                 intent.putExtra("name", name_str);
-                intent.putExtra("username", username_str);
-                intent.putExtra("interests", interests_str);
-                intent.putExtra("email", email_str);
+//                intent.putExtra("username", username_str);
+//                intent.putExtra("interests", interests_str);
+//                intent.putExtra("email", email_str);
                 /* Save user information */
                 UserRef.child("name").setValue(name_str);
                 UserRef.child("username").setValue(username_str);

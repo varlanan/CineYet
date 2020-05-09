@@ -40,12 +40,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="10dp"
+                    android:layout_weight="1"
                     >
                     <TextView
                         android:id="@+id/profile_pic_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="YiFei Tang"
+                        android:text="Name"
                         android:textColor="#000000"
                         android:textSize="19sp"
                         android:textStyle="bold"
@@ -134,7 +135,6 @@
                         android:id="@+id/profile_interests"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hitchcock, Fantasy, Mystery, Movies with attractive women in it."
                         android:textColor="@android:color/darker_gray"
                         />
 
@@ -161,7 +161,6 @@
                     android:layout_marginRight="10dp"
 
                     android:textColor="@android:color/black"
-                    app:layout_constraintBottom_toTopOf="@+id/sample_watch_list"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.075"
                     app:layout_constraintStart_toStartOf="parent"
@@ -203,7 +202,6 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    app:layout_constraintBottom_toTopOf="@+id/sample_favourite_movie"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/profile_pic_name"
@@ -242,7 +240,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.071"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/sample_favourite_movie"
                     app:layout_constraintVertical_bias="0.0" />
 
 <!--                <TextView-->

@@ -35,10 +35,6 @@ public class HomeActivity extends AppCompatActivity {
         if(intent.hasExtra("name")){
             Fragment profFrag=new profile_page();
             Bundle mybund=new Bundle();
-            mybund.putString("updatedName",intent.getStringExtra("name"));
-            mybund.putString("updatedUsername",intent.getStringExtra("username"));
-            mybund.putString("updatedInterests",intent.getStringExtra("interests"));
-            mybund.putString("updatedEmail",intent.getStringExtra("email"));
             mybund.putString("isPersonalProfile","PERSONAL");
             profFrag.setArguments(mybund);
             botNav.setSelectedItemId(R.id.nav_profile);

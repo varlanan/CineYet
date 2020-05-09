@@ -39,11 +39,12 @@ public class AddToListActivity  extends AppCompatActivity {
     EditText search_movie;
     ArrayList<searchbarItems> myMovies;
     SearchBarAdapter listAdapter;
+    Boolean isFavourite;
     Handler handler= new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
             Log.d(TAG,"Starting adapter with size of "+myMovies.size());
-            listAdapter= new SearchBarAdapter(AddToListActivity.this,myMovies);
+            listAdapter= new SearchBarAdapter(AddToListActivity.this,myMovies,isFavourite);
             myView.setAdapter(listAdapter);
 
         }
@@ -53,6 +54,7 @@ public class AddToListActivity  extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_movie);
+        isFavourite = getIntent().getExtras().getBoolean("isFavourite");
         search_movie=findViewById(R.id.search_movie_bar);
         myView=findViewById(R.id.search_movie_results);
         searchButton=findViewById(R.id.search_movie_button);
@@ -114,6 +116,8 @@ public class AddToListActivity  extends AppCompatActivity {
                         }
                     }
                 });
+
+
 
             }
         });
