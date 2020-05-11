@@ -35,7 +35,7 @@ public class AddToListActivity  extends AppCompatActivity {
     final static String TAG="TAG";
     ImageView searchButton;
     RecyclerView myView;
-    private static final String API_KEY=BuildConfig.ApiKey;
+    private static final String API_KEY = BuildConfig.ApiKey;
     EditText search_movie;
     ArrayList<searchbarItems> myMovies;
     SearchBarAdapter listAdapter;
@@ -72,7 +72,7 @@ public class AddToListActivity  extends AppCompatActivity {
                         .url("https://movie-database-imdb-alternative.p.rapidapi.com/?page=1&r=json&s="+movieToSearch)
                         .get()
                         .addHeader("x-rapidapi-host", "movie-database-imdb-alternative.p.rapidapi.com")
-                        .addHeader("x-rapidapi-key", BuildConfig.ApiKey)
+                        .addHeader("x-rapidapi-key", BuildConfig.AltApiKey)
                         .build();
                 client.newCall(request).enqueue(new Callback() {
                     @Override

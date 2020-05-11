@@ -64,6 +64,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
                 Log.d(TAG,"clicked on image");
                     if(position!=mainModels.size()-1 && addable || !addable) {
                         Intent myIntent = new Intent(context, MoviePageActivity.class);
+                        myIntent.putExtra("imdbID", mainModels.get(position).id);
                         context.startActivity(myIntent);
                     }
                     else if(position==mainModels.size()-1&&addable){
