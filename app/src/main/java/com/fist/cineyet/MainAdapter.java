@@ -70,6 +70,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
                     else if(position==mainModels.size()-1&&addable){
                         Intent myIntent=new Intent(context, AddToListActivity.class);
                         myIntent.putExtra("isFavourite",isFavouriteList);
+                        myIntent.putExtra("addButton",true);
                         context.startActivity(myIntent);
                     }
             }

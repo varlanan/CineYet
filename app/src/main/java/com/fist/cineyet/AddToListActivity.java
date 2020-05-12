@@ -40,11 +40,12 @@ public class AddToListActivity  extends AppCompatActivity {
     ArrayList<searchbarItems> myMovies;
     SearchBarAdapter listAdapter;
     Boolean isFavourite;
+    Boolean addButtonOn;
     Handler handler= new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
             Log.d(TAG,"Starting adapter with size of "+myMovies.size());
-            listAdapter= new SearchBarAdapter(AddToListActivity.this,myMovies,isFavourite);
+            listAdapter= new SearchBarAdapter(AddToListActivity.this,myMovies,isFavourite,addButtonOn);
             myView.setAdapter(listAdapter);
 
         }
@@ -55,6 +56,7 @@ public class AddToListActivity  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_movie);
         isFavourite = getIntent().getExtras().getBoolean("isFavourite");
+        addButtonOn=getIntent().getExtras().getBoolean("addButton");
         search_movie=findViewById(R.id.search_movie_bar);
         myView=findViewById(R.id.search_movie_results);
         searchButton=findViewById(R.id.search_movie_button);

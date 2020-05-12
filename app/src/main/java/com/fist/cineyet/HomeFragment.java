@@ -1,9 +1,11 @@
 package com.fist.cineyet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +29,8 @@ public class HomeFragment extends Fragment {
     MainAdapter mainAdapter;
     FirebaseAuth myFirebaseAuth;
     String currentUserID;
+    Button searchPeople;
+    Button searchMovies;
     private FirebaseAuth.AuthStateListener myAuthListener;
     private DatabaseReference userRef;
     View myview;
@@ -34,18 +38,35 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         myview= inflater.inflate(R.layout.fragment_home, container, false);
-        Integer[] moviesArray={R.drawable.groundhogdayposter,R.drawable.movieposter,R.drawable.rearwindowposter,R.drawable.serbianfilmposter,R.drawable.parasiteposter};
-        Integer[] movies2Array={R.drawable.boanposter,R.drawable.littlewomen,R.drawable.midsommarposter,R.drawable.oldboyposter};
+        searchPeople=myview.findViewById(R.id.search_people_button);
+        searchMovies=myview.findViewById(R.id.search_movie_button);
+        searchPeople.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent=new Intent(getActivity(),FindPeopleActivity.class);
+                startActivity(myIntent);
+            }
+        });
+        searchMovies.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent myIntent=new Intent(getActivity(),AddToListActivity.class);
+                myIntent.putExtra("isFavourite",false);
+
+                myIntent.putExtra("addButton",false);
+                startActivity(myIntent);
+            }
+        });
         myFirebaseAuth = FirebaseAuth.getInstance();
         currentUserID = myFirebaseAuth.getCurrentUser().getUid();
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
 
-        scrollFunction(R.id.friends_rec,moviesArray,false);
-        scrollFunction(R.id.mood_rec,movies2Array,false);
+        scrollFunction(R.id.friends_rec,false);
+        scrollFunction(R.id.mood_rec,true);
         return myview;
     }
 
-    private void scrollFunction(Integer id, Integer[] moviesArray, boolean isMyMoodList){
+    private void scrollFunction(Integer id, boolean isMyMoodList){
         favouriteMoviesLayout=(RecyclerView)  myview.findViewById(id);
         final ArrayList<searchbarItems> moviesList= new ArrayList<>();
         userRef.child(isMyMoodList?"moodlist":"friendsreclist").addValueEventListener(new ValueEventListener() {
