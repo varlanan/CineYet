@@ -5,10 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +31,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import okhttp3.Call;
@@ -37,7 +43,7 @@ import okhttp3.Response;
 public class MoviePageActivity extends AppCompatActivity {
     private static final String TAG = "MainAdapter";
     private String imdbID;
-    private Boolean noGoodImgFound, isReqSuccess, isReq2Success, isReq3Success;
+    private Boolean noGoodImgFound, isTitle2Lines, isTitle3Lines, isTitle4Lines, isReqSuccess, isReq2Success, isReq3Success;
     String movieTitle, movieYear, movieRunningTime, type, posterUrl, movieRating, movieSummary, movieSceneImg;
     ArrayList<String> movieGenres = new ArrayList<>();
     private String mainDirectors, mainGenres;
@@ -45,6 +51,8 @@ public class MoviePageActivity extends AppCompatActivity {
 
     private TextView title, directors, year, rating, genres, summary, runningTime, sceneImg;
     private ImageView poster, movieScene;
+
+    private ProgressBar spinner;
 
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler(){
@@ -61,17 +69,27 @@ public class MoviePageActivity extends AppCompatActivity {
                 year = (TextView) findViewById(R.id.movie_year);
                 rating = (TextView) findViewById(R.id.movie_rating);
                 summary = (TextView) findViewById(R.id.movie_summary);
-//                directors = (TextView) findViewById(R.id.movie_director);
                 genres = (TextView) findViewById(R.id.movie_genre);
                 runningTime = (TextView) findViewById(R.id.movie_time);
                 poster = (ImageView) findViewById(R.id.movie_poster);
 
-
+//                setContentView(R.layout.activity_movie_page);
+//                ViewGroup.LayoutParams params = title.getLayoutParams();
+                if(isTitle2Lines){
+                    title.getLayoutParams().height = 170;
+                }
+                else if(isTitle3Lines){
+                    title.getLayoutParams().height = 250;
+                }
+                else if(isTitle4Lines){
+                    title.getLayoutParams().height = 330;
+                }
+                else {
+                    title.getLayoutParams().height = 100;
+                }
                 title.setText(movieTitle);
                 year.setText(movieYear);
                 rating.setText(movieRating);
-//                mainDirectors="Mama, Papa";
-//                directors.setText(mainDirectors);
                 summary.setText(movieSummary);
                 genres.setText(mainGenres);
                 summary.setText(movieSummary);
@@ -79,7 +97,6 @@ public class MoviePageActivity extends AppCompatActivity {
                 runningTime.setText(time_mins);
 
                 Picasso.get().load(posterUrl).placeholder(R.drawable.gradient_flip).into(poster);
-
 
             }
         }
@@ -127,8 +144,13 @@ public class MoviePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_page);
         Log.d(TAG,"oncreate started");
+
         isReqSuccess = false;
         isReq2Success = false;
+        isReq3Success = false;
+
+        spinner = (ProgressBar) findViewById(R.id.progress_bar);
+        spinner.setVisibility(View.VISIBLE);
 
         imdbID = getIntent().getExtras().getString("imdbID");
 
@@ -158,7 +180,24 @@ public class MoviePageActivity extends AppCompatActivity {
                         JSONObject plotOutline = object.getJSONObject("plotOutline");
                         JSONArray genres = object.getJSONArray("genres");
 
+                        isTitle2Lines = false;
+                        isTitle3Lines = false;
+                        isTitle4Lines = false;
+
                         movieTitle = mainInfo.getString("title");
+                        int num_chars_title = movieTitle.length();
+                        int line = 20;
+                        if(num_chars_title > line){
+                            if(num_chars_title <= line*2){
+                                isTitle2Lines = true;
+                            }
+                            else if(num_chars_title <= line*3){
+                                isTitle3Lines = true;
+                            }
+                            else{
+                                isTitle4Lines = true;
+                            }
+                        }
                         movieYear = String.valueOf(mainInfo.getInt("year"));
                         movieRunningTime = String.valueOf(mainInfo.getInt("runningTimeInMinutes"));
                         type = mainInfo.getString("titleType");
@@ -211,13 +250,29 @@ public class MoviePageActivity extends AppCompatActivity {
                         JSONObject object = new JSONObject(responseString);
                         JSONArray directors = object.getJSONArray("directors");
 
-                        /* first two main directors if the list is longer */
-                        if(directors.length() == 1){
-                            mainDirectors = (directors.getJSONObject(0)).getString("name");
-                        }
-                        else {
-                            mainDirectors = (directors.getJSONObject(0)).getString("name") + " & " + (directors.getJSONObject(1)).getString("name");
-                        }
+                        mainDirectors = (directors.getJSONObject(0)).getString("name");
+
+//                        /* first two main directors if the list is longer */
+//                        if(directors.length() == 1){
+//                            mainDirectors = (directors.getJSONObject(0)).getString("name");
+//                        }
+//                        else {
+//                            /* Number of directors */
+//                            String first_dir = directors.getJSONObject(0).getString("name");
+//                            String second_dir = directors.getJSONObject(1).getString("name");
+//                            String[] first_dir_name = first_dir.split("");
+//                            String[] second_dir_name = second_dir.split("");
+//                            int max_length = 20;
+//
+//                            if( (first_dir_name[1].length() + second_dir_name[1].length()) <= max_length ){
+////                                mainDirectors = (directors.getJSONObject(0)).getString("name") + " & " + (directors.getJSONObject(1)).getString("name");
+//                                mainDirectors = first_dir_name[0].charAt(0) + ". " + first_dir_name[1] + " & " + second_dir_name[0].charAt(0) + ". " + second_dir_name[1];
+//                            }
+//                            else{
+//                                mainDirectors = (directors.getJSONObject(0)).getString("name");
+//                            }
+//                        }
+
 
                         isReq2Success = true;
                         handler2.sendEmptyMessage(0);
@@ -294,6 +349,7 @@ public class MoviePageActivity extends AppCompatActivity {
             }
         });
 
+        spinner.setVisibility(View.GONE);
     }
 }
 
