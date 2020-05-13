@@ -75,18 +75,21 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
                     }
             }
         });
-        holder.imgView.setOnLongClickListener(new View.OnLongClickListener(){
-            @Override
-            public boolean onLongClick(View view){
-                if(position!=(mainModels.size()-1)) {
-                    holder.rowItemParent.addView(holder.deleteContainer);
-                    holder.rowItemParent.removeView(holder.imgView);
-                    return true;
-                }
-                return false; //triggers plus button activity
+        if(profileType.equals("PERSONAL")){
 
-            }
-        });
+            holder.imgView.setOnLongClickListener(new View.OnLongClickListener(){
+                @Override
+                public boolean onLongClick(View view){
+                    if(position!=(mainModels.size()-1)) {
+                        holder.rowItemParent.addView(holder.deleteContainer);
+                        holder.rowItemParent.removeView(holder.imgView);
+                        return true;
+                    }
+                    return false; //triggers plus button activity
+
+                }
+            });
+        }
         holder.deleteButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {

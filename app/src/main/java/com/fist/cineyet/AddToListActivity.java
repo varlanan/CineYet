@@ -108,7 +108,7 @@ public class AddToListActivity  extends AppCompatActivity {
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(AddToListActivity.this, "Bad JSON Response, Please Try Again",Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(AddToListActivity.this, "Bad JSON Response, Please Try Again",Toast.LENGTH_SHORT).show();
 
                             }
 

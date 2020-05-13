@@ -12,11 +12,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -29,10 +31,15 @@ public class FindPeopleActivity extends AppCompatActivity {
     EditText inputText;
     private DatabaseReference userRef;
     RecyclerView searchPeopleRecycler;
+    String currentUserID;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         userRef= FirebaseDatabase.getInstance().getReference().child("Users");
+        FirebaseAuth myFirebaseAuth=FirebaseAuth.getInstance();
+        currentUserID = myFirebaseAuth.getCurrentUser().getUid();
+
         setContentView(R.layout.activity_search_people);
         searchPeople=findViewById(R.id.search_people_activity_button);
         searchPeopleRecycler=findViewById(R.id.search_people_results);
@@ -61,17 +68,29 @@ public class FindPeopleActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull FindFriendsViewholder holder, int position, @NonNull FindPeople model) {
+            protected void onBindViewHolder(@NonNull final FindFriendsViewholder holder, final int position, @NonNull final FindPeople model) {
                 holder.name.setText(model.getName());
                 holder.interests.setText(model.getInterests());
                 Picasso.get().load(model.getProfileimage())
                         .placeholder(R.drawable.ic_account_circle_black_24dp)
                         .into(holder.profileimage);
-//                holder.profileimage.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                    }
-//                });
+                holder.profileimage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Fragment profFrag=new profile_page();
+                        Bundle mybund=new Bundle();
+                        String userKey=getRef(position).getKey();
+                        if(userKey.equals(currentUserID))
+                            mybund.putString("isPersonalProfile","PERSONAL");
+                        else{
+                            mybund.putString("isPersonalProfile","NOTFRIENDS"); //change later when you figure out friends lists
+                            mybund.putString("UserID",getRef(position).getKey());
+                        }
+                        profFrag.setArguments(mybund);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.search_frag_container,profFrag).commit();
+
+                    }
+                });
             }
         };
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);

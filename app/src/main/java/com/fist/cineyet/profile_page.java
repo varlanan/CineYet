@@ -63,12 +63,18 @@ public class profile_page extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         myview= inflater.inflate(R.layout.activity_profile_page, container, false);
-
+        Bundle arguments=getArguments();
+        String profileType=arguments.getString("isPersonalProfile");
         //Firebase Variables
         myFirebaseAuth = FirebaseAuth.getInstance();
         currentUserID = myFirebaseAuth.getCurrentUser().getUid();
-        userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
+        if(profileType.equals("PERSONAL"))
+            userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
+        else{
+            String myid=arguments.getString("UserID");
+            userRef=FirebaseDatabase.getInstance().getReference().child("Users").child(myid);
 
+        }
         //Profile atributes
         profile_name = myview.findViewById(R.id.profile_pic_name);
         interests = myview.findViewById(R.id.profile_interests);
@@ -128,8 +134,7 @@ public class profile_page extends Fragment {
             myMovies.add(new newsfeedItems("Sept-06-2018", new_name, "Midsommar",  "Midsommar scared the shit out of me. What the hell was that",
                     "Reviewed",R.drawable.midsommarposter,R.drawable.roundprofilepic));
         }
-        Bundle arguments=getArguments();
-        String profileType=arguments.getString("isPersonalProfile");
+
         modifyButtons(profileType);
         scrollFunction(R.id.sample_favourite_movie,profileType,true);
         scrollFunction(R.id.sample_watch_list,profileType,false);
@@ -144,7 +149,7 @@ public class profile_page extends Fragment {
         favouriteMoviesLayout.setLayoutManager(layoutManager);
         favouriteMoviesLayout.setItemAnimator(new DefaultItemAnimator());
 
-        mainAdapter= new MainAdapter(getActivity(),moviesList,true,isFavouriteList,profileType);
+        mainAdapter= new MainAdapter(getActivity(),moviesList,profileType.equals("PERSONAL"),isFavouriteList,profileType);
         favouriteMoviesLayout.setAdapter(mainAdapter);
         userRef.child(isFavouriteList?"favouritelist":"watchlist").addValueEventListener(new ValueEventListener() {
             @Override
@@ -192,11 +197,13 @@ public class profile_page extends Fragment {
         else if(profileType.equals("NOTFRIENDS")){
             layout.removeView(recommendButton);
             layout.removeView(editProfile);
+            layout.removeView(bLogOut);
         }
         else{
             //should be already friends
             layout.removeView(addFriendButton);
             layout.removeView(editProfile);
+            layout.removeView(bLogOut);
         }
     }
 }
