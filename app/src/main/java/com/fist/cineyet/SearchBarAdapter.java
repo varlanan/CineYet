@@ -42,6 +42,7 @@ class SearchBarAdapter extends RecyclerView.Adapter<SearchBarAdapter.ViewHolder>
     Context c;
     ArrayList<searchbarItems> myModels;
     Boolean isFavourite;
+    Boolean addButtonOn;
     final static String TAG="my adapter";
     FirebaseAuth myFirebaseAuth;
     String new_name, new_interests;
@@ -50,10 +51,12 @@ class SearchBarAdapter extends RecyclerView.Adapter<SearchBarAdapter.ViewHolder>
     private StorageReference UserProfileImageRef;
     String currentUserID;
 
-    SearchBarAdapter(Context context, ArrayList<searchbarItems> mainModels,Boolean isFavourite){
+
+    SearchBarAdapter(Context context, ArrayList<searchbarItems> mainModels,Boolean isFavourite,Boolean addButtonOn){
         this.c = context;
         this.myModels = mainModels;
         this.isFavourite = isFavourite;
+        this.addButtonOn = addButtonOn;
         this.myFirebaseAuth = FirebaseAuth.getInstance();
         this.currentUserID = myFirebaseAuth.getCurrentUser().getUid();
         if(this.isFavourite)
@@ -86,25 +89,29 @@ class SearchBarAdapter extends RecyclerView.Adapter<SearchBarAdapter.ViewHolder>
                 c.startActivity(myIntent);
             }
         });
-        /* Add to list of movies */
-        holder.addMovieToList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                Map map = new HashMap();
-                map.put("poster", myModels.get(position).url);
-                map.put("title", myModels.get(position).title);
-                map.put("year", myModels.get(position).year);
-                userRef.child(myModels.get(position).id).setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Intent intent = new Intent(c, HomeActivity.class);
-                        intent.putExtra("name","myname"); //confusing change later
-                        c.startActivity(intent);
-                    }
-                });
 
-            }
+        /* Add to list of movies */
+        if(addButtonOn) {
+            holder.addMovieToList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    Map map = new HashMap();
+                    map.put("poster", myModels.get(position).url);
+                    map.put("title", myModels.get(position).title);
+                    map.put("year", myModels.get(position).year);
+                    userRef.child(myModels.get(position).id).setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Intent intent = new Intent(c, HomeActivity.class);
+                            intent.putExtra("name", "myname"); //confusing change later
+                            c.startActivity(intent);
+                        }
+                    });
+
+                }
             });
+        }
+
     }
 
     @Override
@@ -129,8 +136,10 @@ class SearchBarAdapter extends RecyclerView.Adapter<SearchBarAdapter.ViewHolder>
             yearOfRelease = view.findViewById(R.id.search_result_movie_year);
             visitMoviePage = view.findViewById(R.id.search_result_item_visit_button);
             addMovieToList = view.findViewById(R.id.search_result_item_add_button);
-
-
+            if(!addButtonOn){
+                ViewGroup layout = (ViewGroup) addMovieToList.getParent();
+                layout.removeView(addMovieToList);
+            }
         }
     }
 }
