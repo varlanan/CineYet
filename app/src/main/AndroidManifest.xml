@@ -27,6 +27,7 @@
         <activity android:name=".UpdateProfileActivity"/>
         <activity android:name=".AddToListActivity"/>
         <activity android:name=".FindPeopleActivity"/>
+        <activity android:name=".FriendsListActivity"/>
         <activity
             android:name="com.google.firebase.auth.internal.FederatedSignInActivity"
             android:excludeFromRecents="true"

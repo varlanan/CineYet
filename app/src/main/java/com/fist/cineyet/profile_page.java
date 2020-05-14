@@ -2,6 +2,7 @@ package com.fist.cineyet;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -10,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,6 +27,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,15 +52,16 @@ public class profile_page extends Fragment {
     String new_name, new_interests;
     private FirebaseAuth.AuthStateListener myAuthListener;
     private DatabaseReference userRef;
-    String currentUserID;
+    private DatabaseReference friendsRequestRef;
+    String currentUserID, profile_id;
     ArrayList<searchbarItems> favouriteMovies;
 
     private newsFeedAdapter listAdapter;
     private View myview;
-
+    boolean friendRequestSent;
     private CircleImageView profile_img;
     private TextView profile_name, interests;
-    private Button bLogOut, editProfile, addFriendButton, messageButton, recommendButton;
+    private Button bLogOut, editProfile, addFriendButton, messageButton, recommendButton, friendsListButton;
     private static final String TAG="Profile Page";
 
     @Nullable
@@ -71,11 +77,13 @@ public class profile_page extends Fragment {
         if(profileType.equals("PERSONAL"))
             userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
         else{
-            String myid=arguments.getString("UserID");
-            userRef=FirebaseDatabase.getInstance().getReference().child("Users").child(myid);
-
+            profile_id=arguments.getString("UserID");
+            userRef=FirebaseDatabase.getInstance().getReference().child("Users").child(profile_id);
         }
+        friendsRequestRef=FirebaseDatabase.getInstance().getReference().child("friend_request");
+
         //Profile atributes
+        friendRequestSent=false;
         profile_name = myview.findViewById(R.id.profile_pic_name);
         interests = myview.findViewById(R.id.profile_interests);
         new_interests = interests.getText().toString();
@@ -85,6 +93,7 @@ public class profile_page extends Fragment {
         messageButton = myview.findViewById(R.id.message_profile);
         recommendButton = myview.findViewById(R.id.give_rec_profile);
         profile_img = myview.findViewById(R.id.profile_picture_sample);
+        friendsListButton=myview.findViewById(R.id.profile_friends_list_button);
         new_name = profile_name.getText().toString();
 
         bLogOut.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +112,26 @@ public class profile_page extends Fragment {
             }
         });
 
+        addFriendButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                addFriendButton.setEnabled(false);
+                if(friendRequestSent==false)
+                    sendFriendRequest();
+                else
+                    cancelFriendRequest();
+            }
 
+
+        });
+        friendsListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent=new Intent(getActivity(),FriendsListActivity.class);
+                startActivity(myIntent);
+
+            }
+        });
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -140,6 +168,45 @@ public class profile_page extends Fragment {
         scrollFunction(R.id.sample_watch_list,profileType,false);
         listFunction(R.id.activity_scroller,myMovies);
         return myview;
+    }
+
+    private void cancelFriendRequest() {
+        friendsRequestRef.child(currentUserID).child(profile_id).child("request_type").removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                friendsRequestRef.child(profile_id).child(currentUserID).child("request_type").removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        addFriendButton.setEnabled(true);
+                        Resources res = getResources();
+                        Drawable drawable = res.getDrawable(R.drawable.add_friend_icon);
+                        addFriendButton.setBackground(drawable);
+                        friendRequestSent=false;
+                    }
+                });
+            }
+        });
+    }
+
+    private void sendFriendRequest() {
+        friendsRequestRef.child(currentUserID).child(profile_id).child("request_type").setValue("sent").addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                friendsRequestRef.child(profile_id).child(currentUserID).child("request_type").setValue("received").addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        addFriendButton.setEnabled(true);
+                        Resources res = getResources();
+                        Drawable drawable = res.getDrawable(R.drawable.ic_cancel_black_24dp);
+                        addFriendButton.setBackground(drawable);
+                        friendRequestSent=true;
+                    }
+                });
+            }
+        });
+
     }
 
     private void scrollFunction(Integer id, final String profileType, final Boolean isFavouriteList){
@@ -194,10 +261,32 @@ public class profile_page extends Fragment {
                 layout.removeView(addFriendButton);
             }
         }
+
         else if(profileType.equals("NOTFRIENDS")){
             layout.removeView(recommendButton);
             layout.removeView(editProfile);
             layout.removeView(bLogOut);
+            friendsRequestRef.child(currentUserID).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.hasChild(profile_id)){
+                        String request_type=dataSnapshot.child(profile_id).child("request_type").getValue().toString();
+                        if(request_type.equals("sent")){
+                            addFriendButton.setEnabled(true);
+                            Resources res = getResources();
+                            Drawable drawable = res.getDrawable(R.drawable.ic_cancel_black_24dp);
+                            addFriendButton.setBackground(drawable);
+
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
         else{
             //should be already friends
