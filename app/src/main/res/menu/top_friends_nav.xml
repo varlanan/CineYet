@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_friends"
+        android:icon="@drawable/friends_icon"
+        android:title="My Friends" />
+    <item android:id="@+id/nav_requests"
+        android:icon="@drawable/add_friend_icon"
+        android:title="Friend Requests"/>
+</menu>

@@ -59,7 +59,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <Button
-                            android:id="@+id/friends_profile"
+                            android:id="@+id/profile_friends_list_button"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:background="@drawable/friends_icon"

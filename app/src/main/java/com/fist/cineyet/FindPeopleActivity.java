@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -74,7 +75,7 @@ public class FindPeopleActivity extends AppCompatActivity {
                 Picasso.get().load(model.getProfileimage())
                         .placeholder(R.drawable.ic_account_circle_black_24dp)
                         .into(holder.profileimage);
-                holder.profileimage.setOnClickListener(new View.OnClickListener() {
+                holder.parent.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Fragment profFrag=new profile_page();
@@ -102,12 +103,14 @@ public class FindPeopleActivity extends AppCompatActivity {
         TextView name;
         CircleImageView profileimage;
         TextView interests;
+        ConstraintLayout parent;
 
         public FindFriendsViewholder(@NonNull View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.search_person_name);
             profileimage=itemView.findViewById(R.id.search_person_image);
             interests=itemView.findViewById(R.id.search_person_interests);
+            parent=itemView.findViewById(R.id.search_people_parent);
         }
     }
 }

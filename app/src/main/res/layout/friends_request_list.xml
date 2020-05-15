@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/search_people_parent"
+    android:id="@+id/friend_request_list_parent"
     android:layout_marginTop="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginLeft="10dp">
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/search_person_image"
+                android:id="@+id/friend_request_picture"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_margin="10dp"
                 android:layout_width="100dp"
@@ -35,7 +35,7 @@
                 android:orientation="vertical"
                 android:layout_gravity="center">
                 <TextView
-                    android:id="@+id/search_person_name"
+                    android:id="@+id/friend_request_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Name"
@@ -46,21 +46,35 @@
                     android:textStyle="bold"
                     />
                 <TextView
-                    android:id="@+id/search_person_interests"
+                    android:id="@+id/friend_request_interests"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Interests"
                     android:textColor="@android:color/darker_gray"
                     android:layout_margin="10dp"
                     android:textSize="18dp"/>
-<!--                    <Button-->
-<!--                        android:id="@+id/search_person_add_friend_button"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:background="@android:color/transparent"-->
-<!--                        android:drawableLeft="@drawable/add_icon"-->
-<!--                        android:text="Add Friend"-->
-<!--                        android:layout_margin="10dp"/>-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/accept_friend_request_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:drawableLeft="@drawable/ic_check_circle_black_24dp"
+                        android:text="Accept"
+                        android:layout_margin="10dp"/>
+                    <Button
+                        android:id="@+id/delete_friend_request_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:drawableLeft="@drawable/ic_cancel_black_24dp"
+                        android:text="Decline"
+                        android:layout_margin="10dp"/>
+                </LinearLayout>
+
 
 
             </LinearLayout>
