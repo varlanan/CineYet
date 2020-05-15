@@ -21,7 +21,12 @@ import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -52,7 +57,9 @@ public class MoviePageActivity extends AppCompatActivity {
     private TextView title, directors, year, rating, genres, summary, runningTime, sceneImg;
     private ImageView poster, movieScene;
 
-    private ProgressBar spinner;
+    private RecyclerView allReviewsLayout;
+    private reviewsAdapter listAdapter;
+//    private ProgressBar spinner;
 
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler(){
@@ -148,9 +155,25 @@ public class MoviePageActivity extends AppCompatActivity {
         isReqSuccess = false;
         isReq2Success = false;
         isReq3Success = false;
+//
+//        spinner = (ProgressBar) findViewById(R.id.progress_bar);
+//        spinner.setVisibility(View.VISIBLE);
 
-        spinner = (ProgressBar) findViewById(R.id.progress_bar);
-        spinner.setVisibility(View.VISIBLE);
+//        FloatingActionButton fab1= findViewById(R.id.add_to_list_fab);
+//        fab1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//
+//        FloatingActionButton fab2= findViewById(R.id.recommend_friend);
+//        fab2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
         imdbID = getIntent().getExtras().getString("imdbID");
 
@@ -349,7 +372,19 @@ public class MoviePageActivity extends AppCompatActivity {
             }
         });
 
-        spinner.setVisibility(View.GONE);
+        ArrayList<reviewItems> allReviews = new ArrayList<reviewItems>();
+        for(int i = 0; i < 5; i++){
+            allReviews.add(new reviewItems("pic-url", "Big Mama", "wow this was an amazingggggggggggggg movie 10/10 would recommend to a friend", imdbID));
+        }
+
+        allReviewsLayout = (RecyclerView) findViewById(R.id.review_list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(MoviePageActivity.this, LinearLayoutManager.VERTICAL, false);
+        allReviewsLayout.setLayoutManager(layoutManager);
+        allReviewsLayout.setItemAnimator(new DefaultItemAnimator());
+        listAdapter = new reviewsAdapter(MoviePageActivity.this, allReviews);
+        allReviewsLayout.setAdapter(listAdapter);
+
+//        spinner.setVisibility(View.GONE);
     }
 }
 
