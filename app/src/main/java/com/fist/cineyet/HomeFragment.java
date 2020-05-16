@@ -2,6 +2,7 @@ package com.fist.cineyet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class HomeFragment extends Fragment {
     private FirebaseAuth.AuthStateListener myAuthListener;
     private DatabaseReference userRef;
     View myview;
+    final String TAG="home fragment";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,36 +63,46 @@ public class HomeFragment extends Fragment {
         currentUserID = myFirebaseAuth.getCurrentUser().getUid();
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
 
-        scrollFunction(R.id.friends_rec,false);
-        scrollFunction(R.id.mood_rec,true);
+        scrollFunction(R.id.friends_rec,"friendsreclist");
+        //scrollFunction(R.id.mood_rec,"moodlist");
         return myview;
     }
 
-    private void scrollFunction(Integer id, boolean isMyMoodList){
+    private void scrollFunction(Integer id, final String listType){
+        Log.d(TAG,"scroll on home  called");
         favouriteMoviesLayout=(RecyclerView)  myview.findViewById(id);
         final ArrayList<searchbarItems> moviesList= new ArrayList<>();
-        userRef.child(isMyMoodList?"moodlist":"friendsreclist").addValueEventListener(new ValueEventListener() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        favouriteMoviesLayout.setLayoutManager(layoutManager);
+        favouriteMoviesLayout.setItemAnimator(new DefaultItemAnimator());
+
+        mainAdapter= new MainAdapter(getActivity(),moviesList,false,listType,"PERSONAL");
+        favouriteMoviesLayout.setAdapter(mainAdapter);
+        userRef.child(listType).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()){
-                    String myid=postSnapshot.getValue().toString();
-                    String mytitle=postSnapshot.child("title").getValue().toString();
+
+                    String myid=postSnapshot.getKey();
                     String myyear=postSnapshot.child("year").getValue().toString();
+                    String mytitle=postSnapshot.child("title").getValue().toString();
                     String myurl=postSnapshot.child("poster").getValue().toString();
+                    Log.d(TAG,"on data change"+mytitle+myyear+myurl+myid);
 
                     moviesList.add(new searchbarItems(mytitle,myyear,myurl,myid));
+
                 }
+                Log.d(TAG, "dataset changed");
+                mainAdapter.notifyDataSetChanged();
+
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
-        favouriteMoviesLayout.setLayoutManager(layoutManager);
-        favouriteMoviesLayout.setItemAnimator(new DefaultItemAnimator());
-        mainAdapter= new MainAdapter(getActivity(),moviesList,false, false,"PERSONAL");
-        favouriteMoviesLayout.setAdapter(mainAdapter);
+
     }
 }

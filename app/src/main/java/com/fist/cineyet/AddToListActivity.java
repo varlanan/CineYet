@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,13 +41,18 @@ public class AddToListActivity  extends AppCompatActivity {
     EditText search_movie;
     ArrayList<searchbarItems> myMovies;
     SearchBarAdapter listAdapter;
-    Boolean isFavourite;
+    String listType;
     Boolean addButtonOn;
+    FirebaseAuth myFirebaseAuth;
+    String currentUserID;
     Handler handler= new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
             Log.d(TAG,"Starting adapter with size of "+myMovies.size());
-            listAdapter= new SearchBarAdapter(AddToListActivity.this,myMovies,isFavourite,addButtonOn);
+            if(getIntent().hasExtra("profile_id"))
+                listAdapter= new SearchBarAdapter(AddToListActivity.this,myMovies,listType,addButtonOn, getIntent().getExtras().getString("profile_id")); //you are adding to someone else's rec list
+            else
+                listAdapter=new SearchBarAdapter(AddToListActivity.this,myMovies,listType,addButtonOn,currentUserID); //adding to your own list
             myView.setAdapter(listAdapter);
 
         }
@@ -55,7 +62,9 @@ public class AddToListActivity  extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_movie);
-        isFavourite = getIntent().getExtras().getBoolean("isFavourite");
+        myFirebaseAuth = FirebaseAuth.getInstance();
+        currentUserID = myFirebaseAuth.getCurrentUser().getUid();
+        listType = getIntent().getExtras().getString("listType");
         addButtonOn=getIntent().getExtras().getBoolean("addButton");
         search_movie=findViewById(R.id.search_movie_bar);
         myView=findViewById(R.id.search_movie_results);

@@ -16,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,28 +43,25 @@ import de.hdodenhof.circleimageview.CircleImageView;
 class SearchBarAdapter extends RecyclerView.Adapter<SearchBarAdapter.ViewHolder>{
     Context c;
     ArrayList<searchbarItems> myModels;
-    Boolean isFavourite;
+    String listType;
     Boolean addButtonOn;
-    final static String TAG="my adapter";
+    final static String TAG="search results adapter";
     FirebaseAuth myFirebaseAuth;
     String new_name, new_interests;
     private FirebaseAuth.AuthStateListener myAuthListener;
     private DatabaseReference userRef;
     private StorageReference UserProfileImageRef;
-    String currentUserID;
+    String listUserID;
 
 
-    SearchBarAdapter(Context context, ArrayList<searchbarItems> mainModels,Boolean isFavourite,Boolean addButtonOn){
+    SearchBarAdapter(Context context, ArrayList<searchbarItems> mainModels,String listType,Boolean addButtonOn, String uid){
         this.c = context;
         this.myModels = mainModels;
-        this.isFavourite = isFavourite;
+        this.listType = listType;
         this.addButtonOn = addButtonOn;
         this.myFirebaseAuth = FirebaseAuth.getInstance();
-        this.currentUserID = myFirebaseAuth.getCurrentUser().getUid();
-        if(this.isFavourite)
-            this.userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID).child("favouritelist");
-        else
-            this.userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID).child("watchlist");
+        this.listUserID = uid;
+        this.userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(listUserID).child(listType);
 
     }
     @NonNull
@@ -99,12 +98,29 @@ class SearchBarAdapter extends RecyclerView.Adapter<SearchBarAdapter.ViewHolder>
                     map.put("poster", myModels.get(position).url);
                     map.put("title", myModels.get(position).title);
                     map.put("year", myModels.get(position).year);
+
                     userRef.child(myModels.get(position).id).setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Intent intent = new Intent(c, HomeActivity.class);
-                            intent.putExtra("name", "myname"); //confusing change later
-                            c.startActivity(intent);
+                            if(listType.equals("friendsreclist")){
+                                //if it is someone else's list, go back to that fragment
+                                Fragment profFrag=new profile_page();
+                                Bundle mybund=new Bundle();
+                                mybund.putString("isPersonalProfile","FRIENDS"); //change later when you figure out friends lists
+                                mybund.putString("UserID",listUserID);
+                                profFrag.setArguments(mybund);
+                                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_friends,profFrag).commit();
+
+                            }
+                            else{
+                                //go back to home activity once movie is added to a personal profile
+                                Intent intent = new Intent(c, HomeActivity.class);
+                                intent.putExtra("name", "myname"); //tells activity to redirect to profile_page
+                                c.startActivity(intent);
+                            }
+
+
                         }
                     });
 

@@ -30,17 +30,18 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
     private FirebaseAuth.AuthStateListener myAuthListener;
     private DatabaseReference userRef;
     String currentUserID;
-    Boolean isFavouriteList;
+    String listType;
     String profileType;
-    public MainAdapter(Context context, ArrayList<searchbarItems> mainModels, Boolean list_is_addable, Boolean isFavouriteList,String profileType){
+    public MainAdapter(Context context, ArrayList<searchbarItems> mainModels, Boolean list_is_addable, String listType,String profileType){
             this.context=context;
             this.mainModels=mainModels;
             this.addable=list_is_addable;
-            this.isFavouriteList=isFavouriteList;
+            this.listType=listType;
             this.profileType=profileType;
             myFirebaseAuth = FirebaseAuth.getInstance();
             currentUserID = myFirebaseAuth.getCurrentUser().getUid();
-            userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID).child(isFavouriteList?"favouritelist":"watchlist");
+            userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID).child(listType);
+            Log.d(TAG, "main adapter created"+mainModels.size());
 
     }
     @NonNull
@@ -69,7 +70,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
                     }
                     else if(position==mainModels.size()-1&&addable){
                         Intent myIntent=new Intent(context, AddToListActivity.class);
-                        myIntent.putExtra("isFavourite",isFavouriteList);
+                        myIntent.putExtra("listType",listType);
                         myIntent.putExtra("addButton",true);
                         context.startActivity(myIntent);
                     }
