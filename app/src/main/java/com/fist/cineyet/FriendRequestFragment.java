@@ -92,13 +92,19 @@ public class FriendRequestFragment extends androidx.fragment.app.Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists()){
-                            final String requesterName=dataSnapshot.child("name").getValue().toString();
-                            final String requesterInterests=dataSnapshot.child("interests").getValue().toString();
-                            final String requesterPicture=dataSnapshot.child("profileimage").getValue().toString();
-                            Log.d(TAG,"requester"+requesterName+requesterInterests+requesterPicture);
-                            holder.setName(requesterName);
-                            holder.setInterests(requesterInterests);
-                            holder.setProfileimage(requesterPicture);
+                            if(dataSnapshot.child("name").getValue()!=null){
+                                final String requesterName=dataSnapshot.child("name").getValue().toString();
+                                holder.setName(requesterName);
+                            }
+                            if(dataSnapshot.child("interests").getValue()!=null){
+                                final String requesterInterests=dataSnapshot.child("interests").getValue().toString();
+                                holder.setInterests(requesterInterests);
+
+                            }
+                            if(dataSnapshot.child("profileimage").getValue()!=null){
+                                final String requesterPicture=dataSnapshot.child("profileimage").getValue().toString();
+                                holder.setProfileimage(requesterPicture);
+                            }
                         }
                     }
 

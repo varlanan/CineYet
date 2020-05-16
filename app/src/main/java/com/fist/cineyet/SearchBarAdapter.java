@@ -1,5 +1,6 @@
 package com.fist.cineyet;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -42,6 +43,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 class SearchBarAdapter extends RecyclerView.Adapter<SearchBarAdapter.ViewHolder>{
     Context c;
+    Activity activity;
     ArrayList<searchbarItems> myModels;
     String listType;
     Boolean addButtonOn;
@@ -52,9 +54,10 @@ class SearchBarAdapter extends RecyclerView.Adapter<SearchBarAdapter.ViewHolder>
     private DatabaseReference userRef;
     private StorageReference UserProfileImageRef;
     String listUserID;
+    boolean fromHome;
 
 
-    SearchBarAdapter(Context context, ArrayList<searchbarItems> mainModels,String listType,Boolean addButtonOn, String uid){
+    SearchBarAdapter(Context context, ArrayList<searchbarItems> mainModels,String listType,Boolean addButtonOn, String uid,boolean fromHome){
         this.c = context;
         this.myModels = mainModels;
         this.listType = listType;
@@ -62,7 +65,7 @@ class SearchBarAdapter extends RecyclerView.Adapter<SearchBarAdapter.ViewHolder>
         this.myFirebaseAuth = FirebaseAuth.getInstance();
         this.listUserID = uid;
         this.userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(listUserID).child(listType);
-
+        this.fromHome=fromHome;
     }
     @NonNull
     @Override
@@ -104,14 +107,21 @@ class SearchBarAdapter extends RecyclerView.Adapter<SearchBarAdapter.ViewHolder>
                         public void onSuccess(Void aVoid) {
                             if(listType.equals("friendsreclist")){
                                 //if it is someone else's list, go back to that fragment
-                                Fragment profFrag=new profile_page();
-                                Bundle mybund=new Bundle();
-                                mybund.putString("isPersonalProfile","FRIENDS"); //change later when you figure out friends lists
-                                mybund.putString("UserID",listUserID);
-                                profFrag.setArguments(mybund);
-                                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_friends,profFrag).commit();
+                                if(fromHome){
+                                    Intent intent = new Intent(c, HomeActivity.class);
+                                    c.startActivity(intent);
+                                }
+                                else{
+                                    ((Activity)c).finish();
+//                                    Fragment profFrag=new profile_page();
+//                                    Bundle mybund=new Bundle();
+//                                    mybund.putString("isPersonalProfile","FRIENDS"); //change later when you figure out friends lists
+//                                    mybund.putString("UserID",listUserID);
+//                                    profFrag.setArguments(mybund);
+//                                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+//                                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_friends,profFrag).commit();
 
+                                }
                             }
                             else{
                                 //go back to home activity once movie is added to a personal profile

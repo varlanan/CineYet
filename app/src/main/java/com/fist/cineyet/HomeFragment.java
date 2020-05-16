@@ -27,7 +27,6 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
 
     RecyclerView favouriteMoviesLayout;
-    MainAdapter mainAdapter;
     FirebaseAuth myFirebaseAuth;
     String currentUserID;
     Button searchPeople;
@@ -64,7 +63,7 @@ public class HomeFragment extends Fragment {
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
 
         scrollFunction(R.id.friends_rec,"friendsreclist");
-        //scrollFunction(R.id.mood_rec,"moodlist");
+        scrollFunction(R.id.mood_rec,"moodlist");
         return myview;
     }
 
@@ -76,7 +75,7 @@ public class HomeFragment extends Fragment {
         favouriteMoviesLayout.setLayoutManager(layoutManager);
         favouriteMoviesLayout.setItemAnimator(new DefaultItemAnimator());
 
-        mainAdapter= new MainAdapter(getActivity(),moviesList,false,listType,"PERSONAL");
+       final MainAdapter mainAdapter= new MainAdapter(getActivity(),moviesList,false,listType,"PERSONAL");
         favouriteMoviesLayout.setAdapter(mainAdapter);
         userRef.child(listType).addValueEventListener(new ValueEventListener() {
             @Override

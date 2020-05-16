@@ -45,14 +45,15 @@ public class AddToListActivity  extends AppCompatActivity {
     Boolean addButtonOn;
     FirebaseAuth myFirebaseAuth;
     String currentUserID;
+    boolean fromHome;
     Handler handler= new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
             Log.d(TAG,"Starting adapter with size of "+myMovies.size());
             if(getIntent().hasExtra("profile_id"))
-                listAdapter= new SearchBarAdapter(AddToListActivity.this,myMovies,listType,addButtonOn, getIntent().getExtras().getString("profile_id")); //you are adding to someone else's rec list
+                listAdapter= new SearchBarAdapter(AddToListActivity.this,myMovies, listType,addButtonOn, getIntent().getExtras().getString("profile_id"),fromHome); //you are adding to someone else's rec list
             else
-                listAdapter=new SearchBarAdapter(AddToListActivity.this,myMovies,listType,addButtonOn,currentUserID); //adding to your own list
+                listAdapter=new SearchBarAdapter(AddToListActivity.this, myMovies,listType,addButtonOn,currentUserID,fromHome); //adding to your own list
             myView.setAdapter(listAdapter);
 
         }
@@ -73,6 +74,10 @@ public class AddToListActivity  extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(AddToListActivity.this,LinearLayoutManager.VERTICAL,false);
         myView.setLayoutManager(layoutManager);
         myView.setItemAnimator(new DefaultItemAnimator());
+        if(getIntent().hasExtra("fromHome"))
+            fromHome=true;
+        else
+            fromHome=false;
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

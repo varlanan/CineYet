@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -94,10 +95,16 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
         holder.deleteButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                mainModels.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, mainModels.size());
-                userRef.child(mainModels.get(position).id).removeValue();
+                userRef.child(mainModels.get(position).id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        mainModels.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, mainModels.size());
+
+                    }
+                });
+
 
             }
         });

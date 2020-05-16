@@ -20,8 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -31,6 +34,7 @@ public class FindPeopleActivity extends AppCompatActivity {
     Button searchPeople;
     EditText inputText;
     private DatabaseReference userRef;
+    private DatabaseReference friendsRef;
     RecyclerView searchPeopleRecycler;
     String currentUserID;
 
@@ -38,6 +42,7 @@ public class FindPeopleActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         userRef= FirebaseDatabase.getInstance().getReference().child("Users");
+        friendsRef=FirebaseDatabase.getInstance().getReference().child("Friends");
         FirebaseAuth myFirebaseAuth=FirebaseAuth.getInstance();
         currentUserID = myFirebaseAuth.getCurrentUser().getUid();
 
@@ -78,17 +83,38 @@ public class FindPeopleActivity extends AppCompatActivity {
                 holder.parent.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Fragment profFrag=new profile_page();
-                        Bundle mybund=new Bundle();
-                        String userKey=getRef(position).getKey();
-                        if(userKey.equals(currentUserID))
+                        final Fragment profFrag=new profile_page();
+                        final Bundle mybund=new Bundle();
+                        final String userKey=getRef(position).getKey();
+                        if(userKey.equals(currentUserID)){
                             mybund.putString("isPersonalProfile","PERSONAL");
-                        else{
-                            mybund.putString("isPersonalProfile","NOTFRIENDS"); //change later when you figure out friends lists
-                            mybund.putString("UserID",getRef(position).getKey());
+                            mybund.putString("UserID",currentUserID);
+                            profFrag.setArguments(mybund);
+                            getSupportFragmentManager().beginTransaction().replace(R.id.search_frag_container,profFrag).commit();
+
                         }
-                        profFrag.setArguments(mybund);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.search_frag_container,profFrag).commit();
+                        else{
+                            friendsRef.child(currentUserID).child(userKey).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if(dataSnapshot.exists()){
+                                        mybund.putString("isPersonalProfile","FRIENDS");
+                                    }
+                                    else
+                                        mybund.putString("isPersonalProfile","NOTFRIENDS"); //change later when you figure out friends lists
+                                    mybund.putString("UserID",userKey);
+                                    mybund.putString("fromHome","true");
+                                    profFrag.setArguments(mybund);
+                                    getSupportFragmentManager().beginTransaction().replace(R.id.search_frag_container,profFrag).commit();
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
 
                     }
                 });

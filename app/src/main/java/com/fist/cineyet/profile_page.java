@@ -46,7 +46,6 @@ public class profile_page extends Fragment {
 
     private RecyclerView favouriteMoviesLayout;
     private ListView activityList;
-    private MainAdapter mainAdapter;
 
     FirebaseAuth myFirebaseAuth;
     String new_name, new_interests;
@@ -69,7 +68,7 @@ public class profile_page extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         myview= inflater.inflate(R.layout.activity_profile_page, container, false);
-        Bundle arguments=getArguments();
+        final Bundle arguments=getArguments();
         String profileType=arguments.getString("isPersonalProfile");
         //Firebase Variables
         myFirebaseAuth = FirebaseAuth.getInstance();
@@ -137,11 +136,15 @@ public class profile_page extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if(dataSnapshot.exists()){
-                    String image_string=dataSnapshot.child("profileimage").getValue().toString();
-                    Picasso.get().load(image_string).placeholder(R.drawable.ic_account_circle_black_24dp).into(profile_img);
+                    if(dataSnapshot.child("profileimage").getValue()!=null){
+                        String image_string=dataSnapshot.child("profileimage").getValue().toString();
+                        Picasso.get().load(image_string).placeholder(R.drawable.ic_account_circle_black_24dp).into(profile_img);
 
-                    new_name=dataSnapshot.child("name").getValue().toString();
-                    profile_name.setText(new_name);
+                    }
+                    if(dataSnapshot.child("name").getValue()!=null){
+                        new_name=dataSnapshot.child("name").getValue().toString();
+                        profile_name.setText(new_name);
+                    }
 
                     if(dataSnapshot.child("interests").getValue()!=null) {
                         String new_interests = dataSnapshot.child("interests").getValue().toString();
@@ -159,6 +162,8 @@ public class profile_page extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent myIntent=new Intent(getActivity(), AddToListActivity.class);
+                if(arguments.containsKey("fromHome"))
+                    myIntent.putExtra("fromHome",true);
                 myIntent.putExtra("listType","friendsreclist"); //type of list
                 myIntent.putExtra("addButton",true); //add button to add movie to their list
                 myIntent.putExtra("profile_id",profile_id); //
@@ -226,7 +231,7 @@ public class profile_page extends Fragment {
         favouriteMoviesLayout.setLayoutManager(layoutManager);
         favouriteMoviesLayout.setItemAnimator(new DefaultItemAnimator());
 
-        mainAdapter= new MainAdapter(getActivity(),moviesList,profileType.equals("PERSONAL"),listType,profileType);
+       final MainAdapter mainAdapter= new MainAdapter(getActivity(),moviesList,profileType.equals("PERSONAL"),listType,profileType);
         favouriteMoviesLayout.setAdapter(mainAdapter);
         userRef.child(listType).addValueEventListener(new ValueEventListener() {
             @Override
