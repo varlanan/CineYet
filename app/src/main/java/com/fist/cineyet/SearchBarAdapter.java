@@ -64,7 +64,8 @@ class SearchBarAdapter extends RecyclerView.Adapter<SearchBarAdapter.ViewHolder>
         this.addButtonOn = addButtonOn;
         this.myFirebaseAuth = FirebaseAuth.getInstance();
         this.listUserID = uid;
-        this.userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(listUserID).child(listType);
+        if(listType!=null)
+            this.userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(listUserID).child(listType);
         this.fromHome=fromHome;
     }
     @NonNull
