@@ -181,7 +181,8 @@
                         android:id="@+id/review_section"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_marginBottom="3dp"
+                        android:layout_marginTop="3dp"
                         android:orientation="vertical"
                         app:layout_constraintEnd_toEndOf="@+id/movie_summary"
                         app:layout_constraintStart_toStartOf="@+id/movie_summary"
@@ -191,7 +192,7 @@
                             android:id="@+id/reviews_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="15dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginRight="10dp"
                             android:text="Reviews"
@@ -233,9 +234,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
             android:gravity="center"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
             android:layout_alignParentBottom="true">
 
             <LinearLayout
@@ -246,8 +247,8 @@
 
             <ImageButton
                 android:id="@+id/tell_a_friend"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="2dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -256,9 +257,9 @@
             <TextView
                 android:id="@+id/Tell_A_Friend"
                 android:layout_width="70dp"
-                android:layout_height="20dp"
+                android:layout_height="15dp"
                 android:text="Tell-a-Friend"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="1dp"
                 android:textColor="#FFFFFF"
                 android:autoSizeTextType="uniform"/>
             </LinearLayout>
@@ -271,8 +272,8 @@
 
                 <ImageButton
                     android:id="@+id/write_review"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_marginRight="75dp"
                     android:layout_marginLeft="73dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
@@ -281,8 +282,8 @@
                 <TextView
                     android:id="@+id/Write_Review"
                     android:layout_width="70dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="3dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="1dp"
                     android:layout_marginRight="70dp"
                     android:layout_marginLeft="60dp"
                     android:text="Write review"
@@ -298,8 +299,9 @@
 
                 <ImageButton
                     android:id="@+id/add_to_list"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="2dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
@@ -308,8 +310,7 @@
                 <TextView
                     android:id="@+id/Add_To_List"
                     android:layout_width="65dp"
-                    android:layout_height="20dp"
-
+                    android:layout_height="15dp"
                     android:layout_marginTop="3dp"
                     android:text="Add to List"
                     android:textColor="#FFFFFF"

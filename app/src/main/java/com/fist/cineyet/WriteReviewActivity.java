@@ -120,6 +120,7 @@ public class WriteReviewActivity extends AppCompatActivity {
                         Intent myIntent = new Intent(WriteReviewActivity.this, MoviePageActivity.class);
                         myIntent.putExtra("imdbID", imdbID);
                         startActivity(myIntent);
+                        finish();
                     }
 
                     @Override
@@ -138,6 +139,7 @@ public class WriteReviewActivity extends AppCompatActivity {
                 Intent myIntent = new Intent(WriteReviewActivity.this, MoviePageActivity.class);
                 myIntent.putExtra("imdbID", imdbID);
                 startActivity(myIntent);
+                finish();
             }
         });
 

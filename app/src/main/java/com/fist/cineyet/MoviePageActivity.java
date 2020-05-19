@@ -209,6 +209,29 @@ public class MoviePageActivity extends AppCompatActivity {
         getTopCrewDetails(imdbID);
         getMovieImages(imdbID);
 
+        /* Retrieve all reviews for the movie with the given imdbID */
+        movieRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild(imdbID)){
+                    for(DataSnapshot snapshot : dataSnapshot.child(imdbID).getChildren()) {
+                        reviewItems newReviewItem = new reviewItems(snapshot.child("userProfilePic").getValue().toString(), snapshot.child("userName").getValue().toString(),
+                                snapshot.child("review").getValue().toString(), imdbID);
+                        movieReviews.add(newReviewItem);
+
+                        displayReviews(movieReviews);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
         write_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,27 +248,6 @@ public class MoviePageActivity extends AppCompatActivity {
 
             }
         });
-        /* Retrieve all reviews for the movie with the given imdbID */
-        movieRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild(imdbID)){
-                    for(DataSnapshot snapshot : dataSnapshot.child(imdbID).getChildren()) {
-                        reviewItems newReviewItem = new reviewItems(snapshot.child("userProfilePic").getValue().toString(), snapshot.child("userName").getValue().toString(),
-                                snapshot.child("review").getValue().toString(), imdbID);
-                        movieReviews.add(newReviewItem);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        displayReviews(movieReviews);
-
 //        spinner.setVisibility(View.GONE);
     }
 
