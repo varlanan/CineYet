@@ -56,28 +56,31 @@ public class WriteReviewActivity extends AppCompatActivity {
         movieTitle = (TextView) findViewById(R.id.movie_title_review);
 
         /* this won't work since we exceeded API quota */
-        //        isTitle2Lines = getIntent().getExtras().getBoolean("isTitle2Lines");
-//        isTitle3Lines = getIntent().getExtras().getBoolean("isTitle3Lines");
-//        isTitle4Lines = getIntent().getExtras().getBoolean("isTitle4ines");
-//        if(isTitle2Lines){
-//            movieTitle.getLayoutParams().height = 170;
-//        }
-//        else if(isTitle3Lines){
-//            movieTitle.getLayoutParams().height = 250;
-//        }
-//        else if(isTitle4Lines){
-//            movieTitle.getLayoutParams().height = 330;
-//        }
-//        else {
-//            movieTitle.getLayoutParams().height = 100;
-//        }
-//        movieTitle.setText(getIntent().getExtras().getString("movieTitle"));
-//        noGoodImgFound = getIntent().getExtras().getBoolean("noGoodImgFound");
-//        movieSceneImg = (ImageView) findViewById(R.id.movie_scene_review);
-//        if(noGoodImgFound){
-//            movieSceneImg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-//        }
-//        Picasso.get().load(getIntent().getExtras().getString("movieScene")).placeholder(R.drawable.gradient_flip).into(movieSceneImg);
+        isTitle2Lines = getIntent().getExtras().getBoolean("isTitle2Lines");
+        isTitle3Lines = getIntent().getExtras().getBoolean("isTitle3Lines");
+        isTitle4Lines = getIntent().getExtras().getBoolean("isTitle4ines");
+
+        if(isTitle2Lines){
+            movieTitle.getLayoutParams().height = 170;
+        }
+        else if(isTitle3Lines){
+            movieTitle.getLayoutParams().height = 250;
+        }
+        else if(isTitle4Lines){
+            movieTitle.getLayoutParams().height = 330;
+        }
+        else {
+            movieTitle.getLayoutParams().height = 100;
+        }
+        if(movieTitle != null){
+            movieTitle.setText(getIntent().getExtras().getString("movieTitle"));
+            noGoodImgFound = getIntent().getExtras().getBoolean("noGoodImgFound");
+            movieSceneImg = (ImageView) findViewById(R.id.movie_scene_review);
+            if(noGoodImgFound){
+                movieSceneImg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            }
+            Picasso.get().load(getIntent().getExtras().getString("movieScene")).placeholder(R.drawable.gradient_flip).into(movieSceneImg);
+        }
 
         userRef.addValueEventListener(new ValueEventListener() {
             @Override

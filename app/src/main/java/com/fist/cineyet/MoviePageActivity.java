@@ -216,12 +216,12 @@ public class MoviePageActivity extends AppCompatActivity {
                 Intent myIntent = new Intent(MoviePageActivity.this, WriteReviewActivity.class);
                 myIntent.putExtra("imdbID",imdbID);
                 /* This won't work since we exceeded API quota */
-//                myIntent.putExtra("movieTitle", movieTitle);
-//                myIntent.putExtra("movieScene", movieSceneImg);
-//                myIntent.putExtra("isTitle2Lines", isTitle2Lines);
-//                myIntent.putExtra("isTitle3Lines", isTitle3Lines);
-//                myIntent.putExtra("isTitle4Lines", isTitle4Lines);
-//                myIntent.putExtra("noGoodImgFound", noGoodImgFound);
+                myIntent.putExtra("movieTitle", movieTitle);
+                myIntent.putExtra("movieScene", movieSceneImg);
+                myIntent.putExtra("isTitle2Lines", isTitle2Lines);
+                myIntent.putExtra("isTitle3Lines", isTitle3Lines);
+                myIntent.putExtra("isTitle4Lines", isTitle4Lines);
+                myIntent.putExtra("noGoodImgFound", noGoodImgFound);
                 startActivity(myIntent);
 
             }
