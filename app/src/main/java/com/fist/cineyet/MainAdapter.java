@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,17 +31,18 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
     private FirebaseAuth.AuthStateListener myAuthListener;
     private DatabaseReference userRef;
     String currentUserID;
-    Boolean isFavouriteList;
+    String listType;
     String profileType;
-    public MainAdapter(Context context, ArrayList<searchbarItems> mainModels, Boolean list_is_addable, Boolean isFavouriteList,String profileType){
+    public MainAdapter(Context context, ArrayList<searchbarItems> mainModels, Boolean list_is_addable, String listType,String profileType){
             this.context=context;
             this.mainModels=mainModels;
             this.addable=list_is_addable;
-            this.isFavouriteList=isFavouriteList;
+            this.listType=listType;
             this.profileType=profileType;
             myFirebaseAuth = FirebaseAuth.getInstance();
             currentUserID = myFirebaseAuth.getCurrentUser().getUid();
-            userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID).child(isFavouriteList?"favouritelist":"watchlist");
+            userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID).child(listType);
+            Log.d(TAG, "main adapter created"+mainModels.size());
 
     }
     @NonNull
@@ -69,7 +71,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
                     }
                     else if(position==mainModels.size()-1&&addable){
                         Intent myIntent=new Intent(context, AddToListActivity.class);
-                        myIntent.putExtra("isFavourite",isFavouriteList);
+                        myIntent.putExtra("listType",listType);
                         myIntent.putExtra("addButton",true);
                         context.startActivity(myIntent);
                     }
@@ -93,10 +95,16 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
         holder.deleteButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                mainModels.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, mainModels.size());
-                userRef.child(mainModels.get(position).id).removeValue();
+                userRef.child(mainModels.get(position).id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        mainModels.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, mainModels.size());
+
+                    }
+                });
+
 
             }
         });
