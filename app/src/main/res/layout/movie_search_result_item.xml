@@ -46,6 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Movie Year"
+                    android:fontFamily="@font/montserrat"
                     android:textColor="@android:color/black"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="2"/>
@@ -63,12 +64,14 @@
                         android:background="@android:color/transparent"
                         android:drawableLeft="@drawable/add_icon"
                         android:text="Add"
+                        android:fontFamily="@font/montserrat"
                         android:layout_marginRight="20dp"/>
                     <Button
                         android:id="@+id/search_result_item_visit_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Movie Page"
+                        android:fontFamily="@font/montserrat"
                         android:drawableLeft="@drawable/forward_icon"
                         android:background="@android:color/transparent"/>
                 </LinearLayout>

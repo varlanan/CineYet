@@ -26,6 +26,7 @@
                 android:drawableLeft="@drawable/icon_search"
                 android:layout_gravity="right"
                 android:text="movies"
+                android:fontFamily="@font/montserrat"
                 android:background="@android:color/transparent"
                 android:layout_marginRight="30dp"
                 />
@@ -35,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/icon_search"
                 android:layout_gravity="right"
+                android:fontFamily="@font/montserrat"
                 android:text="People"
                 android:background="@android:color/transparent"/>
 
@@ -50,6 +52,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:fontFamily="@font/montserrat"
+                android:textSize="12sp"
                 android:text="Movies Recommended By Your Friends"
                 android:textColor="@android:color/black"/>
 
@@ -73,6 +77,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Movies Based On Your Mood"
+                android:fontFamily="@font/montserrat"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@id/mood_rec"
                 app:layout_constraintTop_toBottomOf="@id/friends_rec"
                 tools:layout_editor_absoluteX="0dp"

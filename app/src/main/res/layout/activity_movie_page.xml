@@ -60,6 +60,7 @@
                 android:layout_height="39dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
+                android:fontFamily="@font/montserrat"
                 android:text="Movie Title"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"
@@ -72,6 +73,7 @@
                 android:layout_width="199dp"
                 android:layout_height="26dp"
                 android:gravity="left"
+                android:fontFamily="@font/montserrat"
                 android:text=" Directors"
                 android:textColor="#AEB4A9"
                 android:textSize="15sp"
@@ -86,6 +88,7 @@
                 android:layout_height="26dp"
                 android:gravity="left"
                 android:text="Year"
+                android:fontFamily="@font/montserrat"
                 android:textColor="#AEB4A9"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toStartOf="@+id/dot"
@@ -111,6 +114,7 @@
                 android:id="@+id/movie_genre"
                 android:layout_width="160dp"
                 android:layout_height="26dp"
+                android:fontFamily="@font/montserrat"
                 android:gravity="left"
                 android:text="Genres"
                 android:textColor="#AEB4A9"
@@ -124,6 +128,7 @@
                 android:id="@+id/movie_rating"
                 android:layout_width="28dp"
                 android:layout_height="22dp"
+                android:fontFamily="@font/montserrat"
                 android:gravity="right"
                 android:text="10"
                 android:textColor="#FFFFFF"
@@ -148,6 +153,7 @@
                 android:layout_height="22dp"
                 android:gravity="right"
                 android:text="/10"
+                android:fontFamily="@font/montserrat"
                 android:textColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="@+id/movie_title"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -158,6 +164,7 @@
                 android:id="@+id/movie_time"
                 android:layout_width="80dp"
                 android:layout_height="26dp"
+                android:fontFamily="@font/montserrat"
                 android:gravity="left"
                 android:text="Duration"
                 android:textColor="#AEB4A9"
@@ -170,6 +177,7 @@
                 android:layout_width="378dp"
                 android:layout_height="95dp"
                 android:layout_marginTop="60dp"
+                android:fontFamily="@font/montserrat"
                 android:text="@string/lorem_ipsum"
                 android:textColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="@+id/movie_poster"
@@ -196,6 +204,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginRight="10dp"
                             android:text="Reviews"
+                            android:fontFamily="@font/montserrat"
                             android:textColor="@android:color/darker_gray" />
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -249,18 +258,19 @@
                 android:id="@+id/tell_a_friend"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="15dp"
                 android:layout_marginRight="2dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/recommend_friend"
                 android:scaleType="fitCenter"/>
             <TextView
                 android:id="@+id/Tell_A_Friend"
-                android:layout_width="70dp"
+                android:layout_width="77dp"
                 android:layout_height="15dp"
                 android:text="Tell-a-Friend"
                 android:layout_marginTop="1dp"
                 android:textColor="#FFFFFF"
+                android:fontFamily="@font/montserrat"
                 android:autoSizeTextType="uniform"/>
             </LinearLayout>
 
@@ -275,18 +285,19 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginRight="75dp"
-                    android:layout_marginLeft="73dp"
+                    android:layout_marginLeft="75dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/write_review"
                     android:scaleType="fitCenter"/>
                 <TextView
                     android:id="@+id/Write_Review"
-                    android:layout_width="70dp"
+                    android:layout_width="77dp"
                     android:layout_height="15dp"
                     android:layout_marginTop="1dp"
                     android:layout_marginRight="70dp"
                     android:layout_marginLeft="60dp"
                     android:text="Write review"
+                    android:fontFamily="@font/montserrat"
                     android:textColor="#FFFFFF"
                     android:autoSizeTextType="uniform"/>
             </LinearLayout>
@@ -302,19 +313,21 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="14dp"
                     android:layout_marginRight="2dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/add_to_movie_list_agenda"
                     android:scaleType="fitCenter"/>
+
                 <TextView
                     android:id="@+id/Add_To_List"
                     android:layout_width="65dp"
                     android:layout_height="15dp"
                     android:layout_marginTop="3dp"
+                    android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/montserrat"
                     android:text="Add to List"
-                    android:textColor="#FFFFFF"
-                    android:autoSizeTextType="uniform"/>
+                    android:textColor="#FFFFFF" />
             </LinearLayout>
 
 

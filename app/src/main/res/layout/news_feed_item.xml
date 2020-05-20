@@ -40,6 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="YiFei Tang"
+                    android:fontFamily="@font/montserrat"
                     android:textStyle="bold"
                     android:textSize="16sp"
                     android:padding="10sp"
@@ -54,6 +55,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Insert Activity Here"
+                        android:fontFamily="@font/montserrat"
                         android:textColor="@android:color/black"
                         android:textSize="13sp"
                         android:paddingRight="4dp"/>
@@ -62,6 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Insert Movie"
+                        android:fontFamily="@font/montserrat"
                         android:textColor="@android:color/black"
                         android:textSize="13sp"
                         android:paddingRight="4dp"
@@ -70,7 +73,8 @@
                         android:id="@+id/news_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Date"/>
+                        android:text="Date"
+                        android:fontFamily="@font/montserrat" />
 
 
                 </LinearLayout>
@@ -88,6 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Snippet of News Item "
+                    android:fontFamily="@font/montserrat"
                     android:textColor="@android:color/darker_gray"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
@@ -115,6 +120,8 @@
         android:layout_width="70dp"
         android:layout_height="match_parent"
         android:layout_marginRight="20dp"
+        android:fontFamily="@font/montserrat"
+
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/thumbs"
         android:text="Like" />
@@ -123,6 +130,7 @@
         android:id="@+id/news_comment"
         android:layout_width="105dp"
         android:layout_height="match_parent"
+        android:fontFamily="@font/montserrat"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/comment_icon"
         android:text="Comment"

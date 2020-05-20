@@ -49,6 +49,7 @@
                 android:layout_height="39dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
+                android:fontFamily="@font/montserrat"
                 android:text="Movie Title"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"
@@ -62,6 +63,7 @@
                 android:layout_height="205dp"
                 android:ems="10"
                 android:hint="Add a review..."
+                android:fontFamily="@font/montserrat"
                 android:gravity = "top"
                 android:inputType="textPersonName"
                 android:textColor="#ACB9C1"
@@ -79,6 +81,7 @@
                 android:background="@drawable/round_transp_button"
                 android:stateListAnimator="@null"
                 android:text="Submit review"
+                android:fontFamily="@font/montserrat"
                 app:layout_constraintStart_toStartOf="@+id/review_text"
                 app:layout_constraintTop_toBottomOf="@+id/review_text" />
 
