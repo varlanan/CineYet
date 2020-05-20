@@ -407,7 +407,7 @@ public class MoviePageActivity extends AppCompatActivity {
 
                         movieTitle = mainInfo.getString("title");
                         int num_chars_title = movieTitle.length();
-                        int line = 20;
+                        int line = 18; //20
                         if(num_chars_title > line){
                             if(num_chars_title <= line*2){
                                 isTitle2Lines = true;

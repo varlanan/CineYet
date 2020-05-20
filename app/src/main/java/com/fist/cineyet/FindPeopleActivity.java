@@ -60,7 +60,7 @@ public class FindPeopleActivity extends AppCompatActivity {
     }
     private void searchPeople(String searchBarInput){
         FirebaseRecyclerOptions<FindPeople> options=new FirebaseRecyclerOptions.Builder<FindPeople>()
-                .setQuery(userRef.orderByChild("name").startAt(searchBarInput).endAt(searchBarInput+"\uf8ff"),FindPeople.class)
+                .setQuery(userRef.orderByChild("name").startAt(searchBarInput).endAt(searchBarInput.toLowerCase()+"\uf8ff"), FindPeople.class)
                 .build();
 
         FirebaseRecyclerAdapter<FindPeople,FindFriendsViewholder> firebaseRecyclerAdapter=new FirebaseRecyclerAdapter<FindPeople, FindFriendsViewholder>(options){
@@ -68,7 +68,7 @@ public class FindPeopleActivity extends AppCompatActivity {
             @NonNull
             @Override
             public FindFriendsViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.people_search_result,parent,false);
+                View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.people_search_result, parent,false);
                 FindFriendsViewholder viewholder=new FindFriendsViewholder(view);
                 return viewholder;
             }
@@ -83,9 +83,9 @@ public class FindPeopleActivity extends AppCompatActivity {
                 holder.parent.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        final Fragment profFrag=new profile_page();
-                        final Bundle mybund=new Bundle();
-                        final String userKey=getRef(position).getKey();
+                        final Fragment profFrag = new profile_page();
+                        final Bundle mybund = new Bundle();
+                        final String userKey = getRef(position).getKey();
                         if(userKey.equals(currentUserID)){
                             mybund.putString("isPersonalProfile","PERSONAL");
                             mybund.putString("UserID",currentUserID);
@@ -105,7 +105,7 @@ public class FindPeopleActivity extends AppCompatActivity {
                                     mybund.putString("UserID",userKey);
                                     mybund.putString("fromHome","true");
                                     profFrag.setArguments(mybund);
-                                    getSupportFragmentManager().beginTransaction().replace(R.id.search_frag_container,profFrag).commit();
+                                    getSupportFragmentManager().beginTransaction().replace(R.id.search_frag_container, profFrag).commit();
 
                                 }
 
@@ -133,10 +133,10 @@ public class FindPeopleActivity extends AppCompatActivity {
 
         public FindFriendsViewholder(@NonNull View itemView) {
             super(itemView);
-            name=itemView.findViewById(R.id.search_person_name);
-            profileimage=itemView.findViewById(R.id.search_person_image);
-            interests=itemView.findViewById(R.id.search_person_interests);
-            parent=itemView.findViewById(R.id.search_people_parent);
+            name = itemView.findViewById(R.id.search_person_name);
+            profileimage = itemView.findViewById(R.id.search_person_image);
+            interests = itemView.findViewById(R.id.search_person_interests);
+            parent = itemView.findViewById(R.id.search_people_parent);
         }
     }
 }

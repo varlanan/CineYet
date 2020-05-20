@@ -53,7 +53,7 @@ public class SignUpPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final String username = etUsername.getText().toString();
-                final String name = etName.getText().toString();
+                final String name = (etName.getText().toString()).toLowerCase();
                 final String email = etEmail.getText().toString();
                 final String pwd = etPassword.getText().toString();
                 String confPwd = etConfirmPassword.getText().toString();

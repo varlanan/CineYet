@@ -113,7 +113,10 @@ public class newsFeedAdapter extends RecyclerView.Adapter<newsFeedAdapter.ViewHo
                         Picasso.get().load(image_string).placeholder(R.drawable.ic_account_circle_black_24dp).into(profile_img);
 
                         personNewName = dataSnapshot.child("name").getValue().toString();
-                        personName.setText(personNewName);
+                        String[] name_split = personNewName.split(" ");
+                        String uppercase_name = name_split[0].substring(0, 1).toUpperCase() + name_split[0].substring(1).toLowerCase() + " "
+                                +  name_split[1].substring(0, 1).toUpperCase() + name_split[1].substring(1).toLowerCase();
+                        personName.setText(uppercase_name);
 
                     }
                 }

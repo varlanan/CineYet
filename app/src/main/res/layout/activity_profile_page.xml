@@ -42,11 +42,12 @@
                     android:padding="10dp"
                     android:layout_weight="1"
                     >
-                    <TextView
+                    <EditText
                         android:id="@+id/profile_pic_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Name"
+                        android:background="@null"
                         android:fontFamily="@font/montserrat"
                         android:textColor="#000000"
                         android:textSize="19sp"
@@ -231,7 +232,7 @@
                 android:layout_marginRight="10dp">
                 <TextView
                     android:id="@+id/activityText"
-                    android:layout_width="48dp"
+                    android:layout_width="60dp"
                     android:layout_height="18dp"
                     android:layout_margin="10dp"
                     android:text="Activity"

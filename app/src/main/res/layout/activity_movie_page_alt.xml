@@ -111,7 +111,7 @@
             android:layout_width="35dp"
             android:layout_height="26dp"
             android:gravity="left"
-            android:text="Year"
+            android:text="2020"
             android:textColor="#AEB4A9"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/movie_poster"

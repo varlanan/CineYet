@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -59,7 +60,8 @@ public class profile_page extends Fragment {
     private View myview;
     boolean friendRequestSent;
     private CircleImageView profile_img;
-    private TextView profile_name, interests;
+    private TextView interests;
+    private EditText profile_name;
     private Button bLogOut, editProfile, addFriendButton, messageButton, recommendButton, friendsListButton;
     private static final String TAG="Profile Page";
 
@@ -142,8 +144,11 @@ public class profile_page extends Fragment {
 
                     }
                     if(dataSnapshot.child("name").getValue()!=null){
-                        new_name=dataSnapshot.child("name").getValue().toString();
-                        profile_name.setText(new_name);
+                        new_name = dataSnapshot.child("name").getValue().toString();
+                        String[] name_split = new_name.split(" ");
+                        String uppercase_name = name_split[0].substring(0, 1).toUpperCase() + name_split[0].substring(1).toLowerCase() + " "
+                                +  name_split[1].substring(0, 1).toUpperCase() + name_split[1].substring(1).toLowerCase();
+                        profile_name.setText(uppercase_name);
                     }
 
                     if(dataSnapshot.child("interests").getValue()!=null) {
