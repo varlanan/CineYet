@@ -94,7 +94,10 @@ public class FriendRequestFragment extends androidx.fragment.app.Fragment {
                         if(dataSnapshot.exists()){
                             if(dataSnapshot.child("name").getValue()!=null){
                                 final String requesterName=dataSnapshot.child("name").getValue().toString();
-                                holder.setName(requesterName);
+                                String[] name_split = requesterName.split(" ");
+                                String uppercase_name = name_split[0].substring(0, 1).toUpperCase() + name_split[0].substring(1).toLowerCase() + " "
+                                        +  name_split[1].substring(0, 1).toUpperCase() + name_split[1].substring(1).toLowerCase();
+                                holder.setName(uppercase_name);
                             }
                             if(dataSnapshot.child("interests").getValue()!=null){
                                 final String requesterInterests=dataSnapshot.child("interests").getValue().toString();
@@ -165,27 +168,27 @@ public class FriendRequestFragment extends androidx.fragment.app.Fragment {
 
         public FindFriendsViewholder(@NonNull View itemView) {
             super(itemView);
-            parent=itemView.findViewById(R.id.friend_request_list_parent);
-            acceptButton=itemView.findViewById(R.id.accept_friend_request_button);
-            declineButton=itemView.findViewById(R.id.delete_friend_request_button);
+            parent = itemView.findViewById(R.id.friend_request_list_parent);
+            acceptButton = itemView.findViewById(R.id.accept_friend_request_button);
+            declineButton = itemView.findViewById(R.id.delete_friend_request_button);
 
         }
         public void setProfileimage(String profileimage) {
-            image=itemView.findViewById(R.id.friend_request_picture);
+            image = itemView.findViewById(R.id.friend_request_picture);
             Picasso.get().load(profileimage)
                     .placeholder(R.drawable.ic_account_circle_black_24dp)
                     .into(image);
         }
 
         public void setName(String name) {
-            myname=itemView.findViewById(R.id.friend_request_name);
+            myname = itemView.findViewById(R.id.friend_request_name);
 
             this.myname.setText(name);
 
 
         }
         public void setInterests(String interests) {
-            myinterests=itemView.findViewById(R.id.friend_request_interests);
+            myinterests = itemView.findViewById(R.id.friend_request_interests);
 
             this.myinterests.setText(interests);
         }

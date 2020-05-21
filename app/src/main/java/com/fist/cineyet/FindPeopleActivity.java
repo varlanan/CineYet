@@ -59,8 +59,8 @@ public class FindPeopleActivity extends AppCompatActivity {
         });
     }
     private void searchPeople(String searchBarInput){
-        FirebaseRecyclerOptions<FindPeople> options=new FirebaseRecyclerOptions.Builder<FindPeople>()
-                .setQuery(userRef.orderByChild("name").startAt(searchBarInput).endAt(searchBarInput.toLowerCase()+"\uf8ff"), FindPeople.class)
+        FirebaseRecyclerOptions<FindPeople> options = new FirebaseRecyclerOptions.Builder<FindPeople>()
+                .setQuery(userRef.orderByChild("name").startAt(searchBarInput.toLowerCase()).endAt(searchBarInput.toLowerCase()+"\uf8ff"), FindPeople.class)
                 .build();
 
         FirebaseRecyclerAdapter<FindPeople,FindFriendsViewholder> firebaseRecyclerAdapter=new FirebaseRecyclerAdapter<FindPeople, FindFriendsViewholder>(options){
@@ -75,7 +75,10 @@ public class FindPeopleActivity extends AppCompatActivity {
 
             @Override
             protected void onBindViewHolder(@NonNull final FindFriendsViewholder holder, final int position, @NonNull final FindPeople model) {
-                holder.name.setText(model.getName());
+                String[] name_split = model.getName().split(" ");
+                String uppercase_name = name_split[0].substring(0, 1).toUpperCase() + name_split[0].substring(1).toLowerCase() + " "
+                        +  name_split[1].substring(0, 1).toUpperCase() + name_split[1].substring(1).toLowerCase();
+                holder.name.setText(uppercase_name);
                 holder.interests.setText(model.getInterests());
                 Picasso.get().load(model.getProfileimage())
                         .placeholder(R.drawable.ic_account_circle_black_24dp)

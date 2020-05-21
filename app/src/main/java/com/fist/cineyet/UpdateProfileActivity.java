@@ -60,7 +60,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         
         /* Buttons */
         name = (EditText) findViewById(R.id.edit_name);
-        newName = name.getText().toString();
+        newName = name.getText().toString().toLowerCase();
         username = (EditText) findViewById(R.id.edit_username);
         newUsername = username.getText().toString();
         interests = (EditText) findViewById(R.id.edit_interests);
@@ -89,7 +89,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     String image = dataSnapshot.child("profileimage").getValue().toString();
                     Picasso.get().load(image).placeholder(R.drawable.abstract_user_icon).into(profile_pic);
 
-                    newName = dataSnapshot.child("name").getValue().toString();
+                    newName = (dataSnapshot.child("name").getValue().toString()).toLowerCase();
                     name.setText(newName);
 
                     newUsername = dataSnapshot.child("username").getValue().toString();
@@ -98,8 +98,11 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     newEmail = dataSnapshot.child("email").getValue().toString();
                     email.setText(newEmail);
 
-                    newInterests = dataSnapshot.child("interests").getValue().toString();
-                    interests.setText(newInterests);
+                    if(dataSnapshot.child("interests").getValue() != null){
+                        newInterests = dataSnapshot.child("interests").getValue().toString();
+                        interests.setText(newInterests);
+                    }
+
                 }
             }
 
@@ -119,12 +122,12 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 String email_str = email.getText().toString();
                 Intent intent = new Intent(UpdateProfileActivity.this, HomeActivity.class);
 
-                intent.putExtra("name", name_str);
+                intent.putExtra("name", name_str.toLowerCase());
 //                intent.putExtra("username", username_str);
 //                intent.putExtra("interests", interests_str);
 //                intent.putExtra("email", email_str);
                 /* Save user information */
-                UserRef.child("name").setValue(name_str);
+                UserRef.child("name").setValue(name_str.toLowerCase());
                 UserRef.child("username").setValue(username_str);
                 UserRef.child("email").setValue(email_str);
                 UserRef.child("interests").setValue(interests_str);
@@ -142,7 +145,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     String image_string = dataSnapshot.child("profileimage").getValue().toString();
                     Picasso.get().load(image_string).placeholder(R.drawable.abstract_user_icon).into(profile_pic);
 
-                    newName = dataSnapshot.child("name").getValue().toString();
+                    newName =  (dataSnapshot.child("name").getValue().toString()).toLowerCase();
                     name.setText(newName);
 
                     newUsername = dataSnapshot.child("username").getValue().toString();
@@ -151,8 +154,11 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     newEmail = dataSnapshot.child("email").getValue().toString();
                     email.setText(newEmail);
 
-                    newInterests = dataSnapshot.child("interests").getValue().toString();
-                    interests.setText(newInterests);
+                    if(dataSnapshot.child("interests").getValue() != null){
+                        newInterests = dataSnapshot.child("interests").getValue().toString();
+                        interests.setText(newInterests);
+                    }
+
 
                 }
             }
