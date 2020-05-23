@@ -71,7 +71,7 @@ public class profile_page extends Fragment {
 
         myview= inflater.inflate(R.layout.activity_profile_page, container, false);
         final Bundle arguments=getArguments();
-        String profileType=arguments.getString("isPersonalProfile");
+        final String profileType=arguments.getString("isPersonalProfile");
         //Firebase Variables
         myFirebaseAuth = FirebaseAuth.getInstance();
         currentUserID = myFirebaseAuth.getCurrentUser().getUid();
@@ -129,6 +129,11 @@ public class profile_page extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent myIntent=new Intent(getActivity(),FriendsListActivity.class);
+                if(profileType.equals("PERSONAL"))
+                    myIntent.putExtra("UserID", currentUserID);
+                else
+                    myIntent.putExtra("UserID",profile_id);
+                myIntent.putExtra("isPersonalProfile",profileType);
                 startActivity(myIntent);
 
             }

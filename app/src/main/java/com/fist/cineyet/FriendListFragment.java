@@ -44,7 +44,7 @@ public class FriendListFragment extends Fragment {
         requestRef= FirebaseDatabase.getInstance().getReference().child("friend_request");
         friendRef=FirebaseDatabase.getInstance().getReference().child("Friends");
         FirebaseAuth myFirebaseAuth=FirebaseAuth.getInstance();
-        currentUserID = myFirebaseAuth.getCurrentUser().getUid();
+        currentUserID = getArguments().getString("UserID");
         myview= inflater.inflate(R.layout.fragment_friend_list, container, false);
         searchPeopleRecycler=myview.findViewById(R.id.friends_list_recycler);
         return myview;

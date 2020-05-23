@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -187,12 +188,21 @@ public class MoviePageActivity extends AppCompatActivity {
         tell_a_friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
         add_to_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HashMap map= new HashMap();
+                map.put("poster",posterUrl);
+                map.put("title",movieTitle);
+                map.put("year",movieYear);
+                userRef.child("watchlist").child(imdbID).setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(MoviePageActivity.this,"Added Movie To Watch List",Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             }
         });
