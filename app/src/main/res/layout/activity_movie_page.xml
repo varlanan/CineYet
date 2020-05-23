@@ -151,9 +151,9 @@
                 android:id="@+id/textView3"
                 android:layout_width="26dp"
                 android:layout_height="22dp"
+                android:fontFamily="@font/montserrat"
                 android:gravity="right"
                 android:text="/ 10"
-                android:fontFamily="@font/montserrat"
                 android:textColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="@+id/movie_title"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -227,7 +227,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="#41434E"
+        android:background="#1E1E1E"
         android:layout_alignParentBottom="true">
 
 <!--        <TextView-->
@@ -243,8 +243,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
             android:gravity="center"
             android:layout_alignParentBottom="true">
 
@@ -256,19 +256,19 @@
 
             <ImageButton
                 android:id="@+id/tell_a_friend"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginLeft="15dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="12dp"
                 android:layout_marginRight="2dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/recommend_friend"
+                app:srcCompat="@drawable/ic_tell_a_friend_new_icon"
                 android:scaleType="fitCenter"/>
             <TextView
                 android:id="@+id/Tell_A_Friend"
                 android:layout_width="77dp"
                 android:layout_height="15dp"
                 android:text="Tell-a-Friend"
-                android:layout_marginTop="1dp"
+
                 android:textColor="#FFFFFF"
                 android:fontFamily="@font/montserrat"
                 android:autoSizeTextType="uniform"/>
@@ -282,20 +282,21 @@
 
                 <ImageButton
                     android:id="@+id/write_review"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="75dp"
-                    android:layout_marginLeft="75dp"
+                    android:layout_width="66dp"
+                    android:layout_height="33dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="67dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginBottom="2dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/write_review"
+                    app:srcCompat="@drawable/ic_write_review_dreptunghi"
                     android:scaleType="fitCenter"/>
                 <TextView
                     android:id="@+id/Write_Review"
                     android:layout_width="77dp"
                     android:layout_height="15dp"
-                    android:layout_marginTop="1dp"
                     android:layout_marginRight="70dp"
-                    android:layout_marginLeft="60dp"
+                    android:layout_marginLeft="57dp"
                     android:text="Write review"
                     android:fontFamily="@font/montserrat"
                     android:textColor="#FFFFFF"
@@ -310,20 +311,20 @@
 
                 <ImageButton
                     android:id="@+id/add_to_list"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginLeft="14dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+
+                    android:layout_marginLeft="8dp"
                     android:layout_marginRight="2dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/add_to_movie_list_agenda"
+                    app:srcCompat="@drawable/ic_add_to_collection_new_icon"
                     android:scaleType="fitCenter"/>
 
                 <TextView
                     android:id="@+id/Add_To_List"
                     android:layout_width="65dp"
                     android:layout_height="15dp"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
                     android:autoSizeTextType="uniform"
                     android:fontFamily="@font/montserrat"
                     android:text="Add to List"
