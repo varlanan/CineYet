@@ -74,7 +74,7 @@ public class ChatActivity extends AppCompatActivity {
             String receiverReference=receiverID+"/"+currentUserID+"/"+message_key_string;
 
             //date
-      //      Calendar date = Calendar.getInstance();
+            //      Calendar date = Calendar.getInstance();
             final String absoluteTimeString = String.valueOf(System.currentTimeMillis());;
 //            SimpleDateFormat current_date = new SimpleDateFormat("dd-MM-YYYY");
 //            final String saveCurrentDate = current_date.format(date.getTime());
@@ -89,7 +89,7 @@ public class ChatActivity extends AppCompatActivity {
             messageContent.put("time",absoluteTimeString);
             messageContent.put("from",currentUserID);
             messageContent.put("type","text"); //modify later when send pictures enabled
-            
+
             HashMap messageBody= new HashMap();
             messageBody.put(senderReference,messageContent);
             messageBody.put(receiverReference,messageContent);
