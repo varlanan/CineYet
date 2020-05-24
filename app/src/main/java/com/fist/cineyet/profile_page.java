@@ -72,7 +72,6 @@ public class profile_page extends Fragment {
         myview= inflater.inflate(R.layout.activity_profile_page, container, false);
         final Bundle arguments=getArguments();
         final String profileType=arguments.getString("isPersonalProfile");
-        //Firebase Variables
         myFirebaseAuth = FirebaseAuth.getInstance();
         currentUserID = myFirebaseAuth.getCurrentUser().getUid();
         if(profileType.equals("PERSONAL"))
@@ -83,19 +82,8 @@ public class profile_page extends Fragment {
         }
         friendsRequestRef=FirebaseDatabase.getInstance().getReference().child("friend_request");
 
-        //Profile atributes
-        friendRequestSent=false;
-        profile_name = myview.findViewById(R.id.profile_pic_name);
-        interests = myview.findViewById(R.id.profile_interests);
-        new_interests = interests.getText().toString();
-        bLogOut = myview.findViewById(R.id.LogOutButton);
-        editProfile = myview.findViewById(R.id.update_profile);
-        addFriendButton = myview.findViewById(R.id.add_friend_button);
-        messageButton = myview.findViewById(R.id.message_profile);
-        recommendButton = myview.findViewById(R.id.give_rec_profile);
-        profile_img = myview.findViewById(R.id.profile_picture_sample);
-        friendsListButton=myview.findViewById(R.id.profile_friends_list_button);
-        new_name = profile_name.getText().toString();
+        //Firebase Variables
+        initializeVariables();
 
         bLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,6 +169,15 @@ public class profile_page extends Fragment {
             }
         });
 
+        messageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent=new Intent(getActivity(), ChatActivity.class);
+                myIntent.putExtra("ReceiverID",profile_id); //
+                getActivity().startActivity(myIntent);
+            }
+        });
+
         //hardcoded newsfeed for now
         ArrayList<newsfeedItems> myMovies=new ArrayList<newsfeedItems>();
         for(int i=0;i<10;i++){
@@ -194,7 +191,23 @@ public class profile_page extends Fragment {
         listFunction(R.id.activity_scroller,myMovies);
         return myview;
     }
+    private void initializeVariables(){
 
+
+        //Profile atributes
+        friendRequestSent=false;
+        profile_name = myview.findViewById(R.id.profile_pic_name);
+        interests = myview.findViewById(R.id.profile_interests);
+        new_interests = interests.getText().toString();
+        bLogOut = myview.findViewById(R.id.LogOutButton);
+        editProfile = myview.findViewById(R.id.update_profile);
+        addFriendButton = myview.findViewById(R.id.add_friend_button);
+        messageButton = myview.findViewById(R.id.message_profile);
+        recommendButton = myview.findViewById(R.id.give_rec_profile);
+        profile_img = myview.findViewById(R.id.profile_picture_sample);
+        friendsListButton=myview.findViewById(R.id.profile_friends_list_button);
+        new_name = profile_name.getText().toString();
+    }
     private void cancelFriendRequest() {
         friendsRequestRef.child(currentUserID).child(profile_id).child("request_type").removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
