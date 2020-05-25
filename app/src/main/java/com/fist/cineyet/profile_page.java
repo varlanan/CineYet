@@ -205,7 +205,8 @@ public class profile_page extends Fragment {
                                         snapshot_children_of_movie.child("review").getValue().toString(),
                                         "Reviewed: ", snapshot_children_of_movie.child("moviePoster").getValue().toString(),
                                         snapshot_children_of_movie.child("userProfilePic").getValue().toString(),
-                                        snapshot_children_of_movie.child("rating").getValue().toString());
+                                        snapshot_children_of_movie.child("rating").getValue().toString(),
+                                        snapshot_children_of_movie.getKey(), snapshot_children_of_movie.child("userID").getValue().toString());
                         myMovies.add(newNewsfeedItem);
                         listFunction(R.id.activity_scroller, myMovies);
                     }

@@ -141,25 +141,39 @@
 
     <Button
         android:id="@+id/news_like"
-        android:layout_width="70dp"
+        android:layout_width="80dp"
         android:layout_height="match_parent"
-        android:layout_marginRight="20dp"
-        android:fontFamily="@font/montserrat"
-
+        android:layout_marginRight="5dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/thumbs"
-        android:text="Like" />
+        android:fontFamily="@font/montserrat"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:text="Like"
+        android:textSize="15sp" />
 
     <Button
         android:id="@+id/news_comment"
-        android:layout_width="105dp"
+        android:layout_width="100dp"
         android:layout_height="match_parent"
         android:fontFamily="@font/montserrat"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/comment_icon"
         android:text="Comment"
-
         />
+
+    <EditText
+        android:id="@+id/num_likes"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:textSize="12sp"
+        android:layout_marginLeft="50dp"
+        android:textColor="@android:color/darker_gray"
+        android:fontFamily="@font/montserrat"
+        android:text="likes"
+        android:background="@android:color/transparent"/>
 
 
 </LinearLayout>

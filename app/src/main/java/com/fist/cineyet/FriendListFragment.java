@@ -58,7 +58,7 @@ public class FriendListFragment extends Fragment {
 
     private void displayAllRequests(){
         Query myquery=friendRef.child(currentUserID); //all the accounts that sent the current user requests
-        FirebaseRecyclerOptions<FindRequests> options=new FirebaseRecyclerOptions.Builder<FindRequests>()
+        FirebaseRecyclerOptions<FindRequests> options = new FirebaseRecyclerOptions.Builder<FindRequests>()
                 .setQuery(myquery,FindRequests.class)
                 .build();
 

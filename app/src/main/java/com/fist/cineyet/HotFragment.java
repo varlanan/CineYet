@@ -50,6 +50,7 @@ public class HotFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 //                if(dataSnapshot.hasChild(imdbID)){
                 for(DataSnapshot snapshot_movie_ids : dataSnapshot.getChildren()){
+                    /* all the reviews under one movie ID */
                     for(DataSnapshot snapshot_children_of_movie : snapshot_movie_ids.getChildren()) {
                         newsfeedItems newNewsfeedItem =
                                 new newsfeedItems(snapshot_children_of_movie.child("date").getValue().toString(),
@@ -58,7 +59,8 @@ public class HotFragment extends Fragment {
                                 snapshot_children_of_movie.child("review").getValue().toString(),
                                 "Reviewed: ", snapshot_children_of_movie.child("moviePoster").getValue().toString(),
                                 snapshot_children_of_movie.child("userProfilePic").getValue().toString(),
-                                snapshot_children_of_movie.child("rating").getValue().toString());
+                                snapshot_children_of_movie.child("rating").getValue().toString(), snapshot_children_of_movie.getKey(),
+                                        snapshot_children_of_movie.child("userID").getValue().toString());
                         movieReviews.add(newNewsfeedItem);
 
                         scrollFunction(R.id.newsFeed, movieReviews);
