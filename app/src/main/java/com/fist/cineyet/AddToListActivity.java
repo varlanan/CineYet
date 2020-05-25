@@ -82,7 +82,7 @@ public class AddToListActivity  extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                myMovies.clear();
                 String movieToSearch=search_movie.getText().toString();
                 OkHttpClient client = new OkHttpClient();
                 Request request = new Request.Builder()

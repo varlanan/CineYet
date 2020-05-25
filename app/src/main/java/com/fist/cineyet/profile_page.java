@@ -72,33 +72,20 @@ public class profile_page extends Fragment {
 
         myview= inflater.inflate(R.layout.activity_profile_page, container, false);
         final Bundle arguments=getArguments();
-        String profileType=arguments.getString("isPersonalProfile");
-        //Firebase Variables
+        final String profileType=arguments.getString("isPersonalProfile");
         myFirebaseAuth = FirebaseAuth.getInstance();
         currentUserID = myFirebaseAuth.getCurrentUser().getUid();
         if(profileType.equals("PERSONAL"))
             userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
         else{
-            profile_id=arguments.getString("UserID");
-            userRef=FirebaseDatabase.getInstance().getReference().child("Users").child(profile_id);
+            profile_id = arguments.getString("UserID");
+            userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(profile_id);
         }
-        friendsRequestRef=FirebaseDatabase.getInstance().getReference().child("friend_request");
-
+        friendsRequestRef = FirebaseDatabase.getInstance().getReference().child("friend_request");
         movieRef = FirebaseDatabase.getInstance().getReference().child("ReviewedMovies");
 
-        //Profile atributes
-        friendRequestSent=false;
-        profile_name = myview.findViewById(R.id.profile_pic_name);
-        interests = myview.findViewById(R.id.profile_interests);
-        new_interests = interests.getText().toString();
-        bLogOut = myview.findViewById(R.id.LogOutButton);
-        editProfile = myview.findViewById(R.id.update_profile);
-        addFriendButton = myview.findViewById(R.id.add_friend_button);
-        messageButton = myview.findViewById(R.id.message_profile);
-        recommendButton = myview.findViewById(R.id.give_rec_profile);
-        profile_img = myview.findViewById(R.id.profile_picture_sample);
-        friendsListButton=myview.findViewById(R.id.profile_friends_list_button);
-        new_name = profile_name.getText().toString();
+        /*Firebase Variables*/
+        initializeVariables();
 
         bLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +107,7 @@ public class profile_page extends Fragment {
             @Override
             public void onClick(View view) {
                 addFriendButton.setEnabled(false);
-                if(friendRequestSent==false)
+                if(friendRequestSent == false)
                     sendFriendRequest();
                 else
                     cancelFriendRequest();
@@ -132,6 +119,11 @@ public class profile_page extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent myIntent=new Intent(getActivity(),FriendsListActivity.class);
+                if(profileType.equals("PERSONAL"))
+                    myIntent.putExtra("UserID", currentUserID);
+                else
+                    myIntent.putExtra("UserID",profile_id);
+                myIntent.putExtra("isPersonalProfile",profileType);
                 startActivity(myIntent);
 
             }
@@ -180,6 +172,15 @@ public class profile_page extends Fragment {
             }
         });
 
+        messageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(getActivity(), ChatActivity.class);
+                myIntent.putExtra("ReceiverID", profile_id); //
+                getActivity().startActivity(myIntent);
+            }
+        });
+
         modifyButtons(profileType);
         scrollFunction(R.id.sample_favourite_movie, profileType,"favouritelist");
         scrollFunction(R.id.sample_watch_list, profileType,"watchlist");
@@ -220,7 +221,21 @@ public class profile_page extends Fragment {
 
         return myview;
     }
-
+    private void initializeVariables(){
+        /*Profile atributes*/
+        friendRequestSent=false;
+        profile_name = myview.findViewById(R.id.profile_pic_name);
+        interests = myview.findViewById(R.id.profile_interests);
+        new_interests = interests.getText().toString();
+        bLogOut = myview.findViewById(R.id.LogOutButton);
+        editProfile = myview.findViewById(R.id.update_profile);
+        addFriendButton = myview.findViewById(R.id.add_friend_button);
+        messageButton = myview.findViewById(R.id.message_profile);
+        recommendButton = myview.findViewById(R.id.give_rec_profile);
+        profile_img = myview.findViewById(R.id.profile_picture_sample);
+        friendsListButton=myview.findViewById(R.id.profile_friends_list_button);
+        new_name = profile_name.getText().toString();
+    }
     private void cancelFriendRequest() {
         friendsRequestRef.child(currentUserID).child(profile_id).child("request_type").removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
