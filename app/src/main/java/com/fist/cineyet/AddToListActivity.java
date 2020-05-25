@@ -66,11 +66,11 @@ public class AddToListActivity  extends AppCompatActivity {
         myFirebaseAuth = FirebaseAuth.getInstance();
         currentUserID = myFirebaseAuth.getCurrentUser().getUid();
         listType = getIntent().getExtras().getString("listType");
-        addButtonOn=getIntent().getExtras().getBoolean("addButton");
-        search_movie=findViewById(R.id.search_movie_bar);
-        myView=findViewById(R.id.search_movie_results);
-        searchButton=findViewById(R.id.search_movie_button);
-        myMovies=new ArrayList<searchbarItems>();
+        addButtonOn = getIntent().getExtras().getBoolean("addButton");
+        search_movie = findViewById(R.id.search_movie_bar);
+        myView = findViewById(R.id.search_movie_results);
+        searchButton = findViewById(R.id.search_movie_button);
+        myMovies = new ArrayList<searchbarItems>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(AddToListActivity.this,LinearLayoutManager.VERTICAL,false);
         myView.setLayoutManager(layoutManager);
         myView.setItemAnimator(new DefaultItemAnimator());
@@ -78,6 +78,7 @@ public class AddToListActivity  extends AppCompatActivity {
             fromHome=true;
         else
             fromHome=false;
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,11 +107,11 @@ public class AddToListActivity  extends AppCompatActivity {
                                 JSONArray Jarray = jObject.getJSONArray("Search");
                                 for (int i = 0; i < Jarray.length(); i++) {
                                     JSONObject object     = Jarray.getJSONObject(i);
-                                    String movieTitle= object.getString("Title");
-                                    String movieYear= object.getString("Year");
-                                    String type=object.getString("Type");
-                                    String posterURL=object.getString("Poster");
-                                    String imdbID=object.getString("imdbID");
+                                    String movieTitle = object.getString("Title");
+                                    String movieYear = object.getString("Year");
+                                    String type =object.getString("Type");
+                                    String posterURL =object.getString("Poster");
+                                    String imdbID =object.getString("imdbID");
                                     if(type.equals("movie")){
                                         Log.d(TAG, "add movie"+type);
 

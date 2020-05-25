@@ -2,11 +2,13 @@ package com.fist.cineyet;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Rating;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -58,6 +60,10 @@ public class reviewsAdapter extends RecyclerView.Adapter<reviewsAdapter.ViewHold
 
         holder.reviewText.setText(mainModels.get(position).userReview);
 
+        if(mainModels.get(position).movieRating != null){
+            holder.ratingBar.setRating(Float.parseFloat(mainModels.get(position).movieRating));
+        }
+
     }
 
     @Override
@@ -70,6 +76,7 @@ public class reviewsAdapter extends RecyclerView.Adapter<reviewsAdapter.ViewHold
         ConstraintLayout parentLayout;
         CircleImageView profileImg;
         String personNewName, reviewNew;
+        RatingBar ratingBar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,6 +86,7 @@ public class reviewsAdapter extends RecyclerView.Adapter<reviewsAdapter.ViewHold
             reviewText = itemView.findViewById(R.id.review_text);
             reviewNew = reviewText.getText().toString();
             parentLayout = itemView.findViewById(R.id.parent_news);
+            ratingBar = itemView.findViewById(R.id.review_rating);
 
             /* Setting user profile pic and name */
             userRef.addValueEventListener(new ValueEventListener() {
@@ -90,7 +98,11 @@ public class reviewsAdapter extends RecyclerView.Adapter<reviewsAdapter.ViewHold
                         Picasso.get().load(image_string).placeholder(R.drawable.ic_account_circle_black_24dp).into(profileImg);
 
                         personNewName = dataSnapshot.child("name").getValue().toString();
-                        personName.setText(personNewName);
+                        String[] name_split = personNewName.split(" ");
+                        String uppercase_name = name_split[0].substring(0, 1).toUpperCase() + name_split[0].substring(1).toLowerCase() + " "
+                                +  name_split[1].substring(0, 1).toUpperCase() + name_split[1].substring(1).toLowerCase();
+                        personName.setText(uppercase_name);
+
 
                     }
                 }

@@ -216,7 +216,7 @@ public class MoviePageActivity extends AppCompatActivity {
                 if(dataSnapshot.hasChild(imdbID)){
                     for(DataSnapshot snapshot : dataSnapshot.child(imdbID).getChildren()) {
                         reviewItems newReviewItem = new reviewItems(snapshot.child("userProfilePic").getValue().toString(), snapshot.child("userName").getValue().toString(),
-                                snapshot.child("review").getValue().toString(), imdbID);
+                                snapshot.child("review").getValue().toString(), imdbID, snapshot.child("rating").getValue().toString());
                         movieReviews.add(newReviewItem);
 
                         displayReviews(movieReviews);
@@ -231,7 +231,6 @@ public class MoviePageActivity extends AppCompatActivity {
         });
 
 
-
         write_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -244,7 +243,9 @@ public class MoviePageActivity extends AppCompatActivity {
                 myIntent.putExtra("isTitle3Lines", isTitle3Lines);
                 myIntent.putExtra("isTitle4Lines", isTitle4Lines);
                 myIntent.putExtra("noGoodImgFound", noGoodImgFound);
+                myIntent.putExtra("moviePoster", posterUrl);
                 startActivity(myIntent);
+                finish();
 
             }
         });

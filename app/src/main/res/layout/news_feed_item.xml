@@ -35,20 +35,51 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <TextView
-                    android:id="@+id/news_profile_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="YiFei Tang"
-                    android:fontFamily="@font/montserrat"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:padding="10sp"
-                    android:textColor="@android:color/black"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/news_profile_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="User Name"
+                        android:layout_weight="10"
+                        android:fontFamily="@font/montserrat"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:padding="10sp"
+                        android:textColor="@android:color/black"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <RatingBar
+                            android:id="@+id/review_rating"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:numStars="5"
+                            android:elevation="10dp"
+                            android:theme="@style/RatingBar"
+                            android:stepSize=".5" />
+
+                        <TextView
+                            android:id="@+id/news_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Date"
+                            android:fontFamily="@font/montserrat" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:padding="5dp">
                     <TextView
                         android:id="@+id/news_activity_type"
@@ -69,12 +100,7 @@
                         android:textSize="13sp"
                         android:paddingRight="4dp"
                         android:layout_weight="1"/>
-                    <TextView
-                        android:id="@+id/news_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Date"
-                        android:fontFamily="@font/montserrat" />
+
 
 
                 </LinearLayout>
@@ -98,14 +124,12 @@
                     android:layout_weight="1"
                     />
 
-
-
             <ImageView
                 android:id="@+id/news_movie_poster"
                 android:layout_width="80dp"
                 android:layout_height="120dp"
                 android:layout_margin="10dp"
-                android:src="@drawable/midsommarposter"
+                android:src="@drawable/gradient_flip"
                 />
 
         </LinearLayout>
@@ -113,7 +137,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginLeft="10dp">
+    android:layout_marginLeft="5dp">
 
     <Button
         android:id="@+id/news_like"

@@ -52,6 +52,7 @@ public class profile_page extends Fragment {
     String new_name, new_interests;
     private FirebaseAuth.AuthStateListener myAuthListener;
     private DatabaseReference userRef;
+    private DatabaseReference movieRef;
     private DatabaseReference friendsRequestRef;
     String currentUserID, profile_id;
     ArrayList<searchbarItems> favouriteMovies;
@@ -82,6 +83,8 @@ public class profile_page extends Fragment {
             userRef=FirebaseDatabase.getInstance().getReference().child("Users").child(profile_id);
         }
         friendsRequestRef=FirebaseDatabase.getInstance().getReference().child("friend_request");
+
+        movieRef = FirebaseDatabase.getInstance().getReference().child("ReviewedMovies");
 
         //Profile atributes
         friendRequestSent=false;
@@ -133,6 +136,7 @@ public class profile_page extends Fragment {
 
             }
         });
+
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -176,17 +180,44 @@ public class profile_page extends Fragment {
             }
         });
 
-        //hardcoded newsfeed for now
-        ArrayList<newsfeedItems> myMovies=new ArrayList<newsfeedItems>();
-        for(int i=0;i<10;i++){
-            myMovies.add(new newsfeedItems("Sept-06-2018", new_name, "Midsommar",  "Midsommar scared the shit out of me. What the hell was that",
-                    "Reviewed",R.drawable.midsommarposter,R.drawable.roundprofilepic));
-        }
-
         modifyButtons(profileType);
-        scrollFunction(R.id.sample_favourite_movie,profileType,"favouritelist");
-        scrollFunction(R.id.sample_watch_list,profileType,"watchlist");
-        listFunction(R.id.activity_scroller,myMovies);
+        scrollFunction(R.id.sample_favourite_movie, profileType,"favouritelist");
+        scrollFunction(R.id.sample_watch_list, profileType,"watchlist");
+
+        final ArrayList<newsfeedItems> myMovies = new ArrayList<newsfeedItems>();
+//        for(int i=0;i<10;i++){
+//            myMovies.add(new newsfeedItems("Sept-06-2018", new_name, "Midsommar",  "Midsommar scared the shit out of me. What the hell was that",
+//                    "Reviewed",R.drawable.midsommarposter,R.drawable.roundprofilepic));
+//        }
+
+        /* Retrieve all reviews for the movie with the given imdbID */
+        movieRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.hasChild(imdbID)){
+                for(DataSnapshot snapshot_movie_ids : dataSnapshot.getChildren()){
+                    for(DataSnapshot snapshot_children_of_movie : snapshot_movie_ids.getChildren()) {
+                        newsfeedItems newNewsfeedItem =
+                                new newsfeedItems(snapshot_children_of_movie.child("date").getValue().toString(),
+                                        snapshot_children_of_movie.child("userName").getValue().toString(),
+                                        snapshot_children_of_movie.child("movieTitle").getValue().toString(),
+                                        snapshot_children_of_movie.child("review").getValue().toString(),
+                                        "Reviewed: ", snapshot_children_of_movie.child("moviePoster").getValue().toString(),
+                                        snapshot_children_of_movie.child("userProfilePic").getValue().toString(),
+                                        snapshot_children_of_movie.child("rating").getValue().toString());
+                        myMovies.add(newNewsfeedItem);
+                        listFunction(R.id.activity_scroller, myMovies);
+                    }
+                }
+//                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         return myview;
     }
 

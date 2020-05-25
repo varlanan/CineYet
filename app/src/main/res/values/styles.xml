@@ -13,6 +13,16 @@
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#3F00BCD4</item>
+        <item name="colorControlActivated">#00BCD4</item>
+    </style>
+
+    <style name="ReviewRatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#60959C</item>
+        <item name="colorControlActivated">#00BCD4</item>
+    </style>
+
 
 
 </resources>
