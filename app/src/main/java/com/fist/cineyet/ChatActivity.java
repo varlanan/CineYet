@@ -16,10 +16,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,8 +30,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -39,12 +43,14 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener myAuthListener;
     private DatabaseReference userRef;
     private DatabaseReference messageRef;
+    private final List<Messages> messagesList= new ArrayList<>();
+    private MessageAdapter messageAdapter;
     String currentUserID;
     Toolbar messageToolBar;
     CircleImageView messageReceiverProfilePicture;
     EditText messageEntry;
     TextView messageReceiverProfileName;
-    RecyclerView messageList;
+    RecyclerView messageListRecycler;
     ImageButton messageSendButton;
 
     String receiverID;
@@ -60,8 +66,44 @@ public class ChatActivity extends AppCompatActivity {
                 SendMessage();
             }
         });
+        fetchMessages();
 
     }
+
+    private void fetchMessages() {
+        messageRef.child(currentUserID).child(receiverID).addChildEventListener(new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if(dataSnapshot.exists()){
+                    Messages message=dataSnapshot.getValue(Messages.class);
+                    messagesList.add(message);
+                    messageAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void SendMessage() {
         String messageText=messageEntry.getText().toString();
         if(messageText.equals(""))
@@ -120,9 +162,13 @@ public class ChatActivity extends AppCompatActivity {
         actionbar.setCustomView(action_bar_view);
         messageReceiverProfileName=findViewById(R.id.chat_bar_name);
         messageReceiverProfilePicture=findViewById(R.id.chat_bar_profile);
-        messageList=findViewById(R.id.message_list);
+        messageListRecycler=findViewById(R.id.message_list);
         messageEntry=findViewById(R.id.message_content);
         messageSendButton=findViewById(R.id.message_send_button);
+        messageAdapter=new MessageAdapter(messagesList);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        messageListRecycler.setLayoutManager(linearLayoutManager);
+        messageListRecycler.setAdapter(messageAdapter);
 
     }
     private void displayReceiverInfo(){
