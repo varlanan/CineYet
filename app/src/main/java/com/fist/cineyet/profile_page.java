@@ -301,7 +301,7 @@ public class profile_page extends Fragment {
         favouriteMoviesLayout.setLayoutManager(layoutManager);
         favouriteMoviesLayout.setItemAnimator(new DefaultItemAnimator());
 
-       final MainAdapter mainAdapter= new MainAdapter(getActivity(),moviesList,profileType.equals("PERSONAL"),listType,profileType);
+        final MainAdapter mainAdapter= new MainAdapter(getActivity(),moviesList,profileType.equals("PERSONAL"),listType,profileType);
         favouriteMoviesLayout.setAdapter(mainAdapter);
         userRef.child(listType).addValueEventListener(new ValueEventListener() {
             @Override
