@@ -166,14 +166,29 @@
 
     <EditText
         android:id="@+id/num_likes"
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:textSize="12sp"
-        android:layout_marginLeft="50dp"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_gravity="center"
+        android:gravity="right"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/montserrat"
+        android:text="0"
         android:textColor="@android:color/darker_gray"
+        android:textSize="12sp" />
+
+    <EditText
+        android:id="@+id/likes"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_gravity="center"
+        android:gravity="left"
+        android:background="@android:color/transparent"
         android:fontFamily="@font/montserrat"
         android:text="likes"
-        android:background="@android:color/transparent"/>
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp" />
 
 
 </LinearLayout>

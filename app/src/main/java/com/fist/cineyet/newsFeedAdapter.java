@@ -33,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class newsFeedAdapter extends RecyclerView.Adapter<newsFeedAdapter.ViewHolder>{
     /* Firebase variables */
-    private DatabaseReference userRef, reviewLikesRef;
+    private DatabaseReference userRef, reviewLikesRef, postRef;
     FirebaseAuth myFirebaseAuth;
     String currentUserID;
 
@@ -45,6 +45,7 @@ public class newsFeedAdapter extends RecyclerView.Adapter<newsFeedAdapter.ViewHo
         this.context = context;
         this.mainModels = mainModels;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -95,12 +96,64 @@ public class newsFeedAdapter extends RecyclerView.Adapter<newsFeedAdapter.ViewHo
             holder.rating.setRating(Float.parseFloat(mainModels.get(position).movieRating));
         }
 
+        holder.likeB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reviewLikesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Integer num_likes = 0;
+                        if( dataSnapshot.hasChild(mainModels.get(position).reviewID) ){
+                            /* OLD MODEL: is the userID exists, it means that they already liked the post, and now wish to unlike it - remove ID from db */
+                            if( dataSnapshot.child(mainModels.get(position).reviewID).hasChild(currentUserID) ){
+//                                reviewLikesRef.child(mainModels.get(position).reviewID).child(currentUserID).removeValue();
+//                                holder.liked = true;
+                                DataSnapshot like_stored_state = dataSnapshot.child(mainModels.get(position).reviewID).child(currentUserID).child("liked");
+                                DatabaseReference user_review_like = reviewLikesRef.child(mainModels.get(position).reviewID).child(currentUserID).child("liked");
+                                /* Database not updated yet, using the count that is already printed instead - IK, UNCOOL */
+                                Integer number_likes = Integer.parseInt(holder.numLikes.getText().toString());
+                                if( Boolean.parseBoolean(like_stored_state.getValue().toString()) ){
+                                    holder.likeB.setText("Like");
+                                    holder.numLikes.setText(String.valueOf(number_likes - 1));
+                                }
+                                else {
+                                    holder.likeB.setText("Unlike");
+                                    holder.numLikes.setText(String.valueOf(number_likes + 1));
+                                }
+                                user_review_like.setValue( String.valueOf( !Boolean.parseBoolean(like_stored_state.getValue().toString()) ) );
+                            }
+                            /* User never interacted before with post, therefore he is liking it for the first time */
+                            else {
+                                reviewLikesRef.child(mainModels.get(position).reviewID).child(currentUserID).child("liked").setValue("true");
+                                holder.likeB.setText("Unlike");
+                                Integer number_likes = Integer.parseInt(holder.numLikes.getText().toString()) + 1;
+                                holder.numLikes.setText(String.valueOf(number_likes));
+
+                            }
+
+                        }
+                        /* is the reviewID does not exist, this means this is the first */
+                        else {
+                            reviewLikesRef.child(mainModels.get(position).reviewID).child(currentUserID).child("liked").setValue("true");
+                            holder.likeB.setText("Unlike");
+                            holder.numLikes.setText("1");
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+
+
         reviewLikesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if( dataSnapshot.hasChild(mainModels.get(position).reviewID) ){
-//                    DataSnapshot all_user_likes = dataSnapshot.child(mainModels.get(position).reviewID);
-                    Integer num_likes = 0;
                     if(dataSnapshot.child(mainModels.get(position).reviewID).hasChild(currentUserID)){
                         String temp = dataSnapshot.child(mainModels.get(position).reviewID).child(currentUserID).child("liked").getValue().toString();
                         if(temp.equals("true")){
@@ -110,76 +163,33 @@ public class newsFeedAdapter extends RecyclerView.Adapter<newsFeedAdapter.ViewHo
                             holder.likeB.setText("Like");
                         }
                     }
-                    for( DataSnapshot snapshot_userID : dataSnapshot.child(mainModels.get(position).reviewID).getChildren() ){
-                        String temp = snapshot_userID.child("liked").getValue().toString();
-                        if(temp.equals("true")){
-                            num_likes++;
-                        }
+                    reviewLikesRef.child(mainModels.get(position).reviewID).orderByChild("liked")
+                            .equalTo("true").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if(dataSnapshot.exists()){
+                                        Integer countLikes = (int) dataSnapshot.getChildrenCount();
+                                        holder.numLikes.setText(Integer.toString(countLikes));
+                                    }
+                                    else {
+                                        holder.numLikes.setText("0");
+                                    }
+                                }
 
-                    }
-//                    Query all_true_likes = reviewLikesRef.child(mainModels.get(position).reviewID).orderByChild("liked").equalTo("true");
-//                    Long num_likes = all_user_likes.getChildrenCount();
-                    if(num_likes == 1){
-                        holder.numLikes.setText("1 like");
-                    }
-                    else {
-                        holder.numLikes.setText(num_likes + " likes");
-                    }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
                 }
                 else{
-                    holder.numLikes.setText("0 likes");
+                    holder.numLikes.setText("0");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
-
-        holder.likeB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                reviewLikesRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        /* reviewID already in the list - may or may not have stored likes in it */
-                        if( dataSnapshot.hasChild(mainModels.get(position).reviewID) ){
-                            /* OLD MODEL: is the userID exists, it means that they already liked the post, and now wish to unlike it - remove ID from db */
-                            if( dataSnapshot.child(mainModels.get(position).reviewID).hasChild(currentUserID) ){
-//                                reviewLikesRef.child(mainModels.get(position).reviewID).child(currentUserID).removeValue();
-//                                holder.liked = true;
-                                DataSnapshot like_stored_state = dataSnapshot.child(mainModels.get(position).reviewID).child(currentUserID).child("liked");
-                                DatabaseReference user_review_like = reviewLikesRef.child(mainModels.get(position).reviewID).child(currentUserID).child("liked");
-                                if( Boolean.parseBoolean(like_stored_state.getValue().toString()) ){
-                                    holder.likeB.setText("Like");
-                                }
-                                else {
-                                    holder.likeB.setText("Unlike");
-                                }
-                                user_review_like.setValue( String.valueOf( !Boolean.parseBoolean(like_stored_state.getValue().toString()) ) );
-                            }
-                            /* User never interacted before with post, therefore he is liking it for the first time */
-                            else {
-                                reviewLikesRef.child(mainModels.get(position).reviewID).child(currentUserID).child("liked").setValue("true");
-                                holder.likeB.setText("Unlike");
-                            }
-//                            for( DataSnapshot snapshot_userID : dataSnapshot.child(mainModels.get(position).reviewID).getChildren() ){
-//
-//                            }
-                        }
-                        /* is the reviewID does not exist, this means this is the first */
-                        else {
-                            reviewLikesRef.child(mainModels.get(position).reviewID).child(currentUserID).child("liked").setValue("true");
-                            holder.likeB.setText("Unlike");
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
             }
         });
 

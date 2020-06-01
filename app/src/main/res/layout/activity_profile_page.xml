@@ -271,6 +271,19 @@
 <!--                    app:srcCompat="@drawable/parasite" />-->
 
             </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+
+        </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/activity_scroller"
                 android:scrollbars="vertical"

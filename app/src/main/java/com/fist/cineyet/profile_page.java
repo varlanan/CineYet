@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ListAdapter;
@@ -56,6 +57,7 @@ public class profile_page extends Fragment {
     private DatabaseReference friendsRequestRef;
     String currentUserID, profile_id;
     ArrayList<searchbarItems> favouriteMovies;
+    ArrayList<Boolean> selectedFilters;
 
     private newsFeedAdapter listAdapter;
     private View myview;
@@ -187,33 +189,51 @@ public class profile_page extends Fragment {
         scrollFunction(R.id.sample_favourite_movie, profileType,"favouritelist");
         scrollFunction(R.id.sample_watch_list, profileType,"watchlist");
 
-        final ArrayList<newsfeedItems> myMovies = new ArrayList<newsfeedItems>();
-//        for(int i=0;i<10;i++){
-//            myMovies.add(new newsfeedItems("Sept-06-2018", new_name, "Midsommar",  "Midsommar scared the shit out of me. What the hell was that",
-//                    "Reviewed",R.drawable.midsommarposter,R.drawable.roundprofilepic));
-//        }
+        getNewsFeedList();
 
+        return myview;
+    }
+
+    private void getNewsFeedList(){
+        final ArrayList<newsfeedItems> myMovies = new ArrayList<newsfeedItems>();
         /* Retrieve all reviews for the movie with the given imdbID */
         movieRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 //                if(dataSnapshot.hasChild(imdbID)){
-                for(DataSnapshot snapshot_movie_ids : dataSnapshot.getChildren()){
-                    for(DataSnapshot snapshot_children_of_movie : snapshot_movie_ids.getChildren()) {
-                        newsfeedItems newNewsfeedItem =
-                                new newsfeedItems(snapshot_children_of_movie.child("date").getValue().toString(),
-                                        snapshot_children_of_movie.child("userName").getValue().toString(),
-                                        snapshot_children_of_movie.child("movieTitle").getValue().toString(),
-                                        snapshot_children_of_movie.child("review").getValue().toString(),
-                                        "Reviewed: ", snapshot_children_of_movie.child("moviePoster").getValue().toString(),
-                                        snapshot_children_of_movie.child("userProfilePic").getValue().toString(),
-                                        snapshot_children_of_movie.child("rating").getValue().toString(),
-                                        snapshot_children_of_movie.getKey(), snapshot_children_of_movie.child("userID").getValue().toString());
-                        myMovies.add(newNewsfeedItem);
-                        listFunction(R.id.activity_scroller, myMovies);
+                for (DataSnapshot snapshot_movie_ids : dataSnapshot.getChildren()) {
+                    for (DataSnapshot snapshot_children_of_movie : snapshot_movie_ids.getChildren()) {
+                        newsfeedItems newNewsfeedItem = null;
+
+                        DataSnapshot rootChild = snapshot_children_of_movie;
+                        String userIDString = snapshot_children_of_movie.child("userID").getValue().toString();
+                        if (userIDString.equals(currentUserID.toString())) {
+                            if (rootChild.hasChild("movieTitle")) {
+                                newNewsfeedItem =
+                                        new newsfeedItems(rootChild.child("date").getValue().toString(),
+                                                rootChild.child("userName").getValue().toString(),
+                                                rootChild.child("movieTitle").getValue().toString(),
+                                                rootChild.child("review").getValue().toString(),
+                                                "Reviewed: ", rootChild.child("moviePoster").getValue().toString(),
+                                                rootChild.child("userProfilePic").getValue().toString(),
+                                                rootChild.child("rating").getValue().toString(),
+                                                rootChild.getKey(), rootChild.child("userID").getValue().toString());
+                            } else {
+                                newNewsfeedItem =
+                                        new newsfeedItems(rootChild.child("date").getValue().toString(),
+                                                rootChild.child("userName").getValue().toString(),
+                                                "DON'T BE HASTY",
+                                                rootChild.child("review").getValue().toString(),
+                                                "Reviewed: ", "https://www.101soundboards.com/storage/board_pictures/27046.jpg?c=1583177855",
+                                                rootChild.child("userProfilePic").getValue().toString(),
+                                                rootChild.child("rating").getValue().toString(),
+                                                rootChild.getKey(), rootChild.child("userID").getValue().toString());
+                            }
+                            myMovies.add(newNewsfeedItem);
+                            listFunction(R.id.activity_scroller, myMovies);
+                        }
                     }
                 }
-//                }
             }
 
             @Override
@@ -221,11 +241,9 @@ public class profile_page extends Fragment {
 
             }
         });
-
-        return myview;
     }
     private void initializeVariables(){
-        /*Profile atributes*/
+        /* Profile attributes */
         friendRequestSent=false;
         profile_name = myview.findViewById(R.id.profile_pic_name);
         interests = myview.findViewById(R.id.profile_interests);
@@ -257,7 +275,6 @@ public class profile_page extends Fragment {
             }
         });
     }
-
     private void sendFriendRequest() {
         friendsRequestRef.child(currentUserID).child(profile_id).child("request_type").setValue("sent").addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -277,7 +294,6 @@ public class profile_page extends Fragment {
         });
 
     }
-
     private void scrollFunction(Integer id, final String profileType, final String listType){
         favouriteMoviesLayout=(RecyclerView)  myview.findViewById(id);
         final ArrayList<searchbarItems> moviesList= new ArrayList<>();

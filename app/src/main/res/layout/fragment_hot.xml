@@ -5,25 +5,80 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#85C3CF">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:background="#85C3CF">
 
-        <androidx.recyclerview.widget.RecyclerView
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="Sort by: "
+                    android:fontFamily="@font/montserrat"/>
+
+                <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/filterReviews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="5dp"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/all_filter_chip"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:padding="3dp"
+                            android:text="All"
+                            android:textAppearance="@style/chipTextappearance" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/my_reviews_filter_chip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="My Reviews"
+                            android:textAppearance="@style/chipTextappearance" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/friends_reviews_filter_chip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="Friends Reviews"
+                            android:textAppearance="@style/chipTextappearance"/>
+                    </com.google.android.material.chip.ChipGroup>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/newsFeed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical"
             android:layout_marginBottom="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.118"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/friends_text"
             android:background="#85C3CF"/>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+    </LinearLayout>
 
 </ScrollView>

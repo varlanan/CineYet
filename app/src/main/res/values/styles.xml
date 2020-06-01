@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar.Bridge">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -23,6 +23,9 @@
         <item name="colorControlActivated">#00BCD4</item>
     </style>
 
+    <style name="chipTextappearance" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
 
 
 </resources>
