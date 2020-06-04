@@ -86,13 +86,17 @@ public class HotFragment extends Fragment {
                     movieReviews.clear();
                     selectedFilters.clear();
                     selectedFilters.add(buttonView.getText().toString());
-                    getNewsFeedList();
-                }
+                    getNewsFeedList();                }
                 else{
                     movieReviews.clear();
                     selectedFilters.remove(buttonView.getText().toString());
+                }
+
+                if(selectedFilters.isEmpty()){
+                    movieReviews.clear();
                     getNewsFeedList();
                 }
+
 
             }
         };
@@ -104,6 +108,7 @@ public class HotFragment extends Fragment {
         else {
             checkedChange = false;
         }
+
 
         chipAll.setOnCheckedChangeListener(checkedChangeListener);
         chipMyReviews.setOnCheckedChangeListener(checkedChangeListener);
